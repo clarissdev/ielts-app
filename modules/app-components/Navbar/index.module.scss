@@ -1,0 +1,14 @@
+.menu.menu.menu {
+  justify-content: space-between;
+  align-items: center;
+
+  &::before {
+    content: none;
+  }
+
+  li {
+    div {
+      padding: 0;
+    }
+  }
+}
