@@ -82,7 +82,7 @@ export default function CommentThreadPopover({
           style={{ backgroundColor: "#ad4933" }}
           onClick={() => setActiveCommentThreadId(null)}
         >
-          <ImCross />
+          <ImCross size="8px" />
         </button>
       </Flex.Row>
       <textarea
