@@ -1,0 +1,24 @@
+.quill [class*="ql-container"] {
+  border: none;
+}
+
+.quill [class*="ql-editor"] {
+  border: none;
+}
+
+.image {
+  max-width: 50%;
+}
+
+.textArea.textArea.textArea {
+  margin-top: 12px;
+  min-height: 300px;
+  max-height: 566px;
+}
+
+.countdownTimer {
+  font-weight: 600;
+  text-align: center;
+  line-height: 175%;
+  font-size: 18px;
+}

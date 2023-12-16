@@ -1,0 +1,11 @@
+export const ADA_SYMBOL = "\u20B3"; // "₳" - AUSTRAL SIGN
+export const ALMOST_EQUAL_TO = "\u2248"; // "≈"
+export const BULLET = "\u2022"; // "•" - BULLET
+export const EM_DASH = "\u2014"; // "—";
+export const EM_SPACE = "\u2003"; // EM SPACE
+export const EN_DASH = "\u2013"; // "–"
+export const HORIZONTAL_ELLIPSIS = "\u2026"; // "…" - HORIZONTAL ELLIPSIS
+export const MINUS_SIGN = "\u2212"; // "-"
+export const MULTIPLICATION_SIGN = "\u00D7"; // "×"
+export const NO_BREAK_SPACE = "\u00A0"; // " "
+export const USD_SYMBOL = "\u0024"; // "$" - DOLLAR SIGN

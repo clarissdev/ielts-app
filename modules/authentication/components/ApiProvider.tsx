@@ -5,8 +5,8 @@ import * as React from "react";
 
 import { ApiContext } from "../contexts/ApiContext";
 import { CLIENT_ENV } from "@/modules/env/client";
-import { shamelesslyRevalidateEverything } from "@/modules/common-utils";
 import { httpPost$AuthenticateByGoogle } from "@/modules/commands/AuthenticateWithGoogle/fetcher";
+import { shamelesslyRevalidateEverything } from "@/modules/common-utils";
 
 type Props = {
   children?: React.ReactNode;
@@ -35,8 +35,13 @@ export default function ApiProvider({ children }: Props) {
         }
       );
       console.log(`logged in as ${userId}`);
+      console.log(
+        redirectUrl$OnAuthenticationSuccess,
+        typeof redirectUrl$OnAuthenticationSuccess === "string" &&
+          isSafeUrl(redirectUrl$OnAuthenticationSuccess)
+      );
       await shamelesslyRevalidateEverything();
-      await router.push(
+      router.push(
         typeof redirectUrl$OnAuthenticationSuccess === "string" &&
           isSafeUrl(redirectUrl$OnAuthenticationSuccess)
           ? redirectUrl$OnAuthenticationSuccess
@@ -72,7 +77,6 @@ export default function ApiProvider({ children }: Props) {
             prompt_parent_id: promptContainer.id,
             ux_mode: "popup",
             callback: (event) => {
-              console.log("VAI");
               handleToken?.(event);
             },
           });
