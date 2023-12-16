@@ -42,10 +42,13 @@ export default function CommentThreadPopover({
 
     const domNode = ReactEditor.toDOMNode(editor, textNode);
     const {
-      x: nodeX,
+      x,
       height: nodeHeight,
       y: nodeY,
+      width,
     } = domNode.getBoundingClientRect();
+
+    const nodeX = x + width / 3;
 
     editorEl.style.display = "block";
     editorEl.style.top = `${
