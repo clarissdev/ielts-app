@@ -1,0 +1,63 @@
+@mixin onNarrowScreen {
+  @media (max-width: 960px) {
+    @content;
+  }
+}
+
+.root {
+  display: flex;
+  flex-direction: column;
+  inset: 0;
+  position: fixed;
+
+  @include onNarrowScreen() {
+    display: block;
+    position: relative;
+  }
+}
+
+.navbar {
+  flex: 0 0 auto;
+}
+
+.content {
+  flex: 1 1 120px;
+  min-height: 120px;
+  display: flex;
+  flex-direction: row;
+
+  @include onNarrowScreen() {
+    display: block;
+  }
+}
+
+.right {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  flex: 1 1 120px;
+  min-height: 120px;
+  overflow-y: auto;
+
+  @include onNarrowScreen() {
+    display: block;
+    width: 100%;
+    min-height: 240px;
+    height: calc(90vh - 47px);
+  }
+}
+
+.left {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  flex: 1 1 120px;
+  min-height: 120px;
+  overflow-y: auto;
+  @include onNarrowScreen() {
+    display: block;
+    width: 100%;
+    min-height: 240px;
+    height: auto;
+  }
+}

@@ -1,0 +1,35 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.main {
+  flex: 1 1 0;
+  min-height: 0;
+  overflow-y: auto;
+}
+
+.section {
+  max-width: 1440px;
+  padding: 0 56px;
+  margin: 0 auto;
+  margin-top: 10vh;
+}
+
+.button {
+  display: inline-flex;
+  align-items: center;
+}
+
+.card :global(.ant-card-body) {
+  display: none;
+}
+
+.footer {
+  display: flex;
+  justify-content: end;
+  padding: 0 56px;
+  align-items: center;
+  height: 60px;
+}

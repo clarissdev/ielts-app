@@ -1,0 +1,43 @@
+@use "sass:color" as color;
+
+.container {
+  display: flex;
+  background-color: rgba(black, 0.8);
+
+  &.sizingFill {
+    position: absolute;
+    inset: 0;
+  }
+
+  &.sizingAutoHeight {
+    position: relative;
+    width: 100%;
+
+    &::after {
+      content: "";
+      display: flex;
+      width: 100%;
+      padding-top: calc(100% / var(--aspect-ratio, 1));
+    }
+  }
+
+  &.noImage {
+    background-color: color.adjust(white, $lightness: -30%);
+  }
+
+  &.hasError {
+    background-color: color.adjust(white, $lightness: -10%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 32px;
+    color: rgba(black, 0.3);
+  }
+}
+
+.iconContainer {
+  position: absolute;
+  left: 16px;
+  top: 16px;
+  font-size: 32px;
+}

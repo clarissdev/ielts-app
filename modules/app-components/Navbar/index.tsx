@@ -6,7 +6,7 @@ import { useLoginStatus } from "@/modules/common-hooks/useLoginStatus";
 import { httpPost$Logout } from "@/modules/commands/Logout/fetcher";
 import { shamelesslyRevalidateEverything } from "@/modules/common-utils";
 import cx from "clsx";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 
 type Props = {
   className?: string;
@@ -16,9 +16,11 @@ type Props = {
 export default function Navbar({ className, style }: Props) {
   const loginStatus = useLoginStatus();
   const pathname = usePathname();
+  const router = useRouter();
   const logout = async () => {
     await httpPost$Logout("/api/v1/auth/logout");
     await shamelesslyRevalidateEverything();
+    router.refresh();
   };
   const items: MenuProps["items"] = [
     {
@@ -32,28 +34,10 @@ export default function Navbar({ className, style }: Props) {
         },
         {
           key: "library",
-          label: "Test library",
-          children: [
-            {
-              key: "listening",
-              label: "IELTS Listening Test",
-            },
-            {
-              key: "reading",
-              label: "IELTS Reading Test",
-            },
-            {
-              key: "writing",
-              label: "IELTS Writing Test",
-            },
-            {
-              key: "speaking",
-              label: "IELTS Speaking Test",
-            },
-          ],
+          label: <Link href="/library">Library</Link>,
         },
         ...(loginStatus?.loggedIn && loginStatus.isAgent
-          ? [{ key: "admin", label: <Link href="/admin">Admin</Link> }]
+          ? [{ key: "admin", label: <Link href="/add-exam">Add Exam</Link> }]
           : []),
       ],
     },
