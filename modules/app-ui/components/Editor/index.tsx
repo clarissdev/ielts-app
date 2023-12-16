@@ -50,7 +50,11 @@ export default function Editor({ value, onChange, readOnly }: Props) {
 
   return (
     <Slate editor={editor} initialValue={value} onChange={onChangeHandler}>
-      {!readOnly ? <ToolBar /> : <HoveringToolbar />}
+      {!readOnly ? (
+        <ToolBar />
+      ) : (
+        <HoveringToolbar editorOffsets={editorOffsets} />
+      )}
       <div ref={editorRef}>
         <Editable {...config} />
         {activeCommentThreadId != null ? (

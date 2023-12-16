@@ -20,40 +20,55 @@ import {
   useRemoveCommentThreadCallback,
 } from "../../hooks";
 
-export function HoveringToolbar() {
+type Props = {
+  editorOffsets: { x: number; y: number } | undefined | null;
+};
+
+export function HoveringToolbar({ editorOffsets }: Props) {
   const ref = React.useRef<HTMLDivElement>(null);
   const editor = useSlateStatic();
   const inFocus = useFocused();
 
   React.useEffect(() => {
-    const element = ref.current;
-    const { selection } = editor;
+    const handleShowToolbar = () => {
+      const element = ref.current;
+      const { selection } = editor;
 
-    if (!element) {
-      return;
-    }
+      if (!element) {
+        return;
+      }
 
-    if (
-      !selection ||
-      !inFocus ||
-      Range.isCollapsed(selection) ||
-      Editor.string(editor, selection) === ""
-    ) {
-      element?.removeAttribute("style");
-      return;
-    }
+      if (
+        !selection ||
+        !inFocus ||
+        Range.isCollapsed(selection) ||
+        Editor.string(editor, selection) === ""
+      ) {
+        element?.removeAttribute("style");
+        return;
+      }
 
-    const domSelection = window.getSelection();
-    const domRange = domSelection?.getRangeAt(0);
-    const rect = domRange?.getBoundingClientRect();
-    element.style.opacity = "1";
-    element.style.top = `${
-      rect?.top || 0 + window.scrollY - element?.offsetHeight
-    }px`;
-    element.style.left = `${
-      rect?.left ||
-      0 + window.scrollX - element.offsetWidth / 2 + (rect?.width || 0) / 2
-    }px`;
+      const domSelection = window.getSelection();
+      console.log(domSelection);
+      if (!domSelection) return;
+      const domRange = domSelection?.getRangeAt(0);
+      const {
+        x,
+        height: nodeHeight,
+        y: nodeY,
+        width,
+      } = domRange?.getBoundingClientRect();
+
+      const nodeX = x + width / 3;
+
+      ref.current.style.display = "flex";
+      ref.current.style.top = `${
+        nodeY + nodeHeight - (editorOffsets?.y || 0) + 30
+      }px`;
+      ref.current.style.left = `${nodeX - (editorOffsets?.x || 0)}px`;
+    };
+    window.addEventListener("mouseup", handleShowToolbar);
+    return () => window.removeEventListener("mouseup", handleShowToolbar);
   });
 
   const isHighlightMarkActive = isMarkActive(editor, "highlight");
@@ -79,7 +94,6 @@ export function HoveringToolbar() {
   );
 
   const activeCommentThreadId = useRecoilValue(activeCommentThreadIdAtom);
-  console.log(activeCommentThreadId);
 
   return (
     <div className={styles.container} ref={ref}>
