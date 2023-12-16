@@ -48,7 +48,9 @@ export default function CommentThreadPopover({
     } = domNode.getBoundingClientRect();
 
     editorEl.style.display = "block";
-    editorEl.style.top = `${nodeY + nodeHeight - (editorOffsets?.y || 0)}px`;
+    editorEl.style.top = `${
+      nodeY + nodeHeight - (editorOffsets?.y || 0) + 30
+    }px`;
     editorEl.style.left = `${nodeX - (editorOffsets?.x || 0)}px`;
   }, [editor, editorOffsets?.x, editorOffsets?.y, textNode]);
 
