@@ -24,9 +24,9 @@ export default async function Route({ params, searchParams }: PageProps) {
   const headersList = headers();
   const pathname = headersList.get("x-pathname") || "/";
 
-  if (!loginStatus.loggedIn) {
-    redirect(`/login?${new URLSearchParams({ redirectUrl: pathname })}`);
-  }
+  // if (!loginStatus.loggedIn) {
+  //   redirect(`/login?${new URLSearchParams({ redirectUrl: pathname })}`);
+  // }
 
   const exam = await handler$GetReadingExam(db, {
     params,
