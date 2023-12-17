@@ -7,6 +7,8 @@ import {
 import EditableInput from "./components/EditableInput";
 import { getCommentThreadsOnTextNode } from "./utils";
 import CommentedText from "./components/CommentedText";
+import CheckboxList from "./components/CheckboxList";
+import SelectItem from "./components/SelectItem";
 
 type Config = {
   readOnly: boolean;
@@ -32,6 +34,10 @@ export default function useEditorConfig(editor: Editor, { readOnly }: Config) {
         return <h4 {...attributes}>{children}</h4>;
       case "input":
         return <EditableInput {...props} />;
+      case "checkbox":
+        return <CheckboxList {...props} />;
+      case "select":
+        return <SelectItem {...props} />;
       default:
         // For the default case, we delegate to Slate's default rendering.
         return <DefaultElement {...props} />;
@@ -55,13 +61,12 @@ export default function useEditorConfig(editor: Editor, { readOnly }: Config) {
       children = <span style={{ backgroundColor: "#ffff7b" }}>{children}</span>;
     }
 
-    const commentThreads = getCommentThreadsOnTextNode(leaf);
+    const threadIds = getCommentThreadsOnTextNode(leaf);
 
-    if (commentThreads.size > 0) {
+    if (threadIds.size > 0) {
       children = (
         <CommentedText
-          {...attributes}
-          // commentThreads={commentThreads}
+          threadId={threadIds.values().next().value}
           textNode={leaf}
         >
           {children}
@@ -70,7 +75,10 @@ export default function useEditorConfig(editor: Editor, { readOnly }: Config) {
     }
 
     return (
-      <span style={{ caretColor: "transparent" }} {...attributes}>
+      <span
+        style={readOnly ? { caretColor: "transparent" } : undefined}
+        {...attributes}
+      >
         {children}
       </span>
     );

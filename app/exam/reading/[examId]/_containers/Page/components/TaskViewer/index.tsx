@@ -32,16 +32,16 @@ export default function TaskViewer({
       style={style}
       topAdornment={topAdornment}
     >
-      <PageLayout$TwoColumns.Left className={styles.leftRow}>
-        <div className={styles.leftContent}>
-          <Editor
-            value={readingContent}
-            onChange={setReadingContent}
-            readOnly
-          />
-        </div>
+      <PageLayout$TwoColumns.Left className={styles.column}>
+        <Editor value={readingContent} onChange={setReadingContent} readOnly />
       </PageLayout$TwoColumns.Left>
-      <PageLayout$TwoColumns.Right></PageLayout$TwoColumns.Right>
+      <PageLayout$TwoColumns.Right className={styles.column}>
+        <Editor
+          value={questionContent}
+          onChange={setQuestionContent}
+          readOnly
+        />
+      </PageLayout$TwoColumns.Right>
     </PageLayout$TwoColumns>
   );
 }

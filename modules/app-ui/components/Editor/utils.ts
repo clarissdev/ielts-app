@@ -188,6 +188,11 @@ function updateCommentThreadLengthMap(
   return map;
 }
 
+export const answersState = atom<Record<string, string>>({
+  key: "answers",
+  default: {},
+});
+
 export const commentThreadsState = atomFamily<string | null, string>({
   key: "commentThreads",
   default: null,
@@ -196,11 +201,6 @@ export const commentThreadsState = atomFamily<string | null, string>({
 export const commentThreadIdsState = atom({
   key: "commentThreadIds",
   default: new Set<string>([]),
-});
-
-export const activeCommentThreadIdAtom = atom<string | null | undefined>({
-  key: "activeCommentThreadId",
-  default: null,
 });
 
 export function insertCommentThread(

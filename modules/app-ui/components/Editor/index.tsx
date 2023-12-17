@@ -1,6 +1,6 @@
 import React from "react";
 import { useMemo } from "react";
-import { Descendant, createEditor } from "slate";
+import { Descendant, Element, createEditor } from "slate";
 import { withHistory } from "slate-history";
 import { Editable, ReactEditor, Slate, withReact } from "slate-react";
 
@@ -8,9 +8,6 @@ import useEditorConfig from "./config";
 import ToolBar from "./containers/Toolbar";
 import { useSelection } from "./hooks";
 import { HoveringToolbar } from "./containers/HoveringToolbar";
-import { activeCommentThreadIdAtom, getNodeEntryAtSelection } from "./utils";
-import { useRecoilValue } from "recoil";
-import CommentThreadPopover from "./containers/CommentThreadPopover";
 
 type Props = {
   value: Descendant[];
@@ -21,10 +18,7 @@ type Props = {
 export default function Editor({ value, onChange, readOnly }: Props) {
   const editorRef = React.useRef<HTMLDivElement>(null);
   const editor: ReactEditor = useMemo(
-    () =>
-      readOnly
-        ? withReadOnly(withHistory(withReact(createEditor())))
-        : withHistory(withReact(createEditor())),
+    () => withHistory(withInlines(withReact(createEditor()))),
     []
   );
   const config = useEditorConfig(editor, { readOnly: readOnly || false });
@@ -38,8 +32,6 @@ export default function Editor({ value, onChange, readOnly }: Props) {
     [editor.selection, onChange, setSelection]
   );
 
-  const activeCommentThreadId = useRecoilValue(activeCommentThreadIdAtom);
-
   const editorOffsets =
     editorRef.current != null
       ? {
@@ -50,28 +42,24 @@ export default function Editor({ value, onChange, readOnly }: Props) {
 
   return (
     <Slate editor={editor} initialValue={value} onChange={onChangeHandler}>
-      {!readOnly ? (
-        <ToolBar />
-      ) : (
-        <HoveringToolbar editorOffsets={editorOffsets} />
-      )}
+      {!readOnly ? <ToolBar /> : undefined}
+      <HoveringToolbar editorOffsets={editorOffsets} />
       <div ref={editorRef}>
         <Editable {...config} />
-        {activeCommentThreadId != null ? (
-          <CommentThreadPopover
-            editor={editor}
-            editorOffsets={editorOffsets}
-            threadId={activeCommentThreadId}
-          />
-        ) : null}
       </div>
     </Slate>
   );
 }
 
-const withReadOnly = (editor: ReactEditor) => {
-  editor.insertText = () => {};
-  editor.insertTextData = () => false;
+const withInlines = (editor: ReactEditor) => {
+  const { isInline, isSelectable } = editor;
+
+  editor.isInline = (element: Element) =>
+    ("type" in element && ["input"].includes(String(element.type))) ||
+    isInline(element);
+
+  editor.isSelectable = (element: Element) =>
+    "type" in element && element.type !== "badge" && isSelectable(element);
 
   return editor;
 };

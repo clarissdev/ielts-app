@@ -22,7 +22,7 @@ export default async function Route({ params, searchParams }: PageProps) {
     token: cookieList.get("token")?.value,
   });
   const headersList = headers();
-  const pathname = headersList.get("x-pathname") || "/";
+  // const pathname = headersList.get("x-pathname") || "/";
 
   // if (!loginStatus.loggedIn) {
   //   redirect(`/login?${new URLSearchParams({ redirectUrl: pathname })}`);

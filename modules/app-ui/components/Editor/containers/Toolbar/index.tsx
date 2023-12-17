@@ -1,5 +1,4 @@
 import { Menu, MenuProps } from "antd";
-import { Editor, Selection } from "slate";
 import { useSlateStatic } from "slate-react";
 
 import { toggleMark } from "../../utils";

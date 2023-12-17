@@ -7,14 +7,13 @@ import styles from "./index.module.scss";
 import { MdClear, MdHighlight, MdOutlineSpeakerNotes } from "react-icons/md";
 import {
   COMMENT_THREAD_PREFIX,
-  activeCommentThreadIdAtom,
   getCommentThreadsOnTextNode,
   getNodeEntryAtSelection,
   insertCommentThread,
   isMarkActive,
   toggleMark,
 } from "../../utils";
-import { useRecoilValue, useSetRecoilState } from "recoil";
+import { useSetRecoilState } from "recoil";
 import {
   useAddCommentThreadCallback,
   useRemoveCommentThreadCallback,
@@ -49,8 +48,10 @@ export function HoveringToolbar({ editorOffsets }: Props) {
       }
 
       const domSelection = window.getSelection();
-      console.log(domSelection);
-      if (!domSelection) return;
+      if (!domSelection) {
+        element?.removeAttribute("style");
+        return;
+      }
       const domRange = domSelection?.getRangeAt(0);
       const {
         x,
@@ -79,21 +80,17 @@ export function HoveringToolbar({ editorOffsets }: Props) {
   const isCommentMarkActive =
     commentThreadsOnTextNode != null && commentThreadsOnTextNode.size > 0;
 
-  const setActiveCommentThreadId = useSetRecoilState(activeCommentThreadIdAtom);
-
   const addCommentThread = useAddCommentThreadCallback();
   const removeCommentThread = useRemoveCommentThreadCallback();
 
   const handleInsertComment = useCallback(
     (event: React.MouseEvent<HTMLElement, MouseEvent>) => {
       event.stopPropagation();
-      const newCommentThreadId = insertCommentThread(editor, addCommentThread);
-      setActiveCommentThreadId(newCommentThreadId);
+      insertCommentThread(editor, addCommentThread);
+      editor.selection = null;
     },
     [editor, addCommentThread]
   );
-
-  const activeCommentThreadId = useRecoilValue(activeCommentThreadIdAtom);
 
   return (
     <div className={styles.container} ref={ref}>
@@ -102,8 +99,11 @@ export function HoveringToolbar({ editorOffsets }: Props) {
           style={{ borderRadius: "0" }}
           icon={<MdHighlight />}
           onMouseDown={(e) => {
-            e.preventDefault();
+            e.stopPropagation();
             toggleMark(editor, "highlight");
+
+            // set selection to false to prevent highlight
+            editor.selection = null;
           }}
         >
           Highlight
@@ -122,6 +122,7 @@ export function HoveringToolbar({ editorOffsets }: Props) {
               focus: Editor.point(editor, nodeEntry[1], { edge: "end" }),
             });
             toggleMark(editor, "highlight");
+            editor.selection = null;
           }}
           style={{ borderRadius: "0" }}
         >
@@ -139,7 +140,7 @@ export function HoveringToolbar({ editorOffsets }: Props) {
       ) : (
         <Button
           onMouseDown={(event) => {
-            event.preventDefault();
+            event.stopPropagation();
             if (!commentThreadsOnTextNode?.size) return;
             const nodeEntry = getNodeEntryAtSelection(editor);
             if (nodeEntry == null) return;
@@ -152,9 +153,9 @@ export function HoveringToolbar({ editorOffsets }: Props) {
             });
             const markToRemove =
               COMMENT_THREAD_PREFIX + Array.from(commentThreadsOnTextNode)[0];
-            console.log("VAI", Editor.marks(editor));
             removeCommentThread(markToRemove);
             toggleMark(editor, markToRemove);
+            editor.selection = null;
           }}
           icon={<MdOutlineSpeakerNotes />}
           style={{ borderRadius: "0" }}

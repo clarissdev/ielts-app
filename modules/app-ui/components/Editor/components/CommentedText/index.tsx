@@ -1,37 +1,44 @@
 import styles from "./index.module.scss";
 import { useSlateStatic } from "slate-react";
-import { useSetRecoilState } from "recoil";
+import { useRecoilStateLoadable, useSetRecoilState } from "recoil";
 import {
-  activeCommentThreadIdAtom,
+  commentThreadsState,
   getSmallestCommentThreadAtTextNode,
 } from "../../utils";
 import { Text } from "slate";
+import { Popover } from "antd";
+import TextArea from "antd/es/input/TextArea";
 
 type Props = {
-  // commentThreads: string;
   textNode: Text;
   children: React.ReactNode;
-  "data-slate-leaf": true;
+  threadId: string;
 };
 
-export default function CommentedText({
-  // commentThreads,
-  textNode,
-  children,
-  ...otherProps
-}: Props) {
+export default function CommentedText({ textNode, children, threadId }: Props) {
   const editor = useSlateStatic();
-  const setActiveCommentThreadId = useSetRecoilState(activeCommentThreadIdAtom);
 
-  const onClick = () => {
-    setActiveCommentThreadId(
-      getSmallestCommentThreadAtTextNode(editor, textNode)
-    );
+  const [commentLoadable, setComment] = useRecoilStateLoadable<string | null>(
+    commentThreadsState(threadId)
+  );
+
+  const onChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setComment(e.target.value);
   };
 
   return (
-    <span {...otherProps} className={styles.isActive} onClick={onClick}>
-      {children}
-    </span>
+    <Popover
+      content={
+        <div className={styles.container}>
+          <TextArea
+            value={commentLoadable.contents || ""}
+            onChange={onChange}
+          ></TextArea>
+        </div>
+      }
+      trigger="click"
+    >
+      <span className={styles.isActive}>{children}</span>
+    </Popover>
   );
 }
