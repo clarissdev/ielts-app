@@ -18,7 +18,10 @@ type Props = {
 export default function Editor({ value, onChange, readOnly }: Props) {
   const editorRef = React.useRef<HTMLDivElement>(null);
   const editor: ReactEditor = useMemo(
-    () => withHistory(withInlines(withReact(createEditor()))),
+    () =>
+      readOnly
+        ? withReadOnly(withHistory(withInlines(withReact(createEditor()))))
+        : withHistory(withInlines(withReact(createEditor()))),
     []
   );
   const config = useEditorConfig(editor, { readOnly: readOnly || false });
@@ -60,6 +63,13 @@ const withInlines = (editor: ReactEditor) => {
 
   editor.isSelectable = (element: Element) =>
     "type" in element && element.type !== "badge" && isSelectable(element);
+
+  return editor;
+};
+
+const withReadOnly = (editor: ReactEditor) => {
+  editor.insertText = () => {};
+  editor.insertTextData = () => false;
 
   return editor;
 };
