@@ -13,7 +13,10 @@ import { ReadingExam } from "@/modules/business-types";
 import "react-quill/dist/quill.snow.css";
 import { Descendant } from "slate";
 import TaskViewer from "./components/TaskViewer";
-import { RecoilRoot } from "recoil";
+import { RecoilRoot, useRecoilValue } from "recoil";
+import { getQuestionId, range } from "@/modules/common-utils";
+import { answersState } from "@/modules/app-ui/components/Editor/utils";
+import PageNavigator from "./components/PageNavigator";
 
 type Props = {
   initialExam: ReadingExam;
@@ -41,6 +44,7 @@ export default function Page({ initialExam }: Props) {
     ) as Descendant[]) || [
       { type: "paragraph", children: [{ text: "not found" }] },
     ];
+
     return (
       <RecoilRoot key={index}>
         <TaskViewer
@@ -77,6 +81,12 @@ export default function Page({ initialExam }: Props) {
                 <Button type="primary">Submit</Button>
               </Flex.Row>
             </Flex.Row>
+          }
+          bottomAdornment={
+            <PageNavigator
+              initialExam={initialExam}
+              onChangeCurrentTask={setCurrentTask}
+            />
           }
           initialReadingContent={readingContent}
           initialQuestionContent={questionContent}

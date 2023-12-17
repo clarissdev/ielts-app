@@ -11,6 +11,7 @@ type Props = {
   initialQuestionContent: Descendant[];
   expiredAt: number;
   topAdornment: React.ReactNode;
+  bottomAdornment: React.ReactNode;
 };
 
 export default function TaskViewer({
@@ -19,6 +20,7 @@ export default function TaskViewer({
   initialReadingContent,
   initialQuestionContent,
   topAdornment,
+  bottomAdornment,
 }: Props) {
   const [readingContent, setReadingContent] = React.useState<Descendant[]>(
     initialReadingContent
@@ -31,6 +33,7 @@ export default function TaskViewer({
       className={className}
       style={style}
       topAdornment={topAdornment}
+      bottomAdornment={bottomAdornment}
     >
       <PageLayout$TwoColumns.Left className={styles.column}>
         <Editor value={readingContent} onChange={setReadingContent} readOnly />

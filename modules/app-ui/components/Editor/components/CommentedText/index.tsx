@@ -1,13 +1,11 @@
 import styles from "./index.module.scss";
 import { useSlateStatic } from "slate-react";
-import { useRecoilStateLoadable, useSetRecoilState } from "recoil";
-import {
-  commentThreadsState,
-  getSmallestCommentThreadAtTextNode,
-} from "../../utils";
+import { useRecoilStateLoadable } from "recoil";
+import { commentThreadsState } from "../../utils";
 import { Text } from "slate";
 import { Popover } from "antd";
 import TextArea from "antd/es/input/TextArea";
+import React from "react";
 
 type Props = {
   textNode: Text;
@@ -15,9 +13,9 @@ type Props = {
   threadId: string;
 };
 
-export default function CommentedText({ textNode, children, threadId }: Props) {
-  const editor = useSlateStatic();
+const DURATION_PREVENT_CLOSE_MODAL = 200;
 
+export default function CommentedText({ textNode, children, threadId }: Props) {
   const [commentLoadable, setComment] = useRecoilStateLoadable<string | null>(
     commentThreadsState(threadId)
   );
@@ -25,9 +23,23 @@ export default function CommentedText({ textNode, children, threadId }: Props) {
   const onChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setComment(e.target.value);
   };
+  const [openPopover, setOpenPopover] = React.useState(true);
+  const [allowCloseModal, setAllowCloseModal] = React.useState(false);
+
+  React.useEffect(() => {
+    const timer = setTimeout(
+      () => setAllowCloseModal(true),
+      DURATION_PREVENT_CLOSE_MODAL
+    );
+    return () => clearTimeout(timer);
+  }, []);
 
   return (
     <Popover
+      open={openPopover}
+      onOpenChange={(value) => {
+        if (allowCloseModal) setOpenPopover(value);
+      }}
       content={
         <div className={styles.container}>
           <TextArea

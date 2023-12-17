@@ -71,6 +71,7 @@ export const ReadingExam = z.object({
     .object({
       readingContent: z.string(),
       questionContent: z.string(),
+      numQuestions: z.number(),
     })
     .array(),
 });

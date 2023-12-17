@@ -88,6 +88,7 @@ export function HoveringToolbar({ editorOffsets }: Props) {
       event.stopPropagation();
       insertCommentThread(editor, addCommentThread);
       editor.selection = null;
+      event.preventDefault();
     },
     [editor, addCommentThread]
   );

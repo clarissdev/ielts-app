@@ -6,10 +6,7 @@ import { Descendant } from "slate";
 import { RecoilRoot } from "recoil";
 
 export default function Page() {
-  // useBrowserSearchBlocking();
-  const refInput = React.useRef<HTMLInputElement>();
   const [document, setDocument] = React.useState<Descendant[]>([]);
-  console.log(JSON.stringify(document));
 
   return (
     <div>

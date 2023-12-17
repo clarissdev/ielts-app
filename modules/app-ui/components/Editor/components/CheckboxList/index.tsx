@@ -3,7 +3,7 @@ import React from "react";
 import Flex from "../../../Flex";
 import { RenderElementProps } from "slate-react";
 import { z } from "zod";
-import { useRecoilState, useSetRecoilState } from "recoil";
+import { useSetRecoilState } from "recoil";
 import { answersState } from "../../utils";
 import { Checkbox } from "antd";
 

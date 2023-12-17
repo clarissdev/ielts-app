@@ -19,6 +19,7 @@ export default function EditableInput({
   return (
     <span contentEditable={false} {...attributes}>
       <Input
+        id={index}
         style={{ display: "inline", maxWidth: "200px" }}
         value={answers[index] || ""}
         placeholder={placeholder}

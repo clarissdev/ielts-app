@@ -36,3 +36,7 @@ export function range(start: number, stop?: number): number[] {
   }
   return result;
 }
+
+export function getQuestionId(index: number) {
+  return `question_${index < 10 ? "0" : ""}${index}`;
+}
