@@ -17,6 +17,7 @@ const NUM_MILLISECONDS_PER_HOURS = 3600000;
 
 export default function Page({ initialExam }: Props) {
   const [currentTask, setCurrentTask] = React.useState(0);
+  const [hideScreen, setHideScreen] = React.useState(false);
 
   return initialExam.tasks.map((task, index) => {
     const readingContent = (JSON.parse(
@@ -36,7 +37,12 @@ export default function Page({ initialExam }: Props) {
           style={
             currentTask === index ? { display: "flex" } : { display: "none" }
           }
-          topAdornment={<SettingBar duration={NUM_MILLISECONDS_PER_HOURS} />}
+          topAdornment={
+            <SettingBar
+              duration={NUM_MILLISECONDS_PER_HOURS}
+              onChangeHideScreen={setHideScreen}
+            />
+          }
           bottomAdornment={
             <PageNavigator
               initialExam={initialExam}
@@ -46,6 +52,8 @@ export default function Page({ initialExam }: Props) {
           initialReadingContent={readingContent}
           initialQuestionContent={questionContent}
           expiredAt={0}
+          hideScreen={hideScreen}
+          onChangeHideScreen={setHideScreen}
         />
       </RecoilRoot>
     );

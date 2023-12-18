@@ -6,14 +6,18 @@
   }
 }
 
-.fontStandard {
+.hiddenSreen {
+  position: absolute;
+  z-index: 1000;
+  background-color: white;
+  inset: 0;
+
+  text-align: center;
+  padding: 15vh 0;
+}
+
+.title {
+  font-weight: 500;
   font-size: 16px;
-}
-
-.fontLarge {
-  font-size: 20px;
-}
-
-.fontExtraLarge {
-  font-size: 24px;
+  margin-bottom: 8px;
 }

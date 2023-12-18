@@ -16,9 +16,17 @@ type Props = {
   className?: string;
   style?: React.CSSProperties;
   duration: number;
+
+  onChangeHideScreen: (value: boolean) => void;
 };
 
-export default function SettingBar({ className, style, duration }: Props) {
+export default function SettingBar({
+  className,
+  style,
+  duration,
+
+  onChangeHideScreen,
+}: Props) {
   const [showModalSetting, setShowModalSetting] = React.useState(false);
   const [fontSize, setFontSize] = useRecoilState(fontSizeState);
   const [color, setColor] = useRecoilState(colorState);
@@ -37,7 +45,6 @@ export default function SettingBar({ className, style, duration }: Props) {
             duration={duration}
             unstyled
             as="span"
-            start={true}
           />
           <span>{" minutes left."}</span>
         </div>
@@ -49,7 +56,7 @@ export default function SettingBar({ className, style, duration }: Props) {
           >
             Settings
           </Button>
-          <Button onClick={() => alert("Coming soon!")}>Hide</Button>
+          <Button onClick={() => onChangeHideScreen(true)}>Hide</Button>
         </Flex.Row>
       </Flex.Row>
       <ModalSetting

@@ -80,7 +80,6 @@ export default function Page({ exam }: Props) {
             <CountdownTimer
               className={styles.countdownTimer}
               duration={duration}
-              start
               unstyled
               as="span"
             />
