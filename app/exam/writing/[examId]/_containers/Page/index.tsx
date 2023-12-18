@@ -79,11 +79,11 @@ export default function Page({ exam }: Props) {
           <div className={styles.countdownTimer}>
             <CountdownTimer
               className={styles.countdownTimer}
-              expiredAt={startTime + duration}
+              duration={duration}
+              start
               unstyled
               as="span"
             />
-            <span>{" remaining"}</span>
           </div>
           <Flex.Row gap="8px" justifyContent="center">
             <Button

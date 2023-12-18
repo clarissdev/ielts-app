@@ -8,14 +8,32 @@ import useEditorConfig from "./config";
 import ToolBar from "./containers/Toolbar";
 import { useSelection } from "./hooks";
 import { HoveringToolbar } from "./containers/HoveringToolbar";
+import styles from "./index.module.scss";
+import { FontSize, fontSizeState } from "./utils";
+import cx from "clsx";
+import { useRecoilValue } from "recoil";
 
 type Props = {
+  className?: string;
+  style?: React.CSSProperties;
   value: Descendant[];
   onChange?: (value: Descendant[]) => void;
   readOnly?: boolean;
 };
 
-export default function Editor({ value, onChange, readOnly }: Props) {
+const FONT_SIZE_TO_CLASSNAME: Record<FontSize, string> = {
+  standard: styles.fontStandard,
+  large: styles.fontLarge,
+  "extra-large": styles.fontExtraLarge,
+};
+
+export default function Editor({
+  className,
+  style,
+  value,
+  onChange,
+  readOnly,
+}: Props) {
   const editorRef = React.useRef<HTMLDivElement>(null);
   const editor: ReactEditor = useMemo(
     () =>
@@ -42,15 +60,24 @@ export default function Editor({ value, onChange, readOnly }: Props) {
           y: editorRef.current.getBoundingClientRect().y,
         }
       : null;
-
+  const fontSize = useRecoilValue(fontSizeState);
   return (
-    <Slate editor={editor} initialValue={value} onChange={onChangeHandler}>
-      {!readOnly ? <ToolBar /> : undefined}
-      <HoveringToolbar editorOffsets={editorOffsets} />
-      <div ref={editorRef}>
-        <Editable {...config} />
-      </div>
-    </Slate>
+    <div
+      className={cx(
+        styles.container,
+        className,
+        FONT_SIZE_TO_CLASSNAME[fontSize]
+      )}
+      style={style}
+    >
+      <Slate editor={editor} initialValue={value} onChange={onChangeHandler}>
+        {!readOnly ? <ToolBar /> : undefined}
+        <HoveringToolbar editorOffsets={editorOffsets} />
+        <div ref={editorRef}>
+          <Editable {...config} />
+        </div>
+      </Slate>
+    </div>
   );
 }
 

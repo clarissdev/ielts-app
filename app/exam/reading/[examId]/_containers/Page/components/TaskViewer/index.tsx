@@ -3,6 +3,7 @@ import PageLayout$TwoColumns from "../../../../../../_components/PageLayout$TwoC
 import { Descendant } from "slate";
 import styles from "./index.module.scss";
 import Editor from "@/modules/app-ui/components/Editor";
+import cx from "clsx";
 
 type Props = {
   className?: string;
@@ -30,7 +31,7 @@ export default function TaskViewer({
   );
   return (
     <PageLayout$TwoColumns
-      className={className}
+      className={cx(styles.container, className)}
       style={style}
       topAdornment={topAdornment}
       bottomAdornment={bottomAdornment}

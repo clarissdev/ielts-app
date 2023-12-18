@@ -10,6 +10,7 @@ import {
 import { v4 as uuidv4 } from "uuid";
 
 export type Comment = string;
+export type FontSize = "standard" | "large" | "extra-large";
 
 export const isMarkActive = (editor: Editor, format: string) => {
   const marks = Editor.marks(editor);
@@ -187,6 +188,11 @@ function updateCommentThreadLengthMap(
 
   return map;
 }
+
+export const fontSizeState = atom<FontSize>({
+  key: "fontSize",
+  default: "standard",
+});
 
 export const answersState = atom<Record<string, string>>({
   key: "answers",

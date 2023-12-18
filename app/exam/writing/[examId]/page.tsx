@@ -8,7 +8,6 @@ import { getResourceKey$LoginStatus } from "@/modules/commands/LoginStatus/fetch
 import { SWRProvider } from "@/modules/swr/components/SWRProvider";
 import { notFound, redirect } from "next/navigation";
 import { headers } from "next/headers";
-import { httpGet$GetWritingExam } from "@/modules/commands/GetWritingExam/fetcher";
 import { handler$GetWritingExam } from "@/modules/commands/GetWritingExam/handler";
 
 type PageProps = {

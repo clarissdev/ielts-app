@@ -34,6 +34,7 @@ export default function CheckboxList({
         {allAnswers.map((answer, index) => (
           <div key={index}>
             <Checkbox
+              style={{fontSize: "1em"}}
               checked={state[index]}
               onChange={(e) => {
                 const numChecked = state.filter((item) => item).length;
