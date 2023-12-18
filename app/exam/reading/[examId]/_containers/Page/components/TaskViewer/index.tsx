@@ -4,12 +4,17 @@ import { Descendant } from "slate";
 import styles from "./index.module.scss";
 import Editor from "@/modules/app-ui/components/Editor";
 import cx from "clsx";
-import { Button, Modal } from "antd";
+import { Button } from "antd";
+import { answersState } from "@/modules/app-ui/components/Editor/utils";
+import { useRecoilValue } from "recoil";
+import Flex from "@/modules/app-ui/components/Flex";
+import { getQuestionId } from "@/modules/common-utils";
 
 type Props = {
   className?: string;
   style?: React.CSSProperties;
 
+  questionIdsFromTasks: number[][];
   initialReadingContent: Descendant[];
   initialQuestionContent: Descendant[];
   expiredAt: number;
@@ -18,12 +23,16 @@ type Props = {
 
   hideScreen?: boolean;
   onChangeHideScreen?: (value: boolean) => void;
+
+  showReview?: boolean;
+  onChangeShowReview?: (value: boolean) => void;
 };
 
 export default function TaskViewer({
   className,
   style,
 
+  questionIdsFromTasks,
   initialReadingContent,
   initialQuestionContent,
   topAdornment,
@@ -31,6 +40,9 @@ export default function TaskViewer({
 
   hideScreen,
   onChangeHideScreen,
+
+  showReview,
+  onChangeShowReview,
 }: Props) {
   const [readingContent, setReadingContent] = React.useState<Descendant[]>(
     initialReadingContent
@@ -38,6 +50,9 @@ export default function TaskViewer({
   const [questionContent, setQuestionContent] = React.useState<Descendant[]>(
     initialQuestionContent
   );
+
+  const answers = useRecoilValue(answersState);
+
   return (
     <PageLayout$TwoColumns
       className={cx(styles.container, className)}
@@ -72,6 +87,42 @@ export default function TaskViewer({
             <Button
               style={{ marginTop: "12px" }}
               onClick={() => onChangeHideScreen?.(false)}
+            >
+              Resume Test
+            </Button>
+          </div>
+        </div>
+      ) : undefined}
+
+      {showReview ? (
+        <div className={styles.hiddenSreen}>
+          <div className={styles.title}>{"Review"}</div>
+          <Flex.Row
+            justifyContent="space-between"
+            maxWidth="700px"
+            style={{ margin: "0 auto" }}
+          >
+            {questionIdsFromTasks.map((task, index) => (
+              <Flex.Col
+                paddingTop="24px"
+                key={index}
+                flex="1 1 0"
+                justifyContent="left"
+                style={{ textAlign: "left" }}
+              >
+                <div className={styles.title}>{`Task ${index + 1}: `}</div>
+                {task.map((index) => (
+                  <div key={index}>{`Q${index}: ${
+                    answers[getQuestionId(index)] || ""
+                  }`}</div>
+                ))}
+              </Flex.Col>
+            ))}
+          </Flex.Row>
+          <div style={{ textAlign: "center" }}>
+            <Button
+              style={{ marginTop: "12px" }}
+              onClick={() => onChangeShowReview?.(false)}
             >
               Resume Test
             </Button>

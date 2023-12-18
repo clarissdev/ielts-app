@@ -3,6 +3,7 @@ import { useRecoilState } from "recoil";
 import { RenderElementProps } from "slate-react";
 import { z } from "zod";
 import { answersState } from "../../utils";
+import styles from "./index.module.scss";
 
 const Props = z.object({
   placeholder: z.string().optional(),
@@ -20,7 +21,7 @@ export default function EditableInput({
     <span contentEditable={false} {...attributes}>
       <Input
         id={index}
-        style={{ display: "inline", maxWidth: "200px", color: "inherit" }}
+        className={styles.input}
         value={answers[index] || ""}
         placeholder={placeholder}
         onChange={(e) =>

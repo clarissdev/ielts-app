@@ -43,7 +43,14 @@ export default function SelectItem({
           onChange={handleChange}
           options={items.map((item) => ({
             value: item,
-            label: <span className={COLOR_TO_CLASS_NAME[color]}>{item}</span>,
+            label: (
+              <span
+                style={{ fontWeight: "600" }}
+                className={COLOR_TO_CLASS_NAME[color]}
+              >
+                {item}
+              </span>
+            ),
           }))}
         />
         {children}

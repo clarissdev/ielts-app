@@ -40,3 +40,21 @@ export function range(start: number, stop?: number): number[] {
 export function getQuestionId(index: number) {
   return `question_${index < 10 ? "0" : ""}${index}`;
 }
+
+/**
+ * Given an array of number of questions each tasks, return a list in which each item
+ * is a list of question indexes corresponding to the task
+ */
+export function getQuestionIdsFromTasks(numQuestions: number[]): number[][] {
+  let result = [];
+  let cur = 1;
+  for (let i = 0; i < numQuestions.length; i++) {
+    let questionIds = [];
+    for (let j = 0; j < numQuestions[i]; j++) {
+      questionIds.push(cur);
+      cur += 1;
+    }
+    result.push(questionIds);
+  }
+  return result;
+}
