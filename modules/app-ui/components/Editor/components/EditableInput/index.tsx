@@ -20,7 +20,7 @@ export default function EditableInput({
     <span contentEditable={false} {...attributes}>
       <Input
         id={index}
-        style={{ display: "inline", maxWidth: "200px" }}
+        style={{ display: "inline", maxWidth: "200px", color: "inherit" }}
         value={answers[index] || ""}
         placeholder={placeholder}
         onChange={(e) =>

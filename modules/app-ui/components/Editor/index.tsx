@@ -9,7 +9,7 @@ import ToolBar from "./containers/Toolbar";
 import { useSelection } from "./hooks";
 import { HoveringToolbar } from "./containers/HoveringToolbar";
 import styles from "./index.module.scss";
-import { FontSize, fontSizeState } from "./utils";
+import { Color, FontSize, colorState, fontSizeState } from "./utils";
 import cx from "clsx";
 import { useRecoilValue } from "recoil";
 
@@ -21,10 +21,15 @@ type Props = {
   readOnly?: boolean;
 };
 
-const FONT_SIZE_TO_CLASSNAME: Record<FontSize, string> = {
+const FONT_SIZE_TO_CLASS_NAME: Record<FontSize, string> = {
   standard: styles.fontStandard,
   large: styles.fontLarge,
   "extra-large": styles.fontExtraLarge,
+};
+
+const COLOR_TO_CLASS_NAME: Record<Color, string> = {
+  standard: styles.colorStandard,
+  blue: styles.colorBlue,
 };
 
 export default function Editor({
@@ -61,12 +66,14 @@ export default function Editor({
         }
       : null;
   const fontSize = useRecoilValue(fontSizeState);
+  const color = useRecoilValue(colorState);
   return (
     <div
       className={cx(
         styles.container,
         className,
-        FONT_SIZE_TO_CLASSNAME[fontSize]
+        FONT_SIZE_TO_CLASS_NAME[fontSize],
+        COLOR_TO_CLASS_NAME[color]
       )}
       style={style}
     >

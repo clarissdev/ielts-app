@@ -7,6 +7,7 @@ import Flex from "@/modules/app-ui/components/Flex";
 import ModalSetting from "./containers/ModalSetting";
 import {
   FontSize,
+  colorState,
   fontSizeState,
 } from "@/modules/app-ui/components/Editor/utils";
 import { useRecoilState } from "recoil";
@@ -20,6 +21,7 @@ type Props = {
 export default function SettingBar({ className, style, duration }: Props) {
   const [showModalSetting, setShowModalSetting] = React.useState(false);
   const [fontSize, setFontSize] = useRecoilState(fontSizeState);
+  const [color, setColor] = useRecoilState(colorState);
   return (
     <div className={cx(styles.container, className)} style={style}>
       <Flex.Row
@@ -55,6 +57,8 @@ export default function SettingBar({ className, style, duration }: Props) {
         onCancel={() => setShowModalSetting(false)}
         fontSize={fontSize}
         onChangeFontSize={setFontSize}
+        color={color}
+        onChangeColor={setColor}
       />
     </div>
   );
