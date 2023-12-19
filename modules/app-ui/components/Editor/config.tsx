@@ -25,7 +25,14 @@ export default function useEditorConfig(editor: Editor, { readOnly }: Config) {
     }
     switch (element.type) {
       case "paragraph":
-        return <p {...attributes}>{children}</p>;
+        return (
+          <p
+            {...attributes}
+            id={"id" in element ? String(element.id) : undefined}
+          >
+            {children}
+          </p>
+        );
       case "h1":
         return <h1 {...attributes}>{children}</h1>;
       case "h2":

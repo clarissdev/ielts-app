@@ -8,14 +8,12 @@ import Editor from "@/modules/app-ui/components/Editor";
 export default function Page() {
   const [document, setDocument] = React.useState<Descendant[]>([]);
 
+  // console.log(JSON.stringify(document));
+
   return (
     <div>
       <RecoilRoot>
-        <Editor
-          readOnly
-          value={document}
-          onChange={(value) => setDocument(value)}
-        />
+        <Editor value={document} onChange={(value) => setDocument(value)} />
       </RecoilRoot>
     </div>
   );

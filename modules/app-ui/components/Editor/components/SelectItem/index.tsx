@@ -1,29 +1,30 @@
 import { Select } from "antd";
 import React from "react";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 import { RenderElementProps } from "slate-react";
 import { z } from "zod";
-import styles from "./index.module.scss";
+
 import Flex from "../../../Flex";
-import { useRecoilValue, useSetRecoilState } from "recoil";
 import { Color, answersState, colorState } from "../../utils";
-import cx from "clsx";
+
+import styles from "./index.module.scss";
 
 const Props = z.object({
   items: z.string().array(),
-  index: z.string(),
+  index: z.string()
 });
 
 type Props = z.infer<typeof Props>;
 
 const COLOR_TO_CLASS_NAME: Record<Color, string> = {
   standard: styles.colorStandard,
-  blue: styles.colorBlue,
+  blue: styles.colorBlue
 };
 
 export default function SelectItem({
   attributes,
   children,
-  element,
+  element
 }: RenderElementProps) {
   const { items, index } = Props.parse(element);
 
@@ -50,7 +51,7 @@ export default function SelectItem({
               >
                 {item}
               </span>
-            ),
+            )
           }))}
         />
         {children}

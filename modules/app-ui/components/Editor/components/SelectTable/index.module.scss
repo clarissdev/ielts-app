@@ -1,0 +1,15 @@
+.container {
+  caret-color: transparent;
+  border-collapse: collapse;
+
+  th,
+  td {
+    border: 1px solid black;
+  }
+
+  td {
+    label {
+      margin: 0 8px;
+    }
+  }
+}

@@ -10,7 +10,6 @@ import SettingBar from "./components/SettingBar";
 import TaskViewer from "./components/TaskViewer";
 
 import { ReadingExam } from "@/modules/business-types";
-import { getQuestionIdsFromTasks } from "@/modules/common-utils";
 
 type Props = {
   initialExam: ReadingExam;
@@ -22,9 +21,6 @@ export default function Page({ initialExam }: Props) {
   const [currentTask, setCurrentTask] = React.useState(0);
   const [hideScreen, setHideScreen] = React.useState(false);
   const [showReview, setShowReview] = React.useState(false);
-  const questionIdsFromTasks = getQuestionIdsFromTasks(
-    initialExam.tasks.map((item) => item.numQuestions)
-  );
 
   return initialExam.tasks.map((task, index) => {
     const readingContent = (JSON.parse(
@@ -57,7 +53,6 @@ export default function Page({ initialExam }: Props) {
               onChangeCurrentTask={setCurrentTask}
             />
           }
-          questionIdsFromTasks={questionIdsFromTasks}
           initialReadingContent={readingContent}
           initialQuestionContent={questionContent}
           expiredAt={0}
