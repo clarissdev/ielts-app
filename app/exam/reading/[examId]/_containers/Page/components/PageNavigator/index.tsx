@@ -119,11 +119,13 @@ export default function PageNavigator({
       </Flex.Row>
       <Flex.Row gap="12px">
         <Button
+          size="small"
           icon={<MdArrowLeft size="22px" />}
           disabled={currentTask === 0}
           onClick={() => onChangeCurrentTask(currentTask - 1)}
         ></Button>
         <Button
+          size="small"
           icon={<MdArrowRight size="22px" />}
           disabled={currentTask === initialExam.tasks.length - 1}
           onClick={() => onChangeCurrentTask(currentTask + 1)}
