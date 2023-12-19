@@ -33,7 +33,7 @@ export default function CheckboxList({
         <div key={index} id={index} />
       ))}
       <Flex.Col gap="12px">
-        {allAnswers.map((answer, index) => (
+        {allAnswers.map((_answer, index) => (
           <div key={index}>
             <Checkbox
               style={{ fontSize: "1em", color: "inherit" }}

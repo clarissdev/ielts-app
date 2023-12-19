@@ -8,8 +8,37 @@
   }
 
   td {
+    position: relative;
+    min-width: 32px;
     label {
       margin: 0 8px;
     }
+  }
+}
+
+.buttonCheck {
+  all: unset;
+  position: absolute;
+  inset: 0;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: 32px;
+  height: 100%;
+  cursor: pointer;
+
+  &:hover {
+    background-color: rgba(black, 0.04);
+  }
+
+  &:focus-visible {
+    background-color: rgba(black, 0.04);
+    outline: 2px solid blue;
+  }
+
+  &:active {
+    background-color: rgba(black, 0.08);
   }
 }

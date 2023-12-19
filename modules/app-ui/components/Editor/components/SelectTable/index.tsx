@@ -1,4 +1,4 @@
-import { Radio } from "antd";
+import { IoCheckmark } from "react-icons/io5";
 import { useRecoilState } from "recoil";
 import { RenderElementProps } from "slate-react";
 import { z } from "zod";
@@ -31,22 +31,21 @@ export default function SelectTable({
       </thead>
       <tbody>
         {indices.map((id, index) => (
-          <tr key={id}>
+          <tr key={id} id={id}>
             <td>{children[index]}</td>
 
             {options.map((item) => (
-              <td key={item} style={{ textAlign: "center" }}>
-                <Radio
-                  checked={answers[id] === item}
-                  onChange={(e) => {
-                    if (e.target.checked) {
-                      setAnswers((answers) => ({
-                        ...answers,
-                        [id]: item
-                      }));
+              <td key={item}>
+                <button
+                  className={styles.buttonCheck}
+                  onClick={() => {
+                    if (answers[id] !== item) {
+                      setAnswers((answers) => ({ ...answers, [id]: item }));
                     }
                   }}
-                ></Radio>
+                >
+                  {answers[id] === item ? <IoCheckmark /> : undefined}
+                </button>
               </td>
             ))}
           </tr>

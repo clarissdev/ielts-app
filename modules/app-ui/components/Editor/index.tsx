@@ -1,17 +1,17 @@
+import cx from "clsx";
 import React from "react";
 import { useMemo } from "react";
+import { useRecoilValue } from "recoil";
 import { Descendant, Element, createEditor } from "slate";
 import { withHistory } from "slate-history";
 import { Editable, ReactEditor, Slate, withReact } from "slate-react";
 
 import useEditorConfig from "./config";
+import { HoveringToolbar } from "./containers/HoveringToolbar";
 import ToolBar from "./containers/Toolbar";
 import { useSelection } from "./hooks";
-import { HoveringToolbar } from "./containers/HoveringToolbar";
 import styles from "./index.module.scss";
 import { Color, FontSize, colorState, fontSizeState } from "./utils";
-import cx from "clsx";
-import { useRecoilValue } from "recoil";
 
 type Props = {
   className?: string;
@@ -24,12 +24,12 @@ type Props = {
 const FONT_SIZE_TO_CLASS_NAME: Record<FontSize, string> = {
   standard: styles.fontStandard,
   large: styles.fontLarge,
-  "extra-large": styles.fontExtraLarge,
+  "extra-large": styles.fontExtraLarge
 };
 
 const COLOR_TO_CLASS_NAME: Record<Color, string> = {
   standard: styles.colorStandard,
-  blue: styles.colorBlue,
+  blue: styles.colorBlue
 };
 
 export default function Editor({
@@ -37,7 +37,7 @@ export default function Editor({
   style,
   value,
   onChange,
-  readOnly,
+  readOnly
 }: Props) {
   const editorRef = React.useRef<HTMLDivElement>(null);
   const editor: ReactEditor = useMemo(
@@ -45,10 +45,10 @@ export default function Editor({
       readOnly
         ? withReadOnly(withHistory(withInlines(withReact(createEditor()))))
         : withHistory(withInlines(withReact(createEditor()))),
-    []
+    [readOnly]
   );
   const config = useEditorConfig(editor, { readOnly: readOnly || false });
-  const [selection, setSelection] = useSelection(editor);
+  const [_selection, setSelection] = useSelection(editor);
 
   const onChangeHandler = React.useCallback(
     (document: Descendant[]) => {
@@ -62,7 +62,7 @@ export default function Editor({
     editorRef.current != null
       ? {
           x: editorRef.current.getBoundingClientRect().x,
-          y: editorRef.current.getBoundingClientRect().y,
+          y: editorRef.current.getBoundingClientRect().y
         }
       : null;
   const fontSize = useRecoilValue(fontSizeState);

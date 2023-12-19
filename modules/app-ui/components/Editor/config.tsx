@@ -8,6 +8,7 @@ import {
 import CheckboxList from "./components/CheckboxList";
 import CommentedText from "./components/CommentedText";
 import EditableInput from "./components/EditableInput";
+import RadioGroup from "./components/RadioGroup";
 import SelectItem from "./components/SelectItem";
 import SelectTable from "./components/SelectTable";
 import { getCommentThreadsOnTextNode } from "./utils";
@@ -49,6 +50,8 @@ export default function useEditorConfig(editor: Editor, { readOnly }: Config) {
         return <SelectItem {...props} />;
       case "table":
         return <SelectTable {...props} />;
+      case "radio":
+        return <RadioGroup {...props} />;
       default:
         // For the default case, we delegate to Slate's default rendering.
         return <DefaultElement {...props} />;

@@ -8,8 +8,8 @@ import Editor from "@/modules/app-ui/components/Editor";
 export default function Page() {
   const [document, setDocument] = React.useState<Descendant[]>([]);
 
-  // console.log(JSON.stringify(document));
-
+  //console.log(document);
+  // console.log(JSON.stringify(document).replaceAll('"', '\\"'));
   return (
     <div>
       <RecoilRoot>
