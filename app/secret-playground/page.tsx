@@ -9,7 +9,8 @@ export default function Page() {
   const [document, setDocument] = React.useState<Descendant[]>([]);
 
   //console.log(document);
-  // console.log(JSON.stringify(document).replaceAll('"', '\\"'));
+  //console.log(JSON.stringify(document).replaceAll('"', '\\"'));
+  console.log(JSON.stringify(document));
   return (
     <div>
       <RecoilRoot>

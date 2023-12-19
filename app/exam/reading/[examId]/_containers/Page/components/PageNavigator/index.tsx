@@ -60,7 +60,7 @@ export default function PageNavigator({
               >
                 {questionIdsFromTasks.map((task, index) => (
                   <Flex.Col
-                    minWidth="100px"
+                    minWidth="120px"
                     key={index}
                     flex="1 1 0"
                     justifyContent="left"

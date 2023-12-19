@@ -34,6 +34,8 @@ export default function useEditorConfig(editor: Editor, { readOnly }: Config) {
             {children}
           </p>
         );
+      case "div":
+        return <div {...attributes}>{children}</div>;
       case "h1":
         return <h1 {...attributes}>{children}</h1>;
       case "h2":

@@ -27,7 +27,6 @@ export default function RadioGroup({
 }: RenderElementProps) {
   const { allAnswers, index } = Props.parse(element);
   const setAnswers = useSetRecoilState(answersState);
-  const answers = useRecoilValue(answersState);
   const fontSize = useRecoilValue(fontSizeState);
   return (
     <Radio.Group
