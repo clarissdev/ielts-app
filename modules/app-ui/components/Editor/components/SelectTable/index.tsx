@@ -41,6 +41,9 @@ export default function SelectTable({
                   onClick={() => {
                     if (answers[id] !== item) {
                       setAnswers((answers) => ({ ...answers, [id]: item }));
+                    } else {
+                      const { [id]: _, ...rest } = answers;
+                      setAnswers(rest);
                     }
                   }}
                 >

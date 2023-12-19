@@ -79,7 +79,9 @@ export default function PageNavigator({
             </div>
           }
         >
-          <Button onClick={() => setOpenPopover(true)}>Review</Button>
+          <Button size="small" onClick={() => setOpenPopover(true)}>
+            Review
+          </Button>
         </Popover>
       </div>
       <Flex.Row flexWrap="wrap" gap="8px 20px">

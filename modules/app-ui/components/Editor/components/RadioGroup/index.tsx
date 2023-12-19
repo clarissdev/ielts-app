@@ -1,6 +1,7 @@
 import { Radio } from "antd";
 import cx from "clsx";
-import { useRecoilValue, useSetRecoilState } from "recoil";
+import React from "react";
+import { useRecoilState, useRecoilValue } from "recoil";
 import { RenderElementProps } from "slate-react";
 import { z } from "zod";
 
@@ -26,23 +27,31 @@ export default function RadioGroup({
   element
 }: RenderElementProps) {
   const { allAnswers, index } = Props.parse(element);
-  const setAnswers = useSetRecoilState(answersState);
+  const [answers, setAnswers] = useRecoilState(answersState);
   const fontSize = useRecoilValue(fontSizeState);
   return (
     <Radio.Group
       className={cx(styles.container, FONT_SIZE_TO_CLASS_NAME[fontSize])}
       id={index}
       {...attributes}
-      onChange={(e) =>
-        setAnswers((answers) => ({ ...answers, [index]: e.target.value }))
-      }
+      value={answers[index]}
+      onChange={(e) => {
+        setAnswers((answers) => ({ ...answers, [index]: e.target.value }));
+      }}
     >
       <Flex.Col gap="12px">
-        {allAnswers.map((answer, index) => (
-          <Radio value={answer} key={index}>
-            <span style={{ fontSize: "1em !important" }}>
-              {children[index]}
-            </span>
+        {allAnswers.map((answer, id) => (
+          <Radio
+            value={answer}
+            key={id}
+            onClick={() => {
+              if (answers[index] === answer) {
+                const { [index]: _, ...rest } = answers;
+                setAnswers(rest);
+              }
+            }}
+          >
+            <span style={{ fontSize: "1em !important" }}>{children[id]}</span>
           </Radio>
         ))}
       </Flex.Col>
