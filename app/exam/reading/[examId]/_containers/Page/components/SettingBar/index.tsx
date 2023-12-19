@@ -1,16 +1,17 @@
-import React from "react";
-import cx from "clsx";
-import styles from "./index.module.scss";
-import CountdownTimer from "@/modules/app-components/CountdownTimer";
 import { Button } from "antd";
-import Flex from "@/modules/app-ui/components/Flex";
-import ModalSetting from "./containers/ModalSetting";
-import {
-  FontSize,
-  colorState,
-  fontSizeState,
-} from "@/modules/app-ui/components/Editor/utils";
+import cx from "clsx";
+import React from "react";
 import { useRecoilState } from "recoil";
+
+import ModalSetting from "./containers/ModalSetting";
+import styles from "./index.module.scss";
+
+import CountdownTimer from "@/modules/app-components/CountdownTimer";
+import {
+  colorState,
+  fontSizeState
+} from "@/modules/app-ui/components/Editor/utils";
+import Flex from "@/modules/app-ui/components/Flex";
 
 type Props = {
   className?: string;
@@ -25,7 +26,7 @@ export default function SettingBar({
   style,
   duration,
 
-  onChangeHideScreen,
+  onChangeHideScreen
 }: Props) {
   const [showModalSetting, setShowModalSetting] = React.useState(false);
   const [fontSize, setFontSize] = useRecoilState(fontSizeState);

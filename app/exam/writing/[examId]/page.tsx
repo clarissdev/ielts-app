@@ -1,14 +1,17 @@
+import { cookies } from "next/headers";
+import { headers } from "next/headers";
+import { notFound, redirect } from "next/navigation";
+import { unstable_serialize } from "swr";
+
+import { formatFallback, intentionallyIgnoreError } from "../../../../utils";
+
 import Page from "./_containers/Page";
+
+import { handler$GetWritingExam } from "@/modules/commands/GetWritingExam/handler";
+import { getResourceKey$LoginStatus } from "@/modules/commands/LoginStatus/fetcher";
 import { handler$LoginStatus } from "@/modules/commands/LoginStatus/handler";
 import { getDb } from "@/modules/mongodb";
-import { cookies } from "next/headers";
-import { unstable_serialize } from "swr";
-import { formatFallback, intentionallyIgnoreError } from "../../../../utils";
-import { getResourceKey$LoginStatus } from "@/modules/commands/LoginStatus/fetcher";
 import { SWRProvider } from "@/modules/swr/components/SWRProvider";
-import { notFound, redirect } from "next/navigation";
-import { headers } from "next/headers";
-import { handler$GetWritingExam } from "@/modules/commands/GetWritingExam/handler";
 
 type PageProps = {
   params: { examId: string };
@@ -18,7 +21,7 @@ export default async function Route({ params }: PageProps) {
   const db = await getDb();
   const cookieList = cookies();
   const loginStatus = await handler$LoginStatus(db, {
-    token: cookieList.get("token")?.value,
+    token: cookieList.get("token")?.value
   });
   const headersList = headers();
   const pathname = headersList.get("x-pathname") || "/";
@@ -28,15 +31,15 @@ export default async function Route({ params }: PageProps) {
   }
 
   const exam = await handler$GetWritingExam(db, {
-    examId: params.examId,
+    examId: params.examId
   }).catch(intentionallyIgnoreError);
   if (!exam) notFound();
   return (
     <SWRProvider
       value={{
         fallback: formatFallback({
-          [unstable_serialize(getResourceKey$LoginStatus())]: loginStatus,
-        }),
+          [unstable_serialize(getResourceKey$LoginStatus())]: loginStatus
+        })
       }}
     >
       <Page exam={exam} />

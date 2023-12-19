@@ -2,13 +2,15 @@ import { Editor } from "slate";
 import {
   DefaultElement,
   RenderElementProps,
-  RenderLeafProps,
+  RenderLeafProps
 } from "slate-react";
-import EditableInput from "./components/EditableInput";
-import { getCommentThreadsOnTextNode } from "./utils";
-import CommentedText from "./components/CommentedText";
+
 import CheckboxList from "./components/CheckboxList";
+import CommentedText from "./components/CommentedText";
+import EditableInput from "./components/EditableInput";
 import SelectItem from "./components/SelectItem";
+import SelectTable from "./components/SelectTable";
+import { getCommentThreadsOnTextNode } from "./utils";
 
 type Config = {
   readOnly: boolean;
@@ -38,6 +40,8 @@ export default function useEditorConfig(editor: Editor, { readOnly }: Config) {
         return <CheckboxList {...props} />;
       case "select":
         return <SelectItem {...props} />;
+      case "table":
+        return <SelectTable {...props} />;
       default:
         // For the default case, we delegate to Slate's default rendering.
         return <DefaultElement {...props} />;

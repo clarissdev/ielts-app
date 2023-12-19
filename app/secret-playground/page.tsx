@@ -1,9 +1,9 @@
 "use client";
-import { useBrowserSearchBlocking } from "@/modules/common-hooks/useBrowserSearchBlocking";
 import React from "react";
-import Editor from "@/modules/app-ui/components/Editor";
-import { Descendant } from "slate";
 import { RecoilRoot } from "recoil";
+import { Descendant } from "slate";
+
+import Editor from "@/modules/app-ui/components/Editor";
 
 export default function Page() {
   const [document, setDocument] = React.useState<Descendant[]>([]);

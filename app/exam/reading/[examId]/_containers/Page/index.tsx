@@ -1,13 +1,15 @@
 "use client";
-import React from "react";
 
-import { ReadingExam } from "@/modules/business-types";
 import "react-quill/dist/quill.snow.css";
-import { Descendant } from "slate";
-import TaskViewer from "./components/TaskViewer";
+import React from "react";
 import { RecoilRoot } from "recoil";
+import { Descendant } from "slate";
+
 import PageNavigator from "./components/PageNavigator";
 import SettingBar from "./components/SettingBar";
+import TaskViewer from "./components/TaskViewer";
+
+import { ReadingExam } from "@/modules/business-types";
 import { getQuestionIdsFromTasks } from "@/modules/common-utils";
 
 type Props = {
@@ -28,12 +30,12 @@ export default function Page({ initialExam }: Props) {
     const readingContent = (JSON.parse(
       task.readingContent
     ) as Descendant[]) || [
-      { type: "paragraph", children: [{ text: "not found" }] },
+      { type: "paragraph", children: [{ text: "not found" }] }
     ];
     const questionContent = (JSON.parse(
       task.questionContent
     ) as Descendant[]) || [
-      { type: "paragraph", children: [{ text: "not found" }] },
+      { type: "paragraph", children: [{ text: "not found" }] }
     ];
 
     return (
@@ -50,7 +52,6 @@ export default function Page({ initialExam }: Props) {
           }
           bottomAdornment={
             <PageNavigator
-              onReview={() => setShowReview(true)}
               initialExam={initialExam}
               currentTask={currentTask}
               onChangeCurrentTask={setCurrentTask}

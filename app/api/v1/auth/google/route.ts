@@ -1,10 +1,11 @@
+import * as cookie from "cookie";
+import { OAuth2Client } from "google-auth-library";
+import jwt from "jsonwebtoken";
+import { NextResponse } from "next/server";
+
 import { AuthenticateByGoogle$Params } from "@/modules/commands/AuthenticateWithGoogle/typing";
 import { SERVER_ENV } from "@/modules/env/server";
 import { ClientError } from "@/modules/errors";
-import { OAuth2Client } from "google-auth-library";
-import { NextResponse } from "next/server";
-import jwt from "jsonwebtoken";
-import * as cookie from "cookie";
 import { getDb } from "@/modules/mongodb";
 
 const MAX_AGE = 604800; // seconds, 7 days
@@ -18,7 +19,7 @@ export async function POST(request: Request) {
   const ticket = await client
     .verifyIdToken({
       idToken: credential,
-      audience: SERVER_ENV.CLIENT_ID,
+      audience: SERVER_ENV.CLIENT_ID
     })
     .catch((error) => {
       throw new ClientError({ message: "invalid token" }, { cause: error });
@@ -47,19 +48,19 @@ export async function POST(request: Request) {
       createdAt: Date.now(),
       updatedAt: Date.now(),
       displayName: payload.name || null,
-      isAgent: false,
+      isAgent: false
     });
     userId = insertedId.toHexString();
   }
 
   const tokenEncoded = jwt.sign({ userId }, SERVER_ENV.SECRET_KEY, {
-    expiresIn: MAX_AGE,
+    expiresIn: MAX_AGE
   });
 
   return NextResponse.json(
     {
       userId,
-      email,
+      email
     },
     {
       status: 200,
@@ -69,9 +70,9 @@ export async function POST(request: Request) {
           maxAge: MAX_AGE,
           httpOnly: true,
           secure: true,
-          path: "/",
-        }),
-      },
+          path: "/"
+        })
+      }
     }
   );
 }

@@ -1,6 +1,7 @@
+import { Modal, Radio } from "antd";
+
 import { Color, FontSize } from "@/modules/app-ui/components/Editor/utils";
 import Flex from "@/modules/app-ui/components/Flex";
-import { Modal, Radio } from "antd";
 
 type Props = {
   open: boolean;
@@ -17,7 +18,7 @@ export default function ModalSetting({
   fontSize,
   onChangeFontSize,
   color,
-  onChangeColor,
+  onChangeColor
 }: Props) {
   return (
     <Modal title="Settings" open={open} onCancel={onCancel} footer={[]}>

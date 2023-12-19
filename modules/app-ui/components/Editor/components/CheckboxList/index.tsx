@@ -1,16 +1,18 @@
-import styles from "./index.module.scss";
+import { Checkbox } from "antd";
 import React from "react";
-import Flex from "../../../Flex";
+import { useSetRecoilState } from "recoil";
 import { RenderElementProps } from "slate-react";
 import { z } from "zod";
-import { useSetRecoilState } from "recoil";
+
+import Flex from "../../../Flex";
 import { answersState } from "../../utils";
-import { Checkbox } from "antd";
+
+import styles from "./index.module.scss";
 
 const Props = z.object({
   allAnswers: z.string().array(),
   numCorrectAnswers: z.number(),
-  indices: z.string().array(),
+  indices: z.string().array()
 });
 
 type Props = z.infer<typeof Props>;
@@ -18,7 +20,7 @@ type Props = z.infer<typeof Props>;
 export default function CheckboxList({
   attributes,
   children,
-  element,
+  element
 }: RenderElementProps) {
   const { allAnswers, numCorrectAnswers, indices } = Props.parse(element);
   const [state, setState] = React.useState(
@@ -57,7 +59,7 @@ export default function CheckboxList({
                           ? [answerId, checkedAnswers[index]]
                           : [answerId, ""]
                       )
-                    ),
+                    )
                   }));
                 }
               }}

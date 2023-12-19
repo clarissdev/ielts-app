@@ -2,18 +2,20 @@ import { Input } from "antd";
 import { useRecoilState } from "recoil";
 import { RenderElementProps } from "slate-react";
 import { z } from "zod";
+
 import { answersState } from "../../utils";
+
 import styles from "./index.module.scss";
 
 const Props = z.object({
   placeholder: z.string().optional(),
-  index: z.string(),
+  index: z.string()
 });
 
 export default function EditableInput({
   attributes,
   children,
-  element,
+  element
 }: RenderElementProps) {
   const { index, placeholder } = Props.parse(element);
   const [answers, setAnswers] = useRecoilState(answersState);

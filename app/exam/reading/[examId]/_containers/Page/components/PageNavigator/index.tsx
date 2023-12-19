@@ -1,26 +1,31 @@
-import { ReadingExam } from "@/modules/business-types";
-import { getQuestionId } from "@/modules/common-utils";
-import { Button } from "antd";
-import { range } from "@/modules/common-utils";
-import Flex from "@/modules/app-ui/components/Flex";
-import { answersState } from "@/modules/app-ui/components/Editor/utils";
-import { useRecoilValue } from "recoil";
+import { Button, Popover } from "antd";
+import React from "react";
+import { AiOutlineClose } from "react-icons/ai";
 import { MdArrowLeft, MdArrowRight } from "react-icons/md";
+import { useRecoilValue } from "recoil";
+
+import { answersState } from "@/modules/app-ui/components/Editor/utils";
+import Flex from "@/modules/app-ui/components/Flex";
+import { ReadingExam } from "@/modules/business-types";
+import { getQuestionId, getQuestionIdsFromTasks } from "@/modules/common-utils";
+import { range } from "@/modules/common-utils";
 
 type Props = {
   initialExam: ReadingExam;
   currentTask: number;
   onChangeCurrentTask: (value: number) => void;
-  onReview: () => void;
 };
 
 export default function PageNavigator({
   initialExam,
   currentTask,
-  onChangeCurrentTask,
-  onReview,
+  onChangeCurrentTask
 }: Props) {
   const answers = useRecoilValue(answersState);
+  const questionIdsFromTasks = getQuestionIdsFromTasks(
+    initialExam.tasks.map(({ numQuestions }) => numQuestions)
+  );
+  const [openPopover, setOpenPopover] = React.useState(false);
   return (
     <Flex.Row
       alignItems="center"
@@ -28,7 +33,54 @@ export default function PageNavigator({
       justifyContent="space-between"
     >
       <div>
-        <Button onClick={onReview}>Review</Button>
+        <Popover
+          open={openPopover}
+          title={
+            <Flex.Row justifyContent="space-between">
+              <span>Review</span>
+              <Button
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center"
+                }}
+                size="small"
+                icon={<AiOutlineClose />}
+                onClick={() => setOpenPopover(false)}
+              ></Button>
+            </Flex.Row>
+          }
+          trigger="click"
+          content={
+            <div>
+              <Flex.Row
+                justifyContent="space-between"
+                style={{ margin: "0 auto" }}
+                gap="20px"
+              >
+                {questionIdsFromTasks.map((task, index) => (
+                  <Flex.Col
+                    minWidth="100px"
+                    key={index}
+                    flex="1 1 0"
+                    justifyContent="left"
+                    style={{ textAlign: "left" }}
+                  >
+                    <b>{`Task ${index + 1}: `}</b>
+                    {task.map((index) => (
+                      <div key={index}>
+                        <span>{`${index}: `}</span>
+                        <strong>{answers[getQuestionId(index)] || ""}</strong>
+                      </div>
+                    ))}
+                  </Flex.Col>
+                ))}
+              </Flex.Row>
+            </div>
+          }
+        >
+          <Button onClick={() => setOpenPopover(true)}>Review</Button>
+        </Popover>
       </div>
       <Flex.Row flexWrap="wrap" gap="8px 20px">
         {(() => {
@@ -43,7 +95,7 @@ export default function PageNavigator({
                 return (
                   <Button
                     size="small"
-                    type={!!answers[questionId] ? "primary" : undefined}
+                    type={answers[questionId] ? "primary" : undefined}
                     key={currentTask}
                     onClick={() => {
                       if (currentTask != indexTask) {

@@ -1,9 +1,11 @@
 "use client";
-import styles from "./index.module.scss";
-import Navbar from "@/modules/app-components/Navbar";
-import { useApiAuthentication } from "@/modules/authentication";
 import { Button } from "antd";
 import { FcGoogle } from "react-icons/fc";
+
+import styles from "./index.module.scss";
+
+import Navbar from "@/modules/app-components/Navbar";
+import { useApiAuthentication } from "@/modules/authentication";
 
 export default function Page() {
   const { triggerGoogleAuthentication } = useApiAuthentication();

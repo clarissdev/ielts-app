@@ -1,8 +1,7 @@
 import * as cookie from "cookie";
-import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
 
-export async function POST(request: Request) {
+export async function POST() {
   return NextResponse.json(
     {},
     {
@@ -13,9 +12,9 @@ export async function POST(request: Request) {
           maxAge: 0,
           httpOnly: true,
           secure: true,
-          path: "/",
-        }),
-      },
+          path: "/"
+        })
+      }
     }
   );
 }

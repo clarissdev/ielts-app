@@ -1,7 +1,8 @@
+import { NextRequest, NextResponse } from "next/server";
+
 import { handler$GetExamList } from "@/modules/commands/GetExamList/handler";
 import { GetExamList$Params } from "@/modules/commands/GetExamList/typing";
 import { getDb } from "@/modules/mongodb";
-import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(request: NextRequest) {
   const db = await getDb();

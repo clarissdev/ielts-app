@@ -13,6 +13,7 @@
     "react/react-in-jsx-scope": "off",
     "react-hooks/rules-of-hooks": "error",
     "react-hooks/exhaustive-deps": "warn",
+    "react/jsx-no-leaked-render": "error",
     "react/jsx-uses-react": "error",
     "react/jsx-uses-vars": "error",
     "eol-last": ["error", "always"],

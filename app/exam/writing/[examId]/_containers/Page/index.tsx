@@ -1,21 +1,25 @@
 "use client";
-import { WritingExam } from "@/modules/business-types";
-import PageLayout$TwoColumns from "../../../../_components/PageLayout$TwoColumns";
-import React from "react";
-import ReactQuill from "react-quill";
+
 import "react-quill/dist/quill.snow.css";
-import styles from "./index.module.scss";
-import Flex from "@/modules/app-ui/components/Flex";
-import Image from "next/image";
-import { getSrcFromImageFileHandle } from "@/modules/common-utils";
 import { Button, Modal } from "antd";
-import { MdArrowLeft, MdArrowRight } from "react-icons/md";
 import TextArea from "antd/es/input/TextArea";
-import { useRouter, useSearchParams } from "next/navigation";
-import { z } from "zod";
-import CountdownTimer from "@/modules/app-components/CountdownTimer";
-import { httpPost$SubmitWriting } from "@/modules/commands/SubmitWriting/fetcher";
 import useNotification from "antd/es/notification/useNotification";
+import Image from "next/image";
+import { useRouter, useSearchParams } from "next/navigation";
+import React from "react";
+import { MdArrowLeft, MdArrowRight } from "react-icons/md";
+import ReactQuill from "react-quill";
+import { z } from "zod";
+
+import PageLayout$TwoColumns from "../../../../_components/PageLayout$TwoColumns";
+
+import styles from "./index.module.scss";
+
+import CountdownTimer from "@/modules/app-components/CountdownTimer";
+import Flex from "@/modules/app-ui/components/Flex";
+import { WritingExam } from "@/modules/business-types";
+import { httpPost$SubmitWriting } from "@/modules/commands/SubmitWriting/fetcher";
+import { getSrcFromImageFileHandle } from "@/modules/common-utils";
 
 type Props = {
   exam: WritingExam;
@@ -31,7 +35,6 @@ export default function Page({ exam }: Props) {
   const parsedDuration = z.coerce
     .number()
     .safeParse(searchParams.get("duration"));
-  const [startTime] = React.useState(Date.now());
   const duration =
     parsedDuration.success && parsedDuration.data > 0
       ? parsedDuration.data
@@ -47,7 +50,7 @@ export default function Page({ exam }: Props) {
         "/api/v1/submit/writing",
         {
           examId: exam.examId,
-          answer,
+          answer
         }
       );
       notificationApi.success({ message: "Exam submitted successfully!" });
@@ -55,7 +58,7 @@ export default function Page({ exam }: Props) {
     } catch (error) {
       notificationApi.error({
         message: "Error",
-        description: "An error has occured, please try again!",
+        description: "An error has occured, please try again!"
       });
       router.push("/library");
     }
@@ -64,7 +67,8 @@ export default function Page({ exam }: Props) {
   React.useEffect(() => {
     const timer = setTimeout(() => void handleSubmit(), duration);
     return () => clearTimeout(timer);
-  }, []);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [duration]);
 
   return (
     <PageLayout$TwoColumns
@@ -100,7 +104,7 @@ export default function Page({ exam }: Props) {
               onClick={() => {
                 Modal.confirm({
                   title: "Are you sure you want to submit the exam?",
-                  onOk: handleSubmit,
+                  onOk: handleSubmit
                 });
               }}
             >

@@ -5,7 +5,7 @@ import {
   Text,
   Location,
   NodeEntry,
-  BaseText,
+  BaseText
 } from "slate";
 import { v4 as uuidv4 } from "uuid";
 
@@ -36,7 +36,7 @@ export function getNodeEntryAtSelection(editor: Editor) {
 
   const textNodeEntry = Editor.nodes(editor, {
     at: editor.selection,
-    mode: "lowest",
+    mode: "lowest"
   }).next().value;
 
   return textNodeEntry;
@@ -53,7 +53,7 @@ export const isBlockActive = (editor: Editor, format: string) => {
         !Editor.isEditor(n) &&
         SlateElement.isElement(n) &&
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        (n as any)["type"] === format,
+        (n as any)["type"] === format
     })
   );
   return !!match;
@@ -101,14 +101,14 @@ export function getSmallestCommentThreadAtTextNode(
     Editor.previous(slateEditor, {
       at: nodePath,
       mode: "lowest",
-      match: Text.isText,
+      match: Text.isText
     });
 
   const forwardTextNodeIterator = (slateEditor: Editor, nodePath?: Location) =>
     Editor.next(slateEditor, {
       at: nodePath,
       mode: "lowest",
-      match: Text.isText,
+      match: Text.isText
     });
 
   if (commentThreads.size > 1) {
@@ -139,7 +139,7 @@ export function getSmallestCommentThreadAtTextNode(
     let minLength = Number.POSITIVE_INFINITY;
 
     // Find the thread with the shortest length.
-    for (let [threadId, length] of Array.from(commentThreadsLengthByID)) {
+    for (const [threadId, length] of Array.from(commentThreadsLengthByID)) {
       if (length < minLength) {
         shortestCommentThreadId = threadId;
         minLength = length;
@@ -192,27 +192,27 @@ function updateCommentThreadLengthMap(
 
 export const fontSizeState = atom<FontSize>({
   key: "fontSize",
-  default: "standard",
+  default: "standard"
 });
 
 export const colorState = atom<Color>({
   key: "color",
-  default: "standard",
+  default: "standard"
 });
 
 export const answersState = atom<Record<string, string>>({
   key: "answers",
-  default: {},
+  default: {}
 });
 
 export const commentThreadsState = atomFamily<string | null, string>({
   key: "commentThreads",
-  default: null,
+  default: null
 });
 
 export const commentThreadIdsState = atom({
   key: "commentThreadIds",
-  default: new Set<string>([]),
+  default: new Set<string>([])
 });
 
 export function insertCommentThread(

@@ -2,6 +2,7 @@ import cx from "clsx";
 import React from "react";
 
 import styles from "./index.module.scss";
+
 import useBodyClasses from "@/modules/common-hooks/useBodyClasses";
 
 type Props$Root = {
@@ -21,7 +22,7 @@ export function Root({
   bottomAdornment,
 
   content,
-  children = content,
+  children = content
 }: Props$Root) {
   useBodyClasses([styles.body]);
 
@@ -45,7 +46,7 @@ export function Left({
   className,
   style,
   content,
-  children = content,
+  children = content
 }: Props$Left) {
   return (
     <section className={cx(styles.left, className)} style={style}>
@@ -65,7 +66,7 @@ export function Right({
   className,
   style,
   content,
-  children = content,
+  children = content
 }: Props$Right) {
   return (
     <section className={cx(styles.right, className)} style={style}>
