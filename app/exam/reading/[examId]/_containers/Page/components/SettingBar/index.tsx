@@ -17,6 +17,7 @@ type Props = {
   className?: string;
   style?: React.CSSProperties;
   duration: number;
+  onSubmit: () => Promise<void>;
 
   onChangeHideScreen: (value: boolean) => void;
 };
@@ -25,6 +26,7 @@ export default function SettingBar({
   className,
   style,
   duration,
+  onSubmit,
 
   onChangeHideScreen
 }: Props) {
@@ -50,6 +52,7 @@ export default function SettingBar({
           <span>{" minutes left."}</span>
         </div>
         <Flex.Row gap="4px">
+          <Button onClick={onSubmit}>Submit</Button>
           <Button
             onClick={() => {
               setShowModalSetting(true);

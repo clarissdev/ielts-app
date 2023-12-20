@@ -1,8 +1,9 @@
-import { ReadingExam } from "@/modules/business-types";
 import { z } from "zod";
 
+import { ReadingExam } from "@/modules/business-types";
+
 export const Params = z.object({
-  examId: z.string(),
+  examId: z.string()
 });
 
 export type Params = z.infer<typeof Params>;
