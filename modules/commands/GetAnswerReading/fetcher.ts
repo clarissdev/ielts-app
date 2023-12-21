@@ -1,6 +1,9 @@
 import { Params, Result } from "./typing";
 
-export async function httpGet$GetReadingExam(url: string, { examId }: Params) {
+export async function httpGet$GetAnswerReading(
+  url: string,
+  { examId }: Params
+) {
   const response = await fetch(`${url}?${new URLSearchParams({ examId })}`, {
     method: "GET"
   });

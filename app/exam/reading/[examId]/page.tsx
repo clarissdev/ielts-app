@@ -1,5 +1,5 @@
-import { cookies } from "next/headers";
-import { notFound } from "next/navigation";
+import { cookies, headers } from "next/headers";
+import { notFound, redirect } from "next/navigation";
 import { unstable_serialize } from "swr";
 
 import { formatFallback, intentionallyIgnoreError } from "../../../../utils";
@@ -23,16 +23,16 @@ export default async function Route({ params }: PageProps) {
   const loginStatus = await handler$LoginStatus(db, {
     token: cookieList.get("token")?.value
   });
-  // const headersList = headers();
-  // const pathname = headersList.get("x-pathname") || "/";
+  const headersList = headers();
+  const pathname = headersList.get("x-pathname") || "/";
 
-  // if (!loginStatus.loggedIn) {
-  //   redirect(`/login?${new URLSearchParams({ redirectUrl: pathname })}`);
-  // }
+  if (!loginStatus.loggedIn) {
+    redirect(`/login?${new URLSearchParams({ redirectUrl: pathname })}`);
+  }
 
-  const exam = await handler$GetReadingExam(db, {
-    params
-  }).catch(intentionallyIgnoreError);
+  const exam = await handler$GetReadingExam(db, params).catch(
+    intentionallyIgnoreError
+  );
   if (!exam) notFound();
   return (
     <SWRProvider

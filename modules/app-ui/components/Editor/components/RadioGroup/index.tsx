@@ -27,12 +27,11 @@ export default function RadioGroup({
   element
 }: RenderElementProps) {
   const { allAnswers, index } = Props.parse(element);
-  const [answers, setAnswers] = useRecoilState(answersState);
   const fontSize = useRecoilValue(fontSizeState);
+  const [answers, setAnswers] = useRecoilState(answersState);
   return (
     <Radio.Group
       className={cx(styles.container, FONT_SIZE_TO_CLASS_NAME[fontSize])}
-      id={index}
       {...attributes}
       value={answers[index]}
       onChange={(e) => {
@@ -51,7 +50,7 @@ export default function RadioGroup({
               }
             }}
           >
-            <span style={{ fontSize: "1em !important" }}>{children[id]}</span>
+            <span style={{ fontSize: "1em" }}>{children[id]}</span>
           </Radio>
         ))}
       </Flex.Col>

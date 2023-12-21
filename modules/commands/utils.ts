@@ -1,5 +1,6 @@
-import { ClientError } from "../errors";
 import { NextResponse } from "next/server";
+
+import { ClientError } from "../errors";
 
 type Handler = () => Promise<void>;
 
@@ -12,15 +13,15 @@ export function withDefaultErrorHandler(handler: Handler): Handler {
         error instanceof ClientError
           ? "ClientError"
           : error instanceof Error
-          ? "Error"
-          : "unknown";
+            ? "Error"
+            : "unknown";
       const status = error instanceof ClientError ? error.status : 500;
       const body =
         error instanceof ClientError
           ? error.reason
           : error instanceof Error
-          ? error.message
-          : null;
+            ? error.message
+            : null;
 
       console.error(name, error);
       NextResponse.json(body, { status: status });
@@ -34,7 +35,7 @@ export function extractSearchTerms(text: string) {
     tags: terms
       .filter((item) => item.startsWith("#"))
       .map((item) => item.replace("#", "")),
-    searchTerms: terms.filter((item) => !item.startsWith("#")),
+    searchTerms: terms.filter((item) => !item.startsWith("#"))
   };
 }
 

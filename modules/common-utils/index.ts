@@ -1,5 +1,6 @@
 import nProgress from "nprogress";
 import { mutate } from "swr";
+
 import { ImageFileHandle } from "../business-types";
 import { CLIENT_ENV } from "../env/client";
 
@@ -46,10 +47,10 @@ export function getQuestionId(index: number) {
  * is a list of question indexes corresponding to the task
  */
 export function getQuestionIdsFromTasks(numQuestions: number[]): number[][] {
-  let result = [];
+  const result: number[][] = [];
   let cur = 1;
   for (let i = 0; i < numQuestions.length; i++) {
-    let questionIds = [];
+    const questionIds: number[] = [];
     for (let j = 0; j < numQuestions[i]; j++) {
       questionIds.push(cur);
       cur += 1;

@@ -8,9 +8,9 @@ export async function httpPost$AuthenticateByGoogle(
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      Accepts: "application/json",
+      Accepts: "application/json"
     },
-    body: JSON.stringify(params),
+    body: JSON.stringify(params)
   });
   if (!response.ok) {
     throw new Error("response not ok");

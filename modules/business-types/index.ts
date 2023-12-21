@@ -8,12 +8,12 @@ export type BlobId = z.infer<typeof BlobId>;
 
 export const CONTENT_TYPE = {
   image: ["image/jpg", "image/jpeg", "image/png", "image/webp"],
-  audio: ["audio/wav", "audio/webm"],
+  audio: ["audio/wav", "audio/webm"]
 } as const;
 
 export const ContentType = z.enum([
   ...CONTENT_TYPE.audio,
-  ...CONTENT_TYPE.image,
+  ...CONTENT_TYPE.image
 ]);
 
 export type ContentType = z.infer<typeof ContentType>;
@@ -28,7 +28,7 @@ export const ImageBlobHandle = z.object({
   contentType: ContentType,
   size: z.number().optional(), // bytes - content size
   width: z.number().optional(), // pixels - image natural width
-  height: z.number().optional(), // pixels - image natural height
+  height: z.number().optional() // pixels - image natural height
 });
 
 export type ImageBlobHandle = z.infer<typeof ImageBlobHandle>;
@@ -38,7 +38,7 @@ export const ImageFileHandle = z.object({
   fileId: FileId, // primary key
   createdAt: UnixTimestamp,
   createdBy: z.string(),
-  blob: ImageBlobHandle,
+  blob: ImageBlobHandle
 });
 
 export type ImageFileHandle = z.infer<typeof ImageFileHandle>;
@@ -49,7 +49,7 @@ export const User = z.object({
   createdAt: UnixTimestamp,
   updatedAt: UnixTimestamp.nullish(),
   displayName: z.string().nullish(),
-  isAgent: z.boolean(),
+  isAgent: z.boolean()
 });
 export type User = z.infer<typeof User>;
 
@@ -59,9 +59,9 @@ export const WritingExam = z.object({
   tasks: z
     .object({
       title: z.string(),
-      image: ImageFileHandle.nullish(),
+      image: ImageFileHandle.nullish()
     })
-    .array(),
+    .array()
 });
 export type WritingExam = z.infer<typeof WritingExam>;
 
@@ -71,9 +71,9 @@ export const ReadingExam = z.object({
     .object({
       readingContent: z.string(),
       questionContent: z.string(),
-      numQuestions: z.number(),
+      numQuestions: z.number()
     })
-    .array(),
+    .array()
 });
 export type ReadingExam = z.infer<typeof ReadingExam>;
 
@@ -85,11 +85,11 @@ export const Exam = z.object({
   updatedAt: UnixTimestamp.nullish(),
   examId: z.string(),
   readingExamId: z.string(),
-  writingExamId: z.string(),
+  writingExamId: z.string()
 });
 export type Exam = z.infer<typeof Exam>;
 
 export const Reading_FillInTheBlank = z.object({
   type: z.literal("fill-in-the-blank"),
-  string: z.literal("fill-in-the-blank"),
+  string: z.literal("fill-in-the-blank")
 });
