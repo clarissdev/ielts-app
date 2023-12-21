@@ -6,6 +6,7 @@ import {
 } from "slate-react";
 
 import CheckboxList from "./components/CheckboxList";
+import CollapseGroup from "./components/CollapseGroup";
 import CommentedText from "./components/CommentedText";
 import EditableInput from "./components/EditableInput";
 import RadioGroup from "./components/RadioGroup";
@@ -34,7 +35,14 @@ export default function useEditorConfig(editor: Editor, { readOnly }: Config) {
           </p>
         );
       case "div":
-        return <div {...attributes}>{children}</div>;
+        return (
+          <div
+            {...attributes}
+            id={"index" in element ? String(element.index) : undefined}
+          >
+            {children}
+          </div>
+        );
       case "h1":
         return <h1 {...attributes}>{children}</h1>;
       case "h2":
@@ -51,6 +59,8 @@ export default function useEditorConfig(editor: Editor, { readOnly }: Config) {
         return <SelectTable {...props} />;
       case "radio":
         return <RadioGroup {...props} />;
+      case "collapse-group":
+        return <CollapseGroup {...props} />;
       default:
         // For the default case, we delegate to Slate's default rendering.
         return <DefaultElement {...props} />;

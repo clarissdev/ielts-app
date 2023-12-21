@@ -12,7 +12,8 @@ import styles from "./index.module.scss";
 
 const Props = z.object({
   allAnswers: z.string().array(),
-  index: z.string()
+  index: z.string(),
+  hideId: z.boolean().optional()
 });
 
 const FONT_SIZE_TO_CLASS_NAME: Record<FontSize, string> = {
@@ -26,11 +27,12 @@ export default function RadioGroup({
   children,
   element
 }: RenderElementProps) {
-  const { allAnswers, index } = Props.parse(element);
+  const { hideId, allAnswers, index } = Props.parse(element);
   const fontSize = useRecoilValue(fontSizeState);
   const [answers, setAnswers] = useRecoilState(answersState);
   return (
     <Radio.Group
+      id={hideId ? undefined : index}
       className={cx(styles.container, FONT_SIZE_TO_CLASS_NAME[fontSize])}
       {...attributes}
       value={answers[index]}
