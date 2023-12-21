@@ -4,6 +4,7 @@ import { Db, ObjectId } from "mongodb";
 import { ClientError } from "../../errors";
 
 import { Result, Token } from "./typing";
+
 import { SERVER_ENV } from "@/modules/env/server";
 
 type Options = {
@@ -26,15 +27,15 @@ export async function handler(db: Db, options: Options): Promise<Result> {
         projection: {
           authenticator: 0,
           authenticatorUserId: 0,
-          email: 0,
-        },
+          email: 0
+        }
       });
     ClientError.assert(!!user, { message: "user not found" });
     return {
       loggedIn: true,
       userId: token.userId,
       displayName: user.displayName,
-      isAgent: user.isAgent,
+      isAgent: user.isAgent
     };
   } catch {
     return { loggedIn: false };

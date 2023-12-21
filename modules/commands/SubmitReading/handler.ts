@@ -13,6 +13,7 @@ export async function handler$SubmitReading(
 ) {
   const { insertedId } = await db.collection("submission-reading").insertOne({
     createdBy,
+    createdAt: Date.now(),
     ...params
   });
   return SubmitReading$Result.parse({ submissionId: insertedId.toHexString() });

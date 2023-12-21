@@ -43,7 +43,7 @@ export default function Body({ initialExam }: Props) {
           answer
         }
       );
-      router.push(`/submission/${submissionId}`);
+      router.push(`/submission/reading/${submissionId}`);
       notificationApi.success({ message: "Submit exam successfully!" });
     } catch (error) {
       const displayableError = DisplayableError.from(error);

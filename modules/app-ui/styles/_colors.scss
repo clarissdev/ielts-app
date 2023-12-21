@@ -1,0 +1,45 @@
+@use "sass:color" as color;
+
+$primary: #9c0c0d;
+$primary96: rgba($primary, 0.96);
+$primary80: rgba($primary, 0.8);
+$primary64: rgba($primary, 0.64);
+$primary56: rgba($primary, 0.56);
+$primary48: rgba($primary, 0.48);
+$primary32: rgba($primary, 0.32);
+$primary24: rgba($primary, 0.24);
+$primary16: rgba($primary, 0.16);
+$primary08: rgba($primary, 0.08);
+
+$secondary: #be3456;
+$secondary96: rgba($secondary, 0.96);
+$secondary80: rgba($secondary, 0.8);
+$secondary64: rgba($secondary, 0.64);
+$secondary56: rgba($secondary, 0.56);
+$secondary48: rgba($secondary, 0.48);
+$secondary32: rgba($secondary, 0.32);
+$secondary24: rgba($secondary, 0.24);
+$secondary16: rgba($secondary, 0.16);
+$secondary08: rgba($secondary, 0.08);
+
+$green: #2dad80;
+$green96: rgba($green, 0.96);
+$green80: rgba($green, 0.8);
+$green64: rgba($green, 0.64);
+$green56: rgba($green, 0.56);
+$green48: rgba($green, 0.48);
+$green32: rgba($green, 0.32);
+$green24: rgba($green, 0.24);
+$green16: rgba($green, 0.16);
+$green08: rgba($green, 0.08);
+
+$red: #dd3b2c;
+$red96: rgba($red, 0.96);
+$red80: rgba($red, 0.8);
+$red64: rgba($red, 0.64);
+$red56: rgba($red, 0.56);
+$red48: rgba($red, 0.48);
+$red32: rgba($red, 0.32);
+$red24: rgba($red, 0.24);
+$red16: rgba($red, 0.16);
+$red08: rgba($red, 0.08);

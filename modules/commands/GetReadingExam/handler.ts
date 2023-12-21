@@ -6,11 +6,7 @@ import { Params } from "./typing";
 
 import { ReadingExam } from "@/modules/business-types";
 
-type Options = {
-  params: Params;
-};
-
-export async function handler$GetReadingExam(db: Db, { params }: Options) {
+export async function handler$GetReadingExam(db: Db, params: Params) {
   const agg = [
     {
       $match: {

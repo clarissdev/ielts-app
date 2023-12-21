@@ -12,6 +12,7 @@ import {
   fontSizeState
 } from "@/modules/app-ui/components/Editor/utils";
 import Flex from "@/modules/app-ui/components/Flex";
+// import { useLoginStatus } from "@/modules/common-hooks/useLoginStatus";
 
 type Props = {
   className?: string;
@@ -33,6 +34,7 @@ export default function SettingBar({
   const [showModalSetting, setShowModalSetting] = React.useState(false);
   const [fontSize, setFontSize] = useRecoilState(fontSizeState);
   const [color, setColor] = useRecoilState(colorState);
+  // const loginStatus = useLoginStatus();
   return (
     <div className={cx(styles.container, className)} style={style}>
       <Flex.Row
@@ -52,7 +54,9 @@ export default function SettingBar({
           <span>{" minutes left."}</span>
         </div>
         <Flex.Row gap="4px">
+          {/* {loginStatus?.loggedIn && loginStatus.isAgent ? ( */}
           <Button onClick={onSubmit}>Submit</Button>
+          {/* ) : undefined} */}
           <Button
             onClick={() => {
               setShowModalSetting(true);

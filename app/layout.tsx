@@ -1,3 +1,4 @@
+import { ConfigProvider } from "antd";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 
@@ -19,7 +20,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <ApiProvider>{children}</ApiProvider>
+        <ConfigProvider theme={{ token: { colorPrimary: "#9c0c0d" } }}>
+          <ApiProvider>{children}</ApiProvider>
+        </ConfigProvider>
       </body>
     </html>
   );
