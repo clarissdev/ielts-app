@@ -14,5 +14,12 @@ export default function Root({ attributes, children }: RenderElementProps) {
     }
     return items;
   })();
-  return <Collapse accordion {...attributes} items={items} />;
+  return (
+    <Collapse
+      style={{ fontSize: "1em" }}
+      accordion
+      {...attributes}
+      items={items}
+    />
+  );
 }
