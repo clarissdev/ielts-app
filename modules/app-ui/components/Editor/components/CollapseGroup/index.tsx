@@ -2,6 +2,8 @@
 import { Collapse, CollapseProps } from "antd";
 import { RenderElementProps } from "slate-react";
 
+import styles from "./index.module.scss";
+
 export default function Root({ attributes, children }: RenderElementProps) {
   const items = (() => {
     const items: CollapseProps["items"] = [];
@@ -16,7 +18,7 @@ export default function Root({ attributes, children }: RenderElementProps) {
   })();
   return (
     <Collapse
-      style={{ fontSize: "1em" }}
+      className={styles.collapse}
       accordion
       {...attributes}
       items={items}

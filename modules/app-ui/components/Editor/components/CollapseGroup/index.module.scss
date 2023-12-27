@@ -1,0 +1,8 @@
+@use "@/modules/app-ui/styles/_colors.scss" as colors;
+
+.collapse {
+  font-size: 1em;
+  &:focus-within {
+    outline: 2px solid colors.$primary;
+  }
+}

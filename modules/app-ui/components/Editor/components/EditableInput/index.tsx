@@ -1,4 +1,5 @@
 import { Input } from "antd";
+import cx from "clsx";
 import { useRecoilState } from "recoil";
 import { RenderElementProps } from "slate-react";
 import { z } from "zod";
@@ -12,7 +13,8 @@ const Props = z.object({
   index: z.string(),
   partial: z.boolean().optional(),
   partialFor: z.string().optional(),
-  partialIndex: z.number().optional()
+  partialIndex: z.number().optional(),
+  hidden: z.boolean().optional()
 });
 
 export default function EditableInput({
@@ -20,14 +22,14 @@ export default function EditableInput({
   children,
   element
 }: RenderElementProps) {
-  const { index, placeholder, partial, partialFor, partialIndex } =
+  const { index, placeholder, partial, partialFor, partialIndex, hidden } =
     Props.parse(element);
   const [answers, setAnswers] = useRecoilState(answersState);
   return (
     <span contentEditable={false} {...attributes}>
       <Input
         id={index}
-        className={styles.input}
+        className={cx(styles.input, hidden ? styles.hidden : undefined)}
         value={
           partialIndex != null
             ? (answers[index] || "").split(", ")[partialIndex]

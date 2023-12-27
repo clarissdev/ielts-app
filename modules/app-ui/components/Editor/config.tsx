@@ -38,6 +38,12 @@ export default function useEditorConfig(editor: Editor, { readOnly }: Config) {
         return (
           <div
             {...attributes}
+            tabIndex={0}
+            style={
+              "hidden" in element && element.hidden
+                ? { height: "0px" }
+                : undefined
+            }
             id={"index" in element ? String(element.index) : undefined}
           >
             {children}

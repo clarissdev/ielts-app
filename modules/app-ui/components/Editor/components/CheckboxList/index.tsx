@@ -12,7 +12,8 @@ import styles from "./index.module.scss";
 const Props = z.object({
   allAnswers: z.string().array(),
   numCorrectAnswers: z.number(),
-  indices: z.string().array()
+  indices: z.string().array(),
+  hideId: z.boolean().optional()
 });
 
 type Props = z.infer<typeof Props>;
@@ -22,16 +23,17 @@ export default function CheckboxList({
   children,
   element
 }: RenderElementProps) {
-  const { allAnswers, numCorrectAnswers, indices } = Props.parse(element);
+  const { allAnswers, numCorrectAnswers, indices, hideId } =
+    Props.parse(element);
   const [state, setState] = React.useState(
     Array.from({ length: allAnswers.length }, () => false)
   );
   const setAnswers = useSetRecoilState(answersState);
   return (
     <div className={styles.container} {...attributes}>
-      {indices.map((index) => (
-        <div key={index} id={index} />
-      ))}
+      {!hideId
+        ? indices.map((index) => <div key={index} id={index} />)
+        : undefined}
       <Flex.Col gap="12px">
         {allAnswers.map((_answer, index) => (
           <div key={index}>
