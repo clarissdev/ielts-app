@@ -9,6 +9,7 @@ import CheckboxList from "./components/CheckboxList";
 import CollapseGroup from "./components/CollapseGroup";
 import CommentedText from "./components/CommentedText";
 import EditableInput from "./components/EditableInput";
+import ImageFigure from "./components/ImageFigure";
 import RadioGroup from "./components/RadioGroup";
 import SelectTable from "./components/SelectTable";
 import { getCommentThreadsOnTextNode } from "./utils";
@@ -57,6 +58,8 @@ export default function useEditorConfig(editor: Editor, { readOnly }: Config) {
         return <h3 {...attributes}>{children}</h3>;
       case "h4":
         return <h4 {...attributes}>{children}</h4>;
+      case "image":
+        return <ImageFigure {...props} />;
       case "input":
         return <EditableInput {...props} />;
       case "checkbox":

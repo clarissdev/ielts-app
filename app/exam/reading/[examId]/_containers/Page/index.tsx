@@ -1,6 +1,5 @@
 "use client";
 
-import "react-quill/dist/quill.snow.css";
 import React from "react";
 import { RecoilRoot } from "recoil";
 

@@ -1,4 +1,3 @@
-import { cookies } from "next/headers";
 import { notFound } from "next/navigation";
 import React from "react";
 import { IoMdCheckmark, IoMdClose } from "react-icons/io";
@@ -14,7 +13,7 @@ import {
 import Flex from "@/modules/app-ui/components/Flex";
 import { handler$GetAnswerReading } from "@/modules/commands/GetAnswerReading/handler";
 import { handler$GetReadingExam } from "@/modules/commands/GetReadingExam/handler";
-import { handler$SubmissionReading } from "@/modules/commands/GetSubmissionReading/handler";
+import { handler$GetSubmissionReading } from "@/modules/commands/GetSubmissionReading/handler";
 import { handler$GetUser } from "@/modules/commands/GetUser/hander";
 import { getQuestionId, getQuestionIdsFromTasks } from "@/modules/common-utils";
 import { getDb } from "@/modules/mongodb";
@@ -26,7 +25,7 @@ type Props = {
 export default async function Page({ params }: Props) {
   const db = await getDb();
 
-  const submission = await handler$SubmissionReading(db, {
+  const submission = await handler$GetSubmissionReading(db, {
     submissionId: params.submissionId
   }).catch(intentionallyIgnoreError);
   if (!submission) {

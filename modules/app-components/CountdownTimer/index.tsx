@@ -14,7 +14,7 @@ export default function CountdownTimer({
   className,
   style,
   duration,
-  as,
+  as
 }: Props) {
   const [millisecondsLeft, setMillisecondsLeft] =
     React.useState<number>(duration);

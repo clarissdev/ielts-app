@@ -1,4 +1,5 @@
 import { Db } from "mongodb";
+
 import { SubmitWriting$Params, SubmitWriting$Result } from "./typing";
 
 type Options = {
@@ -10,10 +11,10 @@ export async function handler$SubmitWriting(
   db: Db,
   { params, createdBy }: Options
 ) {
-  const { insertedId } = await db.collection("submission").insertOne({
+  const { insertedId } = await db.collection("submission-writing").insertOne({
     type: "writing",
     createdBy,
-    ...params,
+    ...params
   });
   return SubmitWriting$Result.parse({ submissionId: insertedId.toHexString() });
 }

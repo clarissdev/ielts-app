@@ -42,7 +42,7 @@ export default async function Route({ params }: PageProps) {
         })
       }}
     >
-      <Page exam={exam} />
+      <Page initialExam={exam} />
     </SWRProvider>
   );
 }

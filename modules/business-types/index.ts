@@ -54,14 +54,8 @@ export const User = z.object({
 export type User = z.infer<typeof User>;
 
 export const WritingExam = z.object({
-  type: z.literal("writing"),
   examId: z.string(),
-  tasks: z
-    .object({
-      title: z.string(),
-      image: ImageFileHandle.nullish()
-    })
-    .array()
+  tasks: z.string().array()
 });
 export type WritingExam = z.infer<typeof WritingExam>;
 
@@ -77,19 +71,15 @@ export const ReadingExam = z.object({
 });
 export type ReadingExam = z.infer<typeof ReadingExam>;
 
-export const Exam = z.object({
-  type: z.literal("full"),
-  title: z.string(),
-  createdBy: z.string(),
-  createdAt: UnixTimestamp,
-  updatedAt: UnixTimestamp.nullish(),
+export const ListeningExam = z.object({
   examId: z.string(),
-  readingExamId: z.string(),
-  writingExamId: z.string()
+  listeningSrc: z.string(),
+  tasks: z
+    .object({
+      questionContent: z.string(),
+      numQuestions: z.number()
+    })
+    .array()
 });
-export type Exam = z.infer<typeof Exam>;
 
-export const Reading_FillInTheBlank = z.object({
-  type: z.literal("fill-in-the-blank"),
-  string: z.literal("fill-in-the-blank")
-});
+export type ListeningExam = z.infer<typeof ListeningExam>;

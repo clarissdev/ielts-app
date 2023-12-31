@@ -12,6 +12,8 @@ import {
   fontSizeState
 } from "@/modules/app-ui/components/Editor/utils";
 import Flex from "@/modules/app-ui/components/Flex";
+import { useLoginStatus } from "@/modules/common-hooks/useLoginStatus";
+import { EM_DASH } from "@/modules/common-utils/unicode";
 // import { useLoginStatus } from "@/modules/common-hooks/useLoginStatus";
 
 type Props = {
@@ -34,7 +36,7 @@ export default function SettingBar({
   const [showModalSetting, setShowModalSetting] = React.useState(false);
   const [fontSize, setFontSize] = useRecoilState(fontSizeState);
   const [color, setColor] = useRecoilState(colorState);
-  // const loginStatus = useLoginStatus();
+  const loginStatus = useLoginStatus();
   return (
     <div className={cx(styles.container, className)} style={style}>
       <Flex.Row
@@ -43,7 +45,7 @@ export default function SettingBar({
         gap="12px"
         alignItems="center"
       >
-        <div>{"XXXX - XXX - 123456"}</div>
+        <div>{loginStatus?.loggedIn ? loginStatus.displayName : EM_DASH}</div>
         <div className={styles.countdownTimer}>
           <CountdownTimer
             className={styles.countdownTimer}

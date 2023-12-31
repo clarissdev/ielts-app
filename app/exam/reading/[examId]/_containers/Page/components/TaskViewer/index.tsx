@@ -15,7 +15,6 @@ type Props = {
 
   initialReadingContent: Descendant[];
   initialQuestionContent: Descendant[];
-  expiredAt: number;
   topAdornment: React.ReactNode;
   bottomAdornment: React.ReactNode;
 

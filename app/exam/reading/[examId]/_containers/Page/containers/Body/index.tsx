@@ -100,7 +100,6 @@ export default function Body({ initialExam }: Props) {
             }
             initialReadingContent={readingContent}
             initialQuestionContent={questionContent}
-            expiredAt={0}
             hideScreen={hideScreen}
             onChangeHideScreen={setHideScreen}
             showReview={showReview}

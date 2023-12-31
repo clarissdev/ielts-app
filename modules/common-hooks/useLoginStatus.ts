@@ -1,10 +1,10 @@
 import useSWR from "swr";
 
-import { LoginStatus$Result } from "../commands/LoginStatus/typing";
 import {
   getResourceKey$LoginStatus,
-  httpGet$LoginStatus,
+  httpGet$LoginStatus
 } from "../commands/LoginStatus/fetcher";
+import { LoginStatus$Result } from "../commands/LoginStatus/typing";
 
 type LoginStatus = LoginStatus$Result & {
   confirmed: boolean;

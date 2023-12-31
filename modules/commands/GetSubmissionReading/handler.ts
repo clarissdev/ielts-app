@@ -4,7 +4,7 @@ import { assert } from "../utils";
 
 import { GetSubmissionReading$Result, Params } from "./typing";
 
-export async function handler$SubmissionReading(db: Db, params: Params) {
+export async function handler$GetSubmissionReading(db: Db, params: Params) {
   const agg = [
     {
       $match: {

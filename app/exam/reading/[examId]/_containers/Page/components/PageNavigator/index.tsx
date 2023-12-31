@@ -89,7 +89,6 @@ export default function PageNavigator({
           let cnt = 0;
           return initialExam.tasks.map((task, indexTask) => (
             <Flex.Row key={indexTask} gap="4px" alignItems="center">
-              <b>{`Task ${indexTask + 1}`}</b>
               {range(task.numQuestions).map(() => {
                 cnt = cnt + 1;
                 const currentTask = cnt;

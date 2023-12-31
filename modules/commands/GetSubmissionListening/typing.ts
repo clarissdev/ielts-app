@@ -1,0 +1,21 @@
+import { z } from "zod";
+
+import { UnixTimestamp } from "@/modules/business-types";
+
+export const Params = z.object({ submissionId: z.string() });
+export type Params = z.infer<typeof Params>;
+
+export const Result = z.object({
+  submissionId: z.string(),
+  examId: z.string(),
+  createdBy: z.string(),
+  createdAt: UnixTimestamp,
+  answer: z.string().array()
+});
+export type Result = z.infer<typeof Result>;
+
+export type GetSubmissionListening$Params = Params;
+export const GetSubmissionListening$Params = Params;
+
+export type GetSubmissionListening$Result = Result;
+export const GetSubmissionListening$Result = Result;

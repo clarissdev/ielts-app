@@ -1,0 +1,29 @@
+.column {
+  padding: 12px 24px;
+
+  div {
+    outline: none;
+  }
+}
+
+.hiddenSreen {
+  position: absolute;
+  z-index: 1000;
+  background-color: white;
+  inset: 0;
+
+  text-align: center;
+  padding: 10vh 0;
+}
+
+.title {
+  font-weight: 500;
+  font-size: 16px;
+  margin-bottom: 8px;
+}
+
+.textArea.textArea.textArea {
+  margin-top: 12px;
+  min-height: 300px;
+  max-height: 566px;
+}
