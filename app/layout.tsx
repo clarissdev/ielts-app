@@ -1,11 +1,17 @@
 import { ConfigProvider } from "antd";
+import cx from "clsx";
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Inter, Montserrat } from "next/font/google";
 
 import "./globals.css";
 import ApiProvider from "@/modules/authentication/components/ApiProvider";
 
 const inter = Inter({ subsets: ["latin"] });
+
+const monsterats = Montserrat({
+  subsets: ["latin"],
+  variable: "--font-monsterats"
+});
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -19,7 +25,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body className={cx(inter.className, monsterats.variable)}>
         <ConfigProvider theme={{ token: { colorPrimary: "#9c0c0d" } }}>
           <ApiProvider>{children}</ApiProvider>
         </ConfigProvider>

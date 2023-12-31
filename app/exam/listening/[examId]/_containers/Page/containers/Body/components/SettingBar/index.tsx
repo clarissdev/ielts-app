@@ -63,7 +63,7 @@ export default function SettingBar({
           />
         </div>
         <Flex.Row gap="4px" alignItems="center">
-          <Col span={8}>
+          <Flex.Cell flex="1 1 300px" minWidth="80px">
             <Slider
               min={0}
               max={1}
@@ -75,7 +75,7 @@ export default function SettingBar({
                 }
               }}
             />
-          </Col>
+          </Flex.Cell>
           {/* {loginStatus?.loggedIn && loginStatus.isAgent ? ( */}
           <Button onClick={onSubmit}>Submit</Button>
           {/* ) : undefined} */}
