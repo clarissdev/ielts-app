@@ -1,5 +1,7 @@
 import * as React from "react";
 
+import { getCountdownDetailsFromMillisecondsLeft } from "./utils";
+
 type Props = {
   className?: string;
   style?: React.CSSProperties;
@@ -18,7 +20,10 @@ export default function CountdownTimer({
 }: Props) {
   const [millisecondsLeft, setMillisecondsLeft] =
     React.useState<number>(duration);
+  const [showFullTime, setShowFullTime] = React.useState(false);
   const numMinutes = Math.floor(millisecondsLeft / MILLISECONDS_PER_MINUTE);
+  const countdownDetails =
+    getCountdownDetailsFromMillisecondsLeft(millisecondsLeft);
 
   const Component = as;
   React.useEffect(() => {
@@ -28,9 +33,17 @@ export default function CountdownTimer({
     const interval = setInterval(refresh, 1000);
     return () => clearInterval(interval);
   }, []);
+
   return (
-    <Component className={className} style={style}>
-      {`${numMinutes}m`}
+    <Component
+      onMouseEnter={() => setShowFullTime(true)}
+      onMouseLeave={() => setShowFullTime(false)}
+      className={className}
+      style={style}
+    >
+      {!showFullTime
+        ? `${numMinutes} minutes left.`
+        : `${countdownDetails.numMinutes} : ${countdownDetails.numSeconds}`}
     </Component>
   );
 }

@@ -1,4 +1,4 @@
-import { Button } from "antd";
+import { Button, Col, Slider } from "antd";
 import cx from "clsx";
 import React from "react";
 import { useRecoilState } from "recoil";
@@ -40,6 +40,7 @@ export default function SettingBar({
   const [fontSize, setFontSize] = useRecoilState(fontSizeState);
   const [color, setColor] = useRecoilState(colorState);
   const loginStatus = useLoginStatus();
+  const audioRef = React.useRef<HTMLAudioElement>(null);
 
   return (
     <div className={cx(styles.container, className)} style={style}>
@@ -49,7 +50,7 @@ export default function SettingBar({
         gap="12px"
         alignItems="center"
       >
-        <audio controls id="audio" style={{ display: "none" }}>
+        <audio controls id="audio" style={{ display: "none" }} ref={audioRef}>
           <source src={listeningSrc} />
         </audio>
         <div>{loginStatus?.loggedIn ? loginStatus.displayName : EM_DASH}</div>
@@ -60,9 +61,21 @@ export default function SettingBar({
             unstyled
             as="span"
           />
-          <span>{" minutes left."}</span>
         </div>
-        <Flex.Row gap="4px">
+        <Flex.Row gap="4px" alignItems="center">
+          <Col span={8}>
+            <Slider
+              min={0}
+              max={1}
+              step={0.01}
+              style={{ margin: "0 16px" }}
+              onChange={(value) => {
+                if (audioRef.current) {
+                  audioRef.current.volume = value;
+                }
+              }}
+            />
+          </Col>
           {/* {loginStatus?.loggedIn && loginStatus.isAgent ? ( */}
           <Button onClick={onSubmit}>Submit</Button>
           {/* ) : undefined} */}

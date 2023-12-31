@@ -53,7 +53,6 @@ export default function SettingBar({
             unstyled
             as="span"
           />
-          <span>{" minutes left."}</span>
         </div>
         <Flex.Row gap="4px">
           {/* {loginStatus?.loggedIn && loginStatus.isAgent ? ( */}
