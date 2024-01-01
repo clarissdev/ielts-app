@@ -1,3 +1,5 @@
+"use client";
+
 import { Dropdown } from "antd";
 import cx from "clsx";
 import Link from "next/link";

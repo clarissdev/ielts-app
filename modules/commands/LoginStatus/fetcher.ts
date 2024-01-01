@@ -4,8 +4,8 @@ export async function httpGet(url: string) {
   const response = await fetch(url, {
     method: "GET",
     headers: {
-      "Content-Type": "application/json",
-    },
+      "Content-Type": "application/json"
+    }
   });
   const text = await response.text();
   const data = JSON.parse(text);

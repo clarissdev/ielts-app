@@ -26,8 +26,7 @@ export async function handler(db: Db, options: Options): Promise<Result> {
       .findOne(ObjectId.createFromHexString(token.userId), {
         projection: {
           authenticator: 0,
-          authenticatorUserId: 0,
-          email: 0
+          authenticatorUserId: 0
         }
       });
     ClientError.assert(!!user, { message: "user not found" });
@@ -35,6 +34,7 @@ export async function handler(db: Db, options: Options): Promise<Result> {
       loggedIn: true,
       userId: token.userId,
       displayName: user.displayName,
+      email: user.email,
       isAgent: user.isAgent
     };
   } catch {

@@ -65,6 +65,7 @@ export default function SettingBar({
         <Flex.Row gap="4px" alignItems="center">
           <Flex.Cell flex="1 1 300px" minWidth="80px">
             <Slider
+              defaultValue={1}
               min={0}
               max={1}
               step={0.01}

@@ -1,0 +1,27 @@
+.main {
+  max-width: 1440px;
+  display: flex;
+  margin: 0 auto;
+  margin-top: 32px;
+  flex-wrap: wrap;
+}
+
+.leftColumn {
+  position: relative;
+}
+
+.rightColumn {
+  position: relative;
+  text-align: center;
+}
+
+.banner {
+  width: 100%;
+  max-width: 520px;
+  height: auto;
+}
+
+.button {
+  display: inline-flex;
+  align-items: center;
+}

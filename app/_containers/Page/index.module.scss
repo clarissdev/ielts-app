@@ -1,0 +1,57 @@
+@use "@/modules/app-ui/styles/_colors.scss" as colors;
+
+@mixin onNarrowScreen {
+  @media (max-width: 960px) {
+    @content;
+  }
+}
+
+.main {
+  margin: 0 auto;
+  max-width: 1440px;
+  position: relative;
+}
+
+.belowBanner {
+  @include onNarrowScreen() {
+    display: flex;
+    justify-content: center !important;
+  }
+}
+
+.banner {
+  width: 100%;
+  height: auto;
+}
+
+.figure {
+  max-width: 280px;
+  height: auto;
+}
+
+.buttonTest.buttonTest.buttonTest {
+  font-size: 28px;
+  height: 60px;
+  padding: 8px 20px;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+.figureContainer {
+  position: relative;
+  text-align: center;
+  font-family: var(--font-monsterats);
+  font-weight: 500;
+}
+
+.backdrop {
+  width: 160px;
+  height: 160px;
+  left: 50%;
+  z-index: -1;
+  transform: translateX(-50%);
+  top: 32px;
+  border-radius: 50%;
+  position: absolute;
+  background-color: colors.$secondary;
+}

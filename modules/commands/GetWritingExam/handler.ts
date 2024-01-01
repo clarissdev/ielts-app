@@ -12,7 +12,6 @@ export async function handler$GetWritingExam(db: Db, { examId }: Params) {
       $match: { _id: ObjectId.createFromHexString(examId) }
     }
   ];
-  console.log("VAI", examId);
   const records = await db.collection("writing-exam").aggregate(agg).toArray();
   assert(records?.length === 1, "exam not found");
   return WritingExam.parse({

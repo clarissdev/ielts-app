@@ -36,7 +36,6 @@ export async function POST(request: Request) {
   const user = await db
     .collection("user")
     .findOne({ authenticator: "Google", authenticatorUserId });
-
   let userId;
   if (user) {
     userId = user._id.toHexString();
