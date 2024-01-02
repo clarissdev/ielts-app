@@ -18,6 +18,7 @@ type Props = {
   style?: React.CSSProperties;
   value: Descendant[];
   onChange?: (value: Descendant[]) => void;
+  disableEditing?: boolean;
   readOnly?: boolean;
 };
 
@@ -37,17 +38,22 @@ export default function Editor({
   style,
   value,
   onChange,
+  disableEditing,
   readOnly
 }: Props) {
   const editorRef = React.useRef<HTMLDivElement>(null);
   const editor: ReactEditor = useMemo(
     () =>
-      readOnly
-        ? withReadOnly(withHistory(withInlines(withReact(createEditor()))))
+      disableEditing
+        ? withDisableEditing(
+            withHistory(withInlines(withReact(createEditor())))
+          )
         : withHistory(withInlines(withReact(createEditor()))),
-    [readOnly]
+    [disableEditing]
   );
-  const config = useEditorConfig(editor, { readOnly: readOnly || false });
+  const config = useEditorConfig(editor, {
+    disableEditing: disableEditing || false
+  });
   const [_selection, setSelection] = useSelection(editor);
 
   const onChangeHandler = React.useCallback(
@@ -78,10 +84,10 @@ export default function Editor({
       style={style}
     >
       <Slate editor={editor} initialValue={value} onChange={onChangeHandler}>
-        {!readOnly ? <ToolBar /> : undefined}
+        {!disableEditing ? <ToolBar /> : undefined}
         <HoveringToolbar editorOffsets={editorOffsets} />
         <div ref={editorRef}>
-          <Editable {...config} />
+          <Editable {...config} readOnly={readOnly} />
         </div>
       </Slate>
     </div>
@@ -101,7 +107,7 @@ const withInlines = (editor: ReactEditor) => {
   return editor;
 };
 
-const withReadOnly = (editor: ReactEditor) => {
+const withDisableEditing = (editor: ReactEditor) => {
   editor.insertText = () => {};
   editor.insertTextData = () => false;
 

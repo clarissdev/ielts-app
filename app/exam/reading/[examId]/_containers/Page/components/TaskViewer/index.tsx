@@ -52,13 +52,17 @@ export default function TaskViewer({
       bottomAdornment={bottomAdornment}
     >
       <PageLayout$TwoColumns.Left className={styles.column}>
-        <Editor value={readingContent} onChange={setReadingContent} readOnly />
+        <Editor
+          value={readingContent}
+          onChange={setReadingContent}
+          disableEditing
+        />
       </PageLayout$TwoColumns.Left>
       <PageLayout$TwoColumns.Right className={styles.column}>
         <Editor
           value={questionContent}
           onChange={setQuestionContent}
-          readOnly
+          disableEditing
         />
       </PageLayout$TwoColumns.Right>
       {hideScreen ? (

@@ -28,7 +28,9 @@ export default function CountdownTimer({
   const Component = as;
   React.useEffect(() => {
     const refresh = () =>
-      setMillisecondsLeft((millisecondsLeft) => millisecondsLeft - 1000);
+      setMillisecondsLeft((millisecondsLeft) =>
+        Math.max(millisecondsLeft - 1000, 0)
+      );
     refresh();
     const interval = setInterval(refresh, 1000);
     return () => clearInterval(interval);
@@ -41,7 +43,7 @@ export default function CountdownTimer({
       className={className}
       style={style}
     >
-      {!showFullTime
+      {!showFullTime && numMinutes > 0
         ? `${numMinutes} minutes left.`
         : `${countdownDetails.numMinutes} : ${countdownDetails.numSeconds}`}
     </Component>

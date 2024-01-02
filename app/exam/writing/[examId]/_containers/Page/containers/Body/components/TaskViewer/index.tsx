@@ -44,7 +44,7 @@ export default function TaskViewer({
       bottomAdornment={bottomAdornment}
     >
       <PageLayout$TwoColumns.Left className={styles.column}>
-        <Editor value={initialTaskContent} readOnly />
+        <Editor value={initialTaskContent} disableEditing />
       </PageLayout$TwoColumns.Left>
       <PageLayout$TwoColumns.Right className={styles.column}>
         <Flex.Cell padding="12px 15px" style={{}}>

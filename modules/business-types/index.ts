@@ -83,3 +83,10 @@ export const ListeningExam = z.object({
 });
 
 export type ListeningExam = z.infer<typeof ListeningExam>;
+
+export const SpeakingExam = z.object({
+  examId: z.string(),
+  tasks: z.string().array().array()
+});
+
+export type SpeakingExam = z.infer<typeof SpeakingExam>;

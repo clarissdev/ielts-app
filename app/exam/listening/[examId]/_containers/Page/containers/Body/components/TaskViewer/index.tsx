@@ -48,7 +48,7 @@ export default function TaskViewer({
         <Editor
           value={questionContent}
           onChange={setQuestionContent}
-          readOnly
+          disableEditing
         />
       </PageLayout$TwoColumns.Left>
       {isStarted ? (

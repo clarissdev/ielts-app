@@ -1,12 +1,21 @@
 @use "@/modules/app-ui/styles/_colors.scss" as colors;
+@use "@/modules/app-ui/styles/_mixins.scss" as mixins;
 
 .container {
   height: 80px;
   display: flex;
-  padding: 4px 56px;
+
   align-items: center;
   box-sizing: border-box;
   border-bottom: 1px solid black;
+
+  @include mixins.media-xs() {
+    padding: 4px 20px;
+  }
+
+  @include mixins.media-lg() {
+    padding: 4px 56px;
+  }
 }
 
 .logo {
@@ -16,13 +25,20 @@
   text-transform: uppercase;
   font-family: var(--font-monsterats);
   font-weight: 600;
-  font-size: 20px;
   font-style: normal;
   cursor: pointer;
 
   &:focus-visible {
     outline: 2px solid colors.$primary;
     border-radius: 4px;
+  }
+
+  @include mixins.media-xs() {
+    font-size: 14px;
+  }
+
+  @include mixins.media-lg() {
+    font-size: 20px;
   }
 }
 
@@ -41,6 +57,14 @@
   text-transform: uppercase;
   cursor: pointer;
   font-weight: 500;
+
+  @include mixins.media-xs() {
+    font-size: 12px;
+  }
+
+  @include mixins.media-lg() {
+    font-size: 16px;
+  }
 
   &:hover,
   &:focus-visible {

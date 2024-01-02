@@ -39,6 +39,9 @@ export default function Navbar({ className, style }: Props) {
           <Link href="/test" className={styles.link}>
             Test Ngay
           </Link>
+          <Link href="/courses" className={styles.link}>
+            Courses
+          </Link>
           {loginStatus?.loggedIn ? (
             <Dropdown
               menu={{

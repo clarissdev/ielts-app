@@ -12,13 +12,17 @@ import EditableInput from "./components/EditableInput";
 import ImageFigure from "./components/ImageFigure";
 import RadioGroup from "./components/RadioGroup";
 import SelectTable from "./components/SelectTable";
+import Ul from "./components/Ul";
 import { getCommentThreadsOnTextNode } from "./utils";
 
 type Config = {
-  readOnly: boolean;
+  disableEditing: boolean;
 };
 
-export default function useEditorConfig(editor: Editor, { readOnly }: Config) {
+export default function useEditorConfig(
+  editor: Editor,
+  { disableEditing }: Config
+) {
   const renderElement = (props: RenderElementProps) => {
     const { element, children, attributes } = props;
 
@@ -70,6 +74,8 @@ export default function useEditorConfig(editor: Editor, { readOnly }: Config) {
         return <RadioGroup {...props} />;
       case "collapse-group":
         return <CollapseGroup {...props} />;
+      case "ul":
+        return <Ul {...props} />;
       default:
         // For the default case, we delegate to Slate's default rendering.
         return <DefaultElement {...props} />;
@@ -108,7 +114,7 @@ export default function useEditorConfig(editor: Editor, { readOnly }: Config) {
 
     return (
       <span
-        style={readOnly ? { caretColor: "transparent" } : undefined}
+        style={disableEditing ? { caretColor: "transparent" } : undefined}
         {...attributes}
       >
         {children}
@@ -117,7 +123,7 @@ export default function useEditorConfig(editor: Editor, { readOnly }: Config) {
   };
 
   const onKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
-    if (readOnly) {
+    if (disableEditing) {
       event.preventDefault();
     }
   };
