@@ -61,17 +61,9 @@ export default function PartOne({
             [blob],
             `Part 1 question ${currentQuestion + 1}`
           );
-          const contentTypeSP = ContentType.safeParse(file.type);
-          assert$DisplayableError(contentTypeSP.success, {
-            title: `Unsupported content type: ${file.type}`,
-            description: [
-              "Currently, we only support PNG, JPG, GIF, WEBP, MP4, SVG, HTML."
-            ].join("\n"),
-            cause: contentTypeSP
-          });
 
           const result = await httpPost$UploadFile("/api/v1/all-files/upload", {
-            contentType: contentTypeSP.data
+            contentType: "audio/webm"
           });
 
           const formData = new FormData();

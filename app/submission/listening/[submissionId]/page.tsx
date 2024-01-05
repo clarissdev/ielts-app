@@ -1,3 +1,4 @@
+import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import React from "react";
 import { IoMdCheckmark, IoMdClose } from "react-icons/io";
@@ -17,6 +18,10 @@ import { handler$GetSubmissionListening } from "@/modules/commands/GetSubmission
 import { handler$GetUser } from "@/modules/commands/GetUser/hander";
 import { getQuestionId, getQuestionIdsFromTasks } from "@/modules/common-utils";
 import { getDb } from "@/modules/mongodb";
+
+export const metadata: Metadata = {
+  title: "TEC - IELTS Test"
+};
 
 type Props = {
   params: { submissionId: string };

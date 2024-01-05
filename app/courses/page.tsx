@@ -1,3 +1,4 @@
+import { Metadata } from "next";
 import Image from "next/image";
 
 import figure1 from "./assets/1. TITLE.png";
@@ -21,6 +22,10 @@ import figure8 from "./assets/Level D.png";
 import styles from "./page.module.scss";
 
 import Navbar from "@/modules/app-components/Navbar";
+
+export const metadata: Metadata = {
+  title: "TEC - Courses"
+};
 
 export default function Page() {
   return (

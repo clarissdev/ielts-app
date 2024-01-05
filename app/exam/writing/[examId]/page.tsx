@@ -1,3 +1,4 @@
+import { Metadata } from "next";
 import { cookies } from "next/headers";
 import { headers } from "next/headers";
 import { notFound, redirect } from "next/navigation";
@@ -12,6 +13,10 @@ import { getResourceKey$LoginStatus } from "@/modules/commands/LoginStatus/fetch
 import { handler$LoginStatus } from "@/modules/commands/LoginStatus/handler";
 import { getDb } from "@/modules/mongodb";
 import { SWRProvider } from "@/modules/swr/components/SWRProvider";
+
+export const metadata: Metadata = {
+  title: "Writing"
+};
 
 type PageProps = {
   params: { examId: string };

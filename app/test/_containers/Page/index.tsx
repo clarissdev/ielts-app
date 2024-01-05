@@ -39,6 +39,7 @@ export default function Route() {
                 rel="noreferrer"
                 size="large"
                 href="/exam/listening/658f86ff578ef4f9988f2eef"
+                className={styles.button}
                 icon={<FaHeadphones />}
               >
                 Listening
@@ -49,6 +50,7 @@ export default function Route() {
                 rel="noreferrer"
                 size="large"
                 href="/exam/reading/657bd98a5b375e28c31b3ba2"
+                className={styles.button}
                 icon={<FaBookOpen />}
               >
                 Reading
@@ -59,22 +61,24 @@ export default function Route() {
                 rel="noreferrer"
                 size="large"
                 href="/exam/writing/658baf8b872548f88a2ca396"
+                className={styles.button}
                 icon={<MdModeEdit />}
               >
                 Writing
               </Button>
-              {/* <Button
+              <Button
                 type="primary"
                 target="_blank"
                 rel="noreferrer"
                 size="large"
+                className={styles.button}
                 href={`/exam/speaking?${new URLSearchParams({
                   redirectUrl: "/exam/speaking/65938f57dc0c9c2ee05f3501"
                 })}`}
                 icon={<RiSpeakFill />}
               >
                 Speaking
-              </Button> */}
+              </Button>
             </Flex.Row>
           </>
         ) : (

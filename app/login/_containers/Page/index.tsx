@@ -1,11 +1,16 @@
 "use client";
 import { Button } from "antd";
+import { Metadata } from "next";
 import { FcGoogle } from "react-icons/fc";
 
 import styles from "./index.module.scss";
 
 import Navbar from "@/modules/app-components/Navbar";
 import { useApiAuthentication } from "@/modules/authentication";
+
+export const metadata: Metadata = {
+  title: "Login"
+};
 
 export default function Page() {
   const { triggerGoogleAuthentication } = useApiAuthentication();
