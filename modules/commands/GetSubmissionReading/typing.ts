@@ -18,7 +18,8 @@ export const Result = z.object({
   examId: z.string(),
   createdBy: z.string(),
   createdAt: UnixTimestamp,
-  answer: z.string().array()
+  answer: z.string().array(),
+  grade: z.number().optional()
 });
 export type Result = z.infer<typeof Result>;
 

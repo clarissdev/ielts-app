@@ -1,3 +1,4 @@
+import { Button } from "antd";
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import React from "react";
@@ -16,6 +17,7 @@ import { handler$GetAnswerListening } from "@/modules/commands/GetAnswerListenin
 import { handler$GetListeningExam } from "@/modules/commands/GetListeningExam/handler";
 import { handler$GetSubmissionListening } from "@/modules/commands/GetSubmissionListening/handler";
 import { handler$GetUser } from "@/modules/commands/GetUser/hander";
+import { handler$SubmitListeningGrade } from "@/modules/commands/SubmitListeningGrade/handler";
 import { getQuestionId, getQuestionIdsFromTasks } from "@/modules/common-utils";
 import { getDb } from "@/modules/mongodb";
 
@@ -71,6 +73,13 @@ export default async function Page({ params }: Props) {
   const score = getScoreFromNumCorrectQuestions(numCorrectAnswers);
   const details = getDescriptionFromScore(score);
 
+  if (submission.grade == null) {
+    await handler$SubmitListeningGrade(db, {
+      submissionId: params.submissionId,
+      grade: score
+    }).catch(intentionallyIgnoreError);
+  }
+
   return (
     <div className={styles.container}>
       <div className={styles.userInfo}>
@@ -124,6 +133,11 @@ export default async function Page({ params }: Props) {
             ))}
           </Flex.Col>
         ))}
+      </Flex.Row>
+      <Flex.Row justifyContent="end">
+        <Button href="/test" type="primary">
+          Continue
+        </Button>
       </Flex.Row>
     </div>
   );

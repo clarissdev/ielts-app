@@ -7,9 +7,13 @@ import { GetSubmissionListening$Result, Params } from "./typing";
 export async function handler$GetSubmissionListening(db: Db, params: Params) {
   const agg = [
     {
-      $match: {
-        _id: ObjectId.createFromHexString(params.submissionId)
-      }
+      $match: params.submissionId
+        ? {
+            _id: ObjectId.createFromHexString(params.submissionId)
+          }
+        : {
+            createdBy: params.createdBy
+          }
     }
   ];
   const records = await db

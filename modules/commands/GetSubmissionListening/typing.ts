@@ -2,7 +2,15 @@ import { z } from "zod";
 
 import { UnixTimestamp } from "@/modules/business-types";
 
-export const Params = z.object({ submissionId: z.string() });
+export const Params = z
+  .object({
+    submissionId: z.string().optional(),
+    createdBy: z.string().optional()
+  })
+  .refine(
+    (data) => !!data.submissionId || !!data.createdBy,
+    "must have submissionId or createdBy"
+  );
 export type Params = z.infer<typeof Params>;
 
 export const Result = z.object({
@@ -10,7 +18,8 @@ export const Result = z.object({
   examId: z.string(),
   createdBy: z.string(),
   createdAt: UnixTimestamp,
-  answer: z.string().array()
+  answer: z.string().array(),
+  grade: z.number().optional()
 });
 export type Result = z.infer<typeof Result>;
 

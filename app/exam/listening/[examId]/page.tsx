@@ -8,6 +8,7 @@ import { formatFallback, intentionallyIgnoreError } from "../../../../utils";
 import Page from "./_containers/Page";
 
 import { handler$GetListeningExam } from "@/modules/commands/GetListeningExam/handler";
+import { handler$GetSubmissionListening } from "@/modules/commands/GetSubmissionListening/handler";
 import { getResourceKey$LoginStatus } from "@/modules/commands/LoginStatus/fetcher";
 import { handler$LoginStatus } from "@/modules/commands/LoginStatus/handler";
 import { getDb } from "@/modules/mongodb";
@@ -38,6 +39,11 @@ export default async function Route({ params }: PageProps) {
     intentionallyIgnoreError
   );
   if (!exam) notFound();
+  const submission = await handler$GetSubmissionListening(db, {
+    createdBy: loginStatus.userId
+  }).catch(intentionallyIgnoreError);
+
+  if (submission) notFound();
   return (
     <SWRProvider
       value={{
