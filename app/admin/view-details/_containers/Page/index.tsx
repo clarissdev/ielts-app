@@ -14,9 +14,6 @@ export default function Page() {
     getResourceKey$GetUserDetailsList(),
     async () => await httpGet$GetUserDetailsList(`/api/v1/user-details/list`)
   );
-  const data = swr.data?.filter(
-    (item) => item.gradeListening || item.gradeReading || item.gradeWriting
-  );
   return (
     <div>
       <header>
@@ -24,7 +21,7 @@ export default function Page() {
       </header>
       <main className={styles.main}>
         <Table
-          dataSource={data?.map((item) => ({
+          dataSource={swr.data?.map((item) => ({
             key: item.userId,
             userId: item.userId,
             name: item.displayName,

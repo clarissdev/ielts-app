@@ -79,12 +79,16 @@ export async function handler$GetUserDetailsList(db: Db) {
   const docs = await db.collection("user").aggregate(agg).toArray();
 
   return GetUserDetailsList$Result.parse(
-    docs.map((doc) => ({
-      ...doc,
-      userId: doc._id.toHexString(),
-      gradeReading: doc.gradeReading?.grade,
-      gradeListening: doc.gradeListening?.grade,
-      gradeWriting: doc.gradeWriting?.grade
-    }))
+    docs
+      .filter(
+        (doc) => doc.gradeReading || doc.gradeListening || doc.gradeWriting
+      )
+      .map((doc) => ({
+        ...doc,
+        userId: doc._id.toHexString(),
+        gradeReading: doc.gradeReading?.grade,
+        gradeListening: doc.gradeListening?.grade,
+        gradeWriting: doc.gradeWriting?.grade
+      }))
   );
 }
