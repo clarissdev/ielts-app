@@ -1,3 +1,5 @@
+"use client";
+
 import { Button } from "antd";
 import Image from "next/image";
 
@@ -9,8 +11,10 @@ import styles from "./index.module.scss";
 
 import Navbar from "@/modules/app-components/Navbar";
 import Flex from "@/modules/app-ui/components/Flex";
+import { useLoginStatus } from "@/modules/common-hooks/useLoginStatus";
 
 export default function Route() {
+  const loginStatus = useLoginStatus();
   return (
     <div>
       <header>
@@ -24,7 +28,7 @@ export default function Route() {
           paddingTop="32px"
           className={styles.belowBanner}
         >
-          <Flex.Cell padding="40px">
+          <Flex.Row padding="40px" gap="12px">
             <Button
               type="primary"
               size="large"
@@ -33,7 +37,17 @@ export default function Route() {
             >
               Test ngay
             </Button>
-          </Flex.Cell>
+            {loginStatus?.loggedIn && loginStatus.isAgent ? (
+              <Button
+                type="primary"
+                size="large"
+                className={styles.buttonTest}
+                href="/admin"
+              >
+                Admin
+              </Button>
+            ) : undefined}
+          </Flex.Row>
           <Flex.Row flexWrap="wrap" className={styles.belowBanner}>
             <div className={styles.figureContainer}>
               <div className={styles.backdrop}></div>

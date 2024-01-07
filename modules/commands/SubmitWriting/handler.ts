@@ -12,8 +12,8 @@ export async function handler$SubmitWriting(
   { params, createdBy }: Options
 ) {
   const { insertedId } = await db.collection("submission-writing").insertOne({
-    type: "writing",
     createdBy,
+    createdAt: Date.now(),
     ...params
   });
   return SubmitWriting$Result.parse({ submissionId: insertedId.toHexString() });

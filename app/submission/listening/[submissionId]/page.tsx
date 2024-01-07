@@ -20,7 +20,7 @@ import { getQuestionId, getQuestionIdsFromTasks } from "@/modules/common-utils";
 import { getDb } from "@/modules/mongodb";
 
 export const metadata: Metadata = {
-  title: "TEC - IELTS Test"
+  title: "Submission Listening"
 };
 
 type Props = {

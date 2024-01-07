@@ -1,6 +1,6 @@
 import { Params, Result } from "./typing";
 
-export async function httpGet$GetSubmissionReading(
+export async function httpGet$GetSubmissionWriting(
   url: string,
   params: Params
 ) {
