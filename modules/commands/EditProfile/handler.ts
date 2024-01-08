@@ -12,7 +12,7 @@ export async function handler$EditProfile(db: Db, { userId, params }: Options) {
   await db.collection("user").updateOne(
     { _id: ObjectId.createFromHexString(userId) },
     {
-      $set: { displayName }
+      $set: { displayName, updatedAt: Date.now() }
     }
   );
   return EditProfile$Result.parse({

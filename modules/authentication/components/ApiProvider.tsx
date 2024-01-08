@@ -4,9 +4,10 @@ import Script from "next/script";
 import * as React from "react";
 
 import { ApiContext } from "../contexts/ApiContext";
-import { CLIENT_ENV } from "@/modules/env/client";
+
 import { httpPost$AuthenticateByGoogle } from "@/modules/commands/AuthenticateWithGoogle/fetcher";
 import { shamelesslyRevalidateEverything } from "@/modules/common-utils";
+import { CLIENT_ENV } from "@/modules/env/client";
 
 type Props = {
   children?: React.ReactNode;
@@ -25,13 +26,13 @@ export default function ApiProvider({ children }: Props) {
   const redirectUrl$OnAuthenticationSuccess = searchParams.get("redirectUrl");
 
   const handleToken = async ({
-    credential,
+    credential
   }: google.accounts.id.CredentialResponse) => {
     try {
       const { userId } = await httpPost$AuthenticateByGoogle(
         `/api/v1/auth/google`,
         {
-          credential,
+          credential
         }
       );
       console.log(`logged in as ${userId}`);
@@ -68,7 +69,7 @@ export default function ApiProvider({ children }: Props) {
             top: "98px",
             // TODO: ideally, we should eliminate the following magic number
             // by using a .scss file. Let's keep this for now for simplicity.
-            zIndex: 100,
+            zIndex: 100
           });
           document.body.appendChild(promptContainer);
 
@@ -78,7 +79,7 @@ export default function ApiProvider({ children }: Props) {
             ux_mode: "popup",
             callback: (event) => {
               handleToken?.(event);
-            },
+            }
           });
 
           const hiddenDiv = document.createElement("div");
@@ -105,7 +106,7 @@ export default function ApiProvider({ children }: Props) {
       ></Script>
       <ApiContext.Provider
         value={{
-          triggerGoogleAuthentication,
+          triggerGoogleAuthentication
         }}
       >
         {children}
