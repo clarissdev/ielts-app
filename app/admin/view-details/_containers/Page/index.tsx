@@ -25,9 +25,9 @@ export default function Page() {
             key: item.userId,
             userId: item.userId,
             name: item.displayName,
-            gradeListening: item.gradeListening,
-            gradeReading: item.gradeReading,
-            gradeWriting: item.gradeWriting
+            gradeListening: item.gradeListening || "",
+            gradeReading: item.gradeReading || "",
+            gradeWriting: item.gradeWriting || ""
           }))}
           columns={[
             { title: "User ID", dataIndex: "userId", key: "user_id" },
