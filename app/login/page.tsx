@@ -1,3 +1,4 @@
+import { Metadata } from "next";
 import { cookies } from "next/headers";
 import { unstable_serialize } from "swr";
 
@@ -9,6 +10,10 @@ import { getResourceKey$LoginStatus } from "@/modules/commands/LoginStatus/fetch
 import { handler$LoginStatus } from "@/modules/commands/LoginStatus/handler";
 import { getDb } from "@/modules/mongodb";
 import { SWRProvider } from "@/modules/swr/components/SWRProvider";
+
+export const metadata: Metadata = {
+  title: "Login"
+};
 
 export default async function Route() {
   const db = await getDb();
