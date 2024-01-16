@@ -1,27 +1,18 @@
-import { ContentType, ImageFileHandle } from "@/modules/business-types";
-import { PresignedPost } from "@aws-sdk/s3-presigned-post";
 import { z } from "zod";
 
+import { ContentType, ImageFileHandle } from "@/modules/business-types";
+
 export const Params = z.object({
-  contentType: ContentType,
+  contentType: ContentType
 });
 export type Params = z.infer<typeof Params>;
 
-export const PresignedPostSchema = z.object({
-  url: z.string(),
-  fields: z.record(z.string()),
-});
-
 export const Result = z.object({
   file: ImageFileHandle,
-  presignedPost: PresignedPostSchema,
+  presignedUrl: z.string()
 });
 
-export type Result = {
-  file: ImageFileHandle;
-  presignedPost: PresignedPost;
-};
-
+export type Result = z.infer<typeof Result>;
 export type UploadFile$Params = Params;
 export const UploadFile$Params = Params;
 export type UploadFile$Result = Result;

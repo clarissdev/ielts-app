@@ -8,6 +8,7 @@ import Page from "./_containers/Page";
 
 import { handler$GetSubmissionListening } from "@/modules/commands/GetSubmissionListening/handler";
 import { handler$GetSubmissionReading } from "@/modules/commands/GetSubmissionReading/handler";
+import { handler$GetSubmissionSpeaking } from "@/modules/commands/GetSubmissionSpeaking/handler";
 import { handler$GetSubmissionWriting } from "@/modules/commands/GetSubmissionWriting/handler";
 import { getResourceKey$LoginStatus } from "@/modules/commands/LoginStatus/fetcher";
 import { handler$LoginStatus } from "@/modules/commands/LoginStatus/handler";
@@ -43,6 +44,12 @@ export default async function Route() {
       }).catch(intentionallyIgnoreError)
     : undefined;
 
+  const submissionSpeaking = loginStatus.loggedIn
+    ? await handler$GetSubmissionSpeaking(db, {
+        createdBy: loginStatus.userId
+      }).catch(intentionallyIgnoreError)
+    : undefined;
+
   return (
     <SWRProvider
       value={{
@@ -55,6 +62,7 @@ export default async function Route() {
         submissionReading={submissionReading}
         submissionListening={submissionListening}
         submissionWriting={submissionWriting}
+        submissionSpeaking={submissionSpeaking}
       />
     </SWRProvider>
   );

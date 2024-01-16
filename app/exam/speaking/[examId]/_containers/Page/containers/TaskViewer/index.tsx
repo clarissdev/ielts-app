@@ -1,54 +1,47 @@
 import React from "react";
 import { RecoilRoot } from "recoil";
 import { Descendant } from "slate";
-import { z } from "zod";
 
 import AudioRecorder from "../../../../../_containers/Page/containers/AudioRecorder";
-import { toRatio, uploadWithProgress } from "../../utils";
 
 import CountdownTimer from "@/modules/app-components/CountdownTimer";
 import Editor from "@/modules/app-ui/components/Editor";
 import { httpPost$UploadFile } from "@/modules/commands/UploadFile/fetcher";
-import { assert$DisplayableError } from "@/modules/error";
 
 type Props = {
   className?: string;
   style?: React.CSSProperties;
+  currentPart: number;
   questions: string[];
+  duration: number;
   onProceedNextTask: () => void;
+  onAddAnswer: (blobId: string) => void;
 };
 
-const NUM_MILLISECONDS_PER_FIVE_MINUTES = 1000 * 60 * 5;
-
-const ContentType = z.enum(["audio/webm"]);
-
-export default function PartOne({
+export default function TaskViewer({
   className,
   style,
   questions,
-  onProceedNextTask
+  currentPart,
+  duration,
+  onProceedNextTask,
+  onAddAnswer
 }: Props) {
   const [currentQuestion, setCurrentQuestion] = React.useState(0);
   React.useEffect(() => {
-    const timer = setTimeout(
-      () => onProceedNextTask(),
-      NUM_MILLISECONDS_PER_FIVE_MINUTES
-    );
+    const timer = setTimeout(() => onProceedNextTask(), duration);
     return () => clearTimeout(timer);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
     <div className={className} style={style}>
-      <h1>Part One</h1>
+      <h1>{`Part ${
+        currentPart === 0 ? "One" : currentPart === 1 ? "Two" : "Three"
+      }`}</h1>
       <div>
-        You have{" "}
-        <CountdownTimer
-          duration={NUM_MILLISECONDS_PER_FIVE_MINUTES}
-          unstyled
-          as={"span"}
-        />
+        You have <CountdownTimer duration={duration} unstyled as={"span"} />
       </div>
-      <RecoilRoot>
+      <RecoilRoot key={currentQuestion}>
         <Editor
           readOnly
           disableEditing
@@ -67,19 +60,21 @@ export default function PartOne({
           });
 
           const formData = new FormData();
-          for (const [key, value] of Object.entries(
-            result.presignedPost.fields
-          )) {
-            formData.append(key, value);
-          }
+          formData.append("Content-Type", "audio/webm");
           formData.append("file", file);
 
-          await uploadWithProgress(result.presignedPost.url, formData, {
-            onProgress: (progress) => {
-              const ratio = toRatio(progress);
-              // setBusy(ratio != null ? { progress: ratio } : true);
-            }
+          await fetch(result.presignedUrl, {
+            method: "PUT",
+            body: file
           });
+
+          onAddAnswer(result.file.blob.blobId);
+
+          if (currentQuestion + 1 < questions.length) {
+            setCurrentQuestion((currentQuestion) => currentQuestion + 1);
+          } else {
+            onProceedNextTask();
+          }
         }}
       />
     </div>

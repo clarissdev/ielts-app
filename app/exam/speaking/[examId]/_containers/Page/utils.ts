@@ -39,7 +39,7 @@ export function uploadWithProgress(
       options?.onProgress(null);
       reject(new UploadAbort("upload aborted", { cause: event }));
     });
-    xhr.open("POST", url);
+    xhr.open("PUT", url);
     xhr.send(body);
   });
 }

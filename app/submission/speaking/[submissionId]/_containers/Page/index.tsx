@@ -1,6 +1,6 @@
 "use client";
 
-import { Button, Select } from "antd";
+import { Select, Button } from "antd";
 import TextArea from "antd/es/input/TextArea";
 import useNotification from "antd/es/notification/useNotification";
 import { useRouter } from "next/navigation";
@@ -13,15 +13,16 @@ import styles from "./index.module.scss";
 import Navbar from "@/modules/app-components/Navbar";
 import Editor from "@/modules/app-ui/components/Editor";
 import Flex from "@/modules/app-ui/components/Flex";
-import { User, WritingExam } from "@/modules/business-types";
-import { GetSubmissionWriting$Result } from "@/modules/commands/GetSubmissionWriting/typing";
-import { httpPost$SubmitWritingGrade } from "@/modules/commands/SubmitWritingGrade/fetcher";
+import { SpeakingExam, User } from "@/modules/business-types";
+import { GetSubmissionSpeaking$Result } from "@/modules/commands/GetSubmissionSpeaking/typing";
+import { httpPost$SubmitSpeakingGrade } from "@/modules/commands/SubmitSpeakingGrade/fetcher";
 import { useLoginStatus } from "@/modules/common-hooks/useLoginStatus";
+import { range } from "@/modules/common-utils";
 import { DisplayableError } from "@/modules/error";
 
 type Props = {
-  submission: GetSubmissionWriting$Result;
-  exam: WritingExam;
+  submission: GetSubmissionSpeaking$Result;
+  exam: SpeakingExam;
   user: User;
 };
 
@@ -45,16 +46,29 @@ export default function Page({ submission, exam, user }: Props) {
         <h1>Submission</h1>
         <div>{`Submission ID: ${submission.submissionId}`}</div>
         <div>{`Taken by: ${user.displayName}`}</div>
-        {submission.answer.map((answer, index) => (
-          <div key={index}>
-            <RecoilRoot>
-              <Editor
-                value={JSON.parse(exam.tasks[index]) as Descendant[]}
-                readOnly
-                disableEditing
-              />
-            </RecoilRoot>
-            <div className={styles.answer}>{answer}</div>
+        {range(3).map((taskIndex) => (
+          <div key={taskIndex}>
+            <h2>{`Part ${taskIndex + 1}`}</h2>
+            {exam.tasks[taskIndex].map((task, index) => (
+              <div key={index}>
+                <RecoilRoot>
+                  <Editor
+                    value={JSON.parse(task) as Descendant[]}
+                    readOnly
+                    disableEditing
+                  />
+                </RecoilRoot>
+                {submission.answer[taskIndex][index] != null ? (
+                  <audio controls>
+                    <source
+                      src={`https://theenglishcoach.vn/blobs/${submission.answer[taskIndex][index]}.wav`}
+                    ></source>
+                  </audio>
+                ) : (
+                  <div>No answer</div>
+                )}
+              </div>
+            ))}
           </div>
         ))}
         {loginStatus?.loggedIn && loginStatus.isAgent ? (
@@ -81,8 +95,8 @@ export default function Page({ submission, exam, user }: Props) {
               style={{ marginTop: "20px" }}
               onClick={async () => {
                 try {
-                  await httpPost$SubmitWritingGrade(
-                    `/api/v1/exam/writing/grade`,
+                  await httpPost$SubmitSpeakingGrade(
+                    `/api/v1/exam/speaking/grade`,
                     {
                       submissionId: submission.submissionId,
                       grade,
@@ -92,7 +106,7 @@ export default function Page({ submission, exam, user }: Props) {
                   notificationApi.success({
                     message: "Grading successfully!"
                   });
-                  router.push("/admin/grade-writing");
+                  router.push("/admin/grade-speaking");
                 } catch (error) {
                   console.error(error);
                   const displayableError = DisplayableError.from(error);

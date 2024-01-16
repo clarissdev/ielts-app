@@ -1,14 +1,10 @@
-import { S3Client } from "@aws-sdk/client-s3";
-import { createPresignedPost } from "@aws-sdk/s3-presigned-post";
+import S3 from "aws-sdk/clients/s3.js";
 import { Db, ObjectId } from "mongodb";
 
 import { Params, Result } from "./typing";
 
 import { ContentType } from "@/modules/business-types";
 import { SERVER_ENV } from "@/modules/env/server";
-
-const UPLOAD_EXPIRES_SECONDS = 60 * 60;
-const FILE_SIZE_LIMIT_BYTES = 300 * 1024 * 1024;
 
 type Options = {
   db: Db;
@@ -53,26 +49,28 @@ export async function handler$UploadFile(
   { db, s3Bucket, userId }: Options
 ): Promise<Result> {
   const blobId = new ObjectId().toHexString();
-  const client = new S3Client({
-    region: "ap-southeast-1",
-    credentials: {
-      accessKeyId: SERVER_ENV.AWS_ACCESS_KEY_ID,
-      secretAccessKey: SERVER_ENV.AWS_SECRET_ACCESS_KEY
-    }
+
+  const r2: S3 = new S3({
+    endpoint: `https://${SERVER_ENV.CLOUDFLARE_ACCOUNT_ID}.r2.cloudflarestorage.com`,
+    accessKeyId: SERVER_ENV.AWS_ACCESS_KEY_ID,
+    secretAccessKey: SERVER_ENV.AWS_SECRET_ACCESS_KEY,
+    region: "apac",
+    signatureVersion: "v4"
   });
 
-  const presignedPost = await createPresignedPost(client, {
-    Bucket: s3Bucket,
-    Key: `blobs/${blobId}`,
-    Fields: { "Content-Type": contentType },
-    Expires: UPLOAD_EXPIRES_SECONDS,
-    Conditions: [["content-length-range", 1, FILE_SIZE_LIMIT_BYTES]]
-  });
+  // allow the user to perform a PUT (upload) operation
 
   const file = await storeFileBlobDoc(db, { blobId, userId, contentType });
 
+  const presignedUrl = await r2.getSignedUrlPromise("putObject", {
+    Bucket: s3Bucket,
+    Key: `blobs/${blobId}.wav`,
+    ContentType: contentType,
+    Expires: 3600
+  });
+
   return {
     file,
-    presignedPost
+    presignedUrl: presignedUrl
   };
 }

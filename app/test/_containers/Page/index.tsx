@@ -4,7 +4,7 @@ import { Button } from "antd";
 import { FaHeadphones } from "react-icons/fa";
 import { FaBookOpen } from "react-icons/fa6";
 import { MdModeEdit } from "react-icons/md";
-// import { RiSpeakFill } from "react-icons/ri";
+import { RiSpeakFill } from "react-icons/ri";
 
 import styles from "./index.module.scss";
 
@@ -12,6 +12,7 @@ import Navbar from "@/modules/app-components/Navbar";
 import Flex from "@/modules/app-ui/components/Flex";
 import { GetSubmissionListening$Result } from "@/modules/commands/GetSubmissionListening/typing";
 import { GetSubmissionReading$Result } from "@/modules/commands/GetSubmissionReading/typing";
+import { GetSubmissionSpeaking$Result } from "@/modules/commands/GetSubmissionSpeaking/typing";
 import { GetSubmissionWriting$Result } from "@/modules/commands/GetSubmissionWriting/typing";
 import { useLoginStatus } from "@/modules/common-hooks/useLoginStatus";
 
@@ -19,12 +20,14 @@ type Props = {
   submissionReading: GetSubmissionReading$Result | undefined;
   submissionListening: GetSubmissionListening$Result | undefined;
   submissionWriting: GetSubmissionWriting$Result | undefined;
+  submissionSpeaking: GetSubmissionSpeaking$Result | undefined;
 };
 
 export default function Route({
   submissionReading,
   submissionListening,
-  submissionWriting
+  submissionWriting,
+  submissionSpeaking
 }: Props) {
   const loginStatus = useLoginStatus();
   return (
@@ -105,19 +108,29 @@ export default function Route({
                   }`}</div>
                 ) : undefined}
               </Flex.Col>
-              {/* <Button
-                type="primary"
-                target="_blank"
-                rel="noreferrer"
-                size="large"
-                className={styles.button}
-                href={`/exam/speaking?${new URLSearchParams({
-                  redirectUrl: "/exam/speaking/65938f57dc0c9c2ee05f3501"
-                })}`}
-                icon={<RiSpeakFill />}
-              >
-                Speaking
-              </Button> */}
+              <Flex.Col gap="12px">
+                <Button
+                  type="primary"
+                  target="_blank"
+                  rel="noreferrer"
+                  size="large"
+                  disabled={submissionSpeaking != null}
+                  className={styles.button}
+                  href={`/exam/speaking?${new URLSearchParams({
+                    redirectUrl: "/exam/speaking/65938f57dc0c9c2ee05f3501"
+                  })}`}
+                  icon={<RiSpeakFill />}
+                >
+                  Speaking
+                </Button>
+                {submissionSpeaking ? (
+                  <div>{`Your result: ${
+                    submissionSpeaking?.grade
+                      ? submissionSpeaking.grade.toFixed(1)
+                      : "TBD"
+                  }`}</div>
+                ) : undefined}
+              </Flex.Col>
             </Flex.Row>
           </>
         ) : (

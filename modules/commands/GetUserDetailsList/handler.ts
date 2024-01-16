@@ -75,20 +75,49 @@ export async function handler$GetUserDetailsList(db: Db) {
     }
   ];
 
-  const agg = [...readingAgg, ...listeningAgg, ...writingAgg];
+  const speakingAgg = [
+    {
+      $lookup: {
+        from: "submission-speaking",
+        let: { userId: { $toString: "$_id" } },
+        pipeline: [
+          {
+            $match: {
+              $expr: { $eq: ["$createdBy", "$$userId"] }
+            }
+          },
+          { $limit: 1 }
+        ],
+        as: "gradeSpeaking"
+      }
+    },
+    {
+      $unwind: {
+        path: "$gradeSpeaking",
+        preserveNullAndEmptyArrays: true
+      }
+    }
+  ];
+
+  const agg = [...readingAgg, ...listeningAgg, ...writingAgg, ...speakingAgg];
   const docs = await db.collection("user").aggregate(agg).toArray();
 
   return GetUserDetailsList$Result.parse(
     docs
       .filter(
-        (doc) => doc.gradeReading || doc.gradeListening || doc.gradeWriting
+        (doc) =>
+          doc.gradeReading ||
+          doc.gradeListening ||
+          doc.gradeWriting ||
+          doc.gradeSpeaking
       )
       .map((doc) => ({
         ...doc,
         userId: doc._id.toHexString(),
         gradeReading: doc.gradeReading?.grade,
         gradeListening: doc.gradeListening?.grade,
-        gradeWriting: doc.gradeWriting?.grade
+        gradeWriting: doc.gradeWriting?.grade,
+        gradeSpeaking: doc.gradeSpeaking?.grade
       }))
   );
 }

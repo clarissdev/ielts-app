@@ -16,6 +16,9 @@ export default function Page() {
           <Button className={styles.grade} href="/admin/grade-writing">
             Grade Writing Exam
           </Button>
+          <Button className={styles.grade} href="/admin/grade-speaking">
+            Grade Speaking Exam
+          </Button>
           <Button className={styles.view} href="/admin/view-details">
             View Details
           </Button>

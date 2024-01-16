@@ -27,7 +27,8 @@ export default function Page() {
             name: item.displayName,
             gradeListening: item.gradeListening || "",
             gradeReading: item.gradeReading || "",
-            gradeWriting: item.gradeWriting || ""
+            gradeWriting: item.gradeWriting || "",
+            gradeSpeaking: item.gradeSpeaking || ""
           }))}
           columns={[
             { title: "User ID", dataIndex: "userId", key: "user_id" },
@@ -46,6 +47,11 @@ export default function Page() {
               title: "Grade Writing",
               dataIndex: "gradeWriting",
               key: "gradeWriting"
+            },
+            {
+              title: "Grade Speaking",
+              dataIndex: "gradeSpeaking",
+              key: "gradeSpeaking"
             }
           ]}
         />

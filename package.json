@@ -9,11 +9,10 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@aws-sdk/client-s3": "^3.465.0",
-    "@aws-sdk/s3-presigned-post": "^3.465.0",
     "@types/google.accounts": "^0.0.14",
     "@types/uuid": "^9.0.7",
     "antd": "^5.11.3",
+    "aws-sdk": "^2.1536.0",
     "clsx": "^2.0.0",
     "cookie": "^0.6.0",
     "deep-equal": "^2.2.3",

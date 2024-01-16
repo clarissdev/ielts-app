@@ -9,7 +9,8 @@ export const Result = z
     // grade
     gradeListening: z.number().optional(),
     gradeReading: z.number().optional(),
-    gradeWriting: z.number().optional()
+    gradeWriting: z.number().optional(),
+    gradeSpeaking: z.number().optional()
   })
   .array();
 export type Result = z.infer<typeof Result>;

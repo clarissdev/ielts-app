@@ -1,0 +1,24 @@
+@use "@/modules/app-ui/styles/_colors.scss" as colors;
+
+.main {
+  max-width: 1440px;
+  margin: 0 auto;
+
+  a {
+    all: unset;
+    display: inline;
+
+    cursor: pointer;
+
+    line-height: 150%;
+    &:hover,
+    &:focus-visible {
+      color: colors.$primary;
+      text-decoration: underline;
+    }
+
+    &:focus-visible {
+      outline: 2px solid colors.$primary;
+    }
+  }
+}
