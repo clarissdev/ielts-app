@@ -120,7 +120,12 @@ export default function Editor({
           <HoveringToolbar editorOffsets={editorOffsets} />
         ) : undefined}
         <div ref={editorRef}>
-          <Editable {...config} readOnly={readOnly} />
+          <Editable
+            {...config}
+            readOnly={readOnly}
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            {...({ spellcheck: "false" } as any)}
+          />
         </div>
       </Slate>
     </div>
