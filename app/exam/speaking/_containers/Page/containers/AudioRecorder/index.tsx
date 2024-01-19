@@ -9,12 +9,17 @@ type Props = {
   style?: React.CSSProperties;
 
   onStop?: (blob: Blob) => Promise<void>;
+
+  mediaRecorder: React.MutableRefObject<MediaRecorder | null>;
 };
 
-export default function AudioRecorder({ className, style, onStop }: Props) {
+export default function AudioRecorder({
+  className,
+  style,
+  onStop,
+  mediaRecorder
+}: Props) {
   const [permission, setPermission] = React.useState(false);
-  const mediaRecorder = React.useRef<MediaRecorder | null>(null);
-  const [recordingStatus, setRecordingStatus] = React.useState("inactive");
   const [stream, setStream] = React.useState<MediaStream | null>(null);
   const [audioChunks, setAudioChunks] = React.useState<Blob[]>([]);
   const [notificationApi, notificationContextHolder] = useNotification();
@@ -98,7 +103,6 @@ export default function AudioRecorder({ className, style, onStop }: Props) {
 
   const startRecording = async () => {
     if (!stream) return;
-    setRecordingStatus("recording");
     const media = new MediaRecorder(stream);
     visualize(stream);
 
@@ -119,7 +123,6 @@ export default function AudioRecorder({ className, style, onStop }: Props) {
 
   const stopRecording = () => {
     if (!mediaRecorder.current) return;
-    setRecordingStatus("inactive");
     mediaRecorder.current?.stop();
 
     mediaRecorder.current.onstop = async () => {
@@ -135,10 +138,12 @@ export default function AudioRecorder({ className, style, onStop }: Props) {
       {!permission ? (
         <Button onClick={getMicrophonePermission}>Get Microphone</Button>
       ) : null}
-      {permission && recordingStatus === "inactive" ? (
+      {permission &&
+      (mediaRecorder.current?.state === "inactive" ||
+        mediaRecorder.current == null) ? (
         <Button onClick={startRecording}>Start Recording</Button>
       ) : null}
-      {recordingStatus === "recording" ? (
+      {mediaRecorder.current?.state === "recording" ? (
         <Button onClick={stopRecording}>Stop Recording</Button>
       ) : null}
       <div style={{ marginTop: "20px" }}>

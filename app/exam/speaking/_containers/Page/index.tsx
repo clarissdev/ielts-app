@@ -9,6 +9,7 @@ import styles from "./index.module.scss";
 export default function Page() {
   const [audio, setAudio] = React.useState("");
   const searchParams = useSearchParams();
+  const mediaRecorder = React.useRef<MediaRecorder | null>(null);
 
   return (
     <div className={styles.container}>
@@ -24,6 +25,7 @@ export default function Page() {
           const url = URL.createObjectURL(blob);
           setAudio(url);
         }}
+        mediaRecorder={mediaRecorder}
       />
       <div style={{ marginTop: "20px" }}>
         {audio ? <audio src={audio} controls></audio> : undefined}
