@@ -1,0 +1,87 @@
+@use "@/modules/app-ui/styles/_colors.scss" as colors;
+@use "@/modules/app-ui/styles/_mixins.scss" as mixins;
+
+.container {
+  height: 80px;
+  display: flex;
+
+  align-items: center;
+  box-sizing: border-box;
+  border-bottom: 1px solid black;
+
+  @include mixins.media-xs() {
+    padding: 4px 20px;
+  }
+
+  @include mixins.media-lg() {
+    padding: 4px 56px;
+  }
+}
+
+.logo {
+  all: unset;
+  display: inline;
+
+  text-transform: uppercase;
+  font-family: var(--font-monsterats);
+  font-weight: 600;
+  font-style: normal;
+  cursor: pointer;
+
+  &:focus-visible {
+    outline: 2px solid colors.$primary;
+    border-radius: 4px;
+  }
+
+  @include mixins.media-xs() {
+    font-size: 14px;
+  }
+
+  @include mixins.media-lg() {
+    font-size: 20px;
+  }
+}
+
+.colorBlack {
+  color: black;
+}
+
+.colorPrimary {
+  color: colors.$primary;
+}
+
+.link {
+  all: unset;
+  display: inline;
+
+  text-transform: uppercase;
+  cursor: pointer;
+  font-weight: 500;
+
+  @include mixins.media-xs() {
+    font-size: 12px;
+  }
+
+  @include mixins.media-lg() {
+    font-size: 16px;
+  }
+
+  &:hover,
+  &:focus-visible {
+    color: colors.$primary;
+  }
+
+  &:focus-visible {
+    outline: 2px solid colors.$primary;
+    border-radius: 4px;
+  }
+}
+
+.speaking {
+  color: white;
+  background-color: colors.$primary;
+  padding: 8px 12px;
+  font-weight: 500;
+  font-size: 18px;
+  border-radius: 20px;
+}

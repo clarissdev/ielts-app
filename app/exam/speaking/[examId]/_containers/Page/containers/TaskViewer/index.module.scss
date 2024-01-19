@@ -1,0 +1,18 @@
+@use "@/modules/app-ui/styles/_colors.scss" as colors;
+
+.container {
+  text-align: center;
+}
+
+.colorPrimary {
+  color: colors.$primary;
+}
+
+.leftColumn {
+  border: 1px solid colors.$primary;
+  span {
+    color: colors.$primary;
+    font-weight: 600;
+    font-size: 20px;
+  }
+}
