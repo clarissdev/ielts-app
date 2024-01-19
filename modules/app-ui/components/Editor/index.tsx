@@ -2,7 +2,13 @@ import cx from "clsx";
 import React from "react";
 import { useMemo } from "react";
 import { useRecoilValue } from "recoil";
-import { Descendant, Element, createEditor } from "slate";
+import {
+  Editor as SlateEditor,
+  Descendant,
+  Element,
+  Range,
+  createEditor
+} from "slate";
 import { withHistory } from "slate-history";
 import { Editable, ReactEditor, Slate, withReact } from "slate-react";
 
@@ -73,6 +79,31 @@ export default function Editor({
       : null;
   const fontSize = useRecoilValue(fontSizeState);
   const color = useRecoilValue(colorState);
+
+  const { selection } = editor;
+  const shouldShowToolbar =
+    selection &&
+    !Range.isCollapsed(selection) &&
+    SlateEditor.string(editor, selection) !== "";
+
+  const [mustShowToolbar, setMustShowToolbar] = React.useState(false);
+
+  React.useEffect(() => {
+    if (!shouldShowToolbar) {
+      setMustShowToolbar(false);
+    }
+  }, [shouldShowToolbar]);
+
+  React.useEffect(() => {
+    const handleContextMenu = (e: MouseEvent) => {
+      e.preventDefault();
+      setMustShowToolbar(true);
+    };
+    window.addEventListener("contextmenu", handleContextMenu);
+    return () => window.removeEventListener("contextmenu", handleContextMenu);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
     <div
       className={cx(
@@ -85,7 +116,9 @@ export default function Editor({
     >
       <Slate editor={editor} initialValue={value} onChange={onChangeHandler}>
         {!disableEditing ? <ToolBar /> : undefined}
-        <HoveringToolbar editorOffsets={editorOffsets} />
+        {mustShowToolbar ? (
+          <HoveringToolbar editorOffsets={editorOffsets} />
+        ) : undefined}
         <div ref={editorRef}>
           <Editable {...config} readOnly={readOnly} />
         </div>

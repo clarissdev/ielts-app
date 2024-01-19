@@ -1,23 +1,23 @@
-import React, { useCallback } from "react";
 import { Button } from "antd";
+import React, { useCallback } from "react";
+import { MdClear, MdHighlight, MdOutlineSpeakerNotes } from "react-icons/md";
 import { Editor, Path, Range, Transforms } from "slate";
 import { useFocused, useSlateStatic } from "slate-react";
 
-import styles from "./index.module.scss";
-import { MdClear, MdHighlight, MdOutlineSpeakerNotes } from "react-icons/md";
+import {
+  useAddCommentThreadCallback,
+  useRemoveCommentThreadCallback
+} from "../../hooks";
 import {
   COMMENT_THREAD_PREFIX,
   getCommentThreadsOnTextNode,
   getNodeEntryAtSelection,
   insertCommentThread,
   isMarkActive,
-  toggleMark,
+  toggleMark
 } from "../../utils";
-import { useSetRecoilState } from "recoil";
-import {
-  useAddCommentThreadCallback,
-  useRemoveCommentThreadCallback,
-} from "../../hooks";
+
+import styles from "./index.module.scss";
 
 type Props = {
   editorOffsets: { x: number; y: number } | undefined | null;
@@ -57,8 +57,8 @@ export function HoveringToolbar({ editorOffsets }: Props) {
         x,
         height: nodeHeight,
         y: nodeY,
-        width,
-      } = domRange?.getBoundingClientRect();
+        width
+      } = domRange?.getBoundingClientRect() || {};
 
       const nodeX = x + width / 3;
 
@@ -70,7 +70,7 @@ export function HoveringToolbar({ editorOffsets }: Props) {
     };
     window.addEventListener("mouseup", handleShowToolbar);
     return () => window.removeEventListener("mouseup", handleShowToolbar);
-  });
+  }, [editor, editorOffsets?.x, editorOffsets?.y, inFocus]);
 
   const isHighlightMarkActive = isMarkActive(editor, "highlight");
   const marks = Editor.marks(editor);
@@ -118,9 +118,9 @@ export function HoveringToolbar({ editorOffsets }: Props) {
             if (!Path.isPath(nodeEntry[1])) return;
             Transforms.select(editor, {
               anchor: Editor.point(editor, nodeEntry[1], {
-                edge: "start",
+                edge: "start"
               }),
-              focus: Editor.point(editor, nodeEntry[1], { edge: "end" }),
+              focus: Editor.point(editor, nodeEntry[1], { edge: "end" })
             });
             toggleMark(editor, "highlight");
             editor.selection = null;
@@ -148,9 +148,9 @@ export function HoveringToolbar({ editorOffsets }: Props) {
             if (!Path.isPath(nodeEntry[1])) return;
             Transforms.select(editor, {
               anchor: Editor.point(editor, nodeEntry[1], {
-                edge: "start",
+                edge: "start"
               }),
-              focus: Editor.point(editor, nodeEntry[1], { edge: "end" }),
+              focus: Editor.point(editor, nodeEntry[1], { edge: "end" })
             });
             const markToRemove =
               COMMENT_THREAD_PREFIX + Array.from(commentThreadsOnTextNode)[0];
