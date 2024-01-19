@@ -141,7 +141,7 @@ export default function PageNavigator({
             onChange={() => onMarkCheckpoint(focus)}
           />
         ) : (
-          <Checkbox />
+          <Checkbox disabled />
         )}
       </Flex.Row>
       <Flex.Row gap="12px">
