@@ -5,6 +5,7 @@ import cx from "clsx";
 import { useRouter } from "next/navigation";
 import React from "react";
 
+import Navbar from "./containers/Navbar";
 import TaskViewer from "./containers/TaskViewer";
 import styles from "./index.module.scss";
 
@@ -49,31 +50,34 @@ export default function Page({ className, style, exam }: Props) {
   }, [currentPart]);
   return (
     <div className={cx(styles.container, className)} style={style}>
+      <Navbar />
       {notificationContextHolder}
-      {currentPart < 3 ? (
-        <TaskViewer
-          key={currentPart}
-          currentPart={currentPart}
-          questions={exam.tasks[currentPart]}
-          onProceedNextTask={() =>
-            setCurrentPart((currentPart) => currentPart + 1)
-          }
-          duration={
-            currentPart === 0
-              ? NUM_MILLISECONDS_PER_MINUTE * 4
-              : currentPart === 1
-                ? NUM_MILLISECONDS_PER_MINUTE * 3
-                : NUM_MILLISECONDS_PER_MINUTE * 5
-          }
-          onAddAnswer={(blobId) =>
-            setAnswer((answer) =>
-              answer.map((task, index) =>
-                index === currentPart ? [...task, blobId] : task
+      <div className={styles.main}>
+        {currentPart < 3 ? (
+          <TaskViewer
+            key={currentPart}
+            currentPart={currentPart}
+            questions={exam.tasks[currentPart]}
+            onProceedNextTask={() =>
+              setCurrentPart((currentPart) => currentPart + 1)
+            }
+            duration={
+              currentPart === 0
+                ? NUM_MILLISECONDS_PER_MINUTE * 4
+                : currentPart === 1
+                  ? NUM_MILLISECONDS_PER_MINUTE * 3
+                  : NUM_MILLISECONDS_PER_MINUTE * 5
+            }
+            onAddAnswer={(blobId) =>
+              setAnswer((answer) =>
+                answer.map((task, index) =>
+                  index === currentPart ? [...task, blobId] : task
+                )
               )
-            )
-          }
-        />
-      ) : undefined}
+            }
+          />
+        ) : undefined}
+      </div>
     </div>
   );
 }
