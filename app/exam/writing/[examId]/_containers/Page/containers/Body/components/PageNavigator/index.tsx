@@ -27,6 +27,7 @@ export default function PageNavigator({
       <Flex.Row flexWrap="wrap" gap="12px">
         {initialExam.tasks.map((_task, index) => (
           <Button
+            style={{ borderWidth: "2px" }}
             size="small"
             type={answer[index] ? "primary" : undefined}
             key={index}
@@ -36,7 +37,7 @@ export default function PageNavigator({
               }
             }}
           >
-            {index + 1}
+            {`Task ${index + 1}`}
           </Button>
         ))}
       </Flex.Row>

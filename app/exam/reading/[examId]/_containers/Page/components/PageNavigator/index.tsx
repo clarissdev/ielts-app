@@ -96,6 +96,7 @@ export default function PageNavigator({
                 return (
                   <Button
                     size="small"
+                    style={{ borderWidth: "2px" }}
                     type={answers[questionId] ? "primary" : undefined}
                     key={currentTask}
                     onClick={() => {

@@ -95,6 +95,7 @@ export default function PageNavigator({
                 const questionId = getQuestionId(currentTask);
                 return (
                   <Button
+                    style={{ borderWidth: "2px" }}
                     size="small"
                     type={answers[questionId] ? "primary" : undefined}
                     key={currentTask}
