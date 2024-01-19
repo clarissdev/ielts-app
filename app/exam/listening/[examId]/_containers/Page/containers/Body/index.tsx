@@ -31,12 +31,17 @@ export default function Body({ initialExam }: Props) {
   const [notificationApi, notificationContextHolder] = useNotification();
 
   const [isStarted, setIsStarted] = React.useState(true);
+
+  const numQuestions = initialExam.tasks.reduce(
+    (accumulator, task) => accumulator + task.numQuestions,
+    0
+  );
+  const [focus, setFocus] = React.useState<number | undefined>();
+  const [checkpoints, setCheckpoints] = React.useState<boolean[]>(
+    Array.from({ length: numQuestions }, () => false)
+  );
   const handleSubmit = async () => {
     try {
-      const numQuestions = initialExam.tasks.reduce(
-        (accumulator, task) => accumulator + task.numQuestions,
-        0
-      );
       const answer = range(numQuestions).map(
         (id) => answers[getQuestionId(id + 1)] || ""
       );
@@ -86,6 +91,16 @@ export default function Body({ initialExam }: Props) {
                   initialExam={initialExam}
                   currentTask={currentTask}
                   onChangeCurrentTask={setCurrentTask}
+                  checkpoints={checkpoints}
+                  onMarkCheckpoint={(value) =>
+                    setCheckpoints((checkpoints) =>
+                      checkpoints.map((item, index) =>
+                        index === value ? !item : item
+                      )
+                    )
+                  }
+                  focus={focus}
+                  onChangeFocus={setFocus}
                 />
               }
               initialQuestionContent={questionContent}

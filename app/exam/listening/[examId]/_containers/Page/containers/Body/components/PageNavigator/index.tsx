@@ -1,8 +1,11 @@
-import { Button, Popover } from "antd";
+import { Button, Checkbox, Popover } from "antd";
+import cx from "clsx";
 import React from "react";
 import { AiOutlineClose } from "react-icons/ai";
 import { MdArrowLeft, MdArrowRight } from "react-icons/md";
 import { useRecoilValue } from "recoil";
+
+import styles from "./index.module.scss";
 
 import { answersState } from "@/modules/app-ui/components/Editor/utils";
 import Flex from "@/modules/app-ui/components/Flex";
@@ -14,12 +17,20 @@ type Props = {
   initialExam: ListeningExam;
   currentTask: number;
   onChangeCurrentTask: (value: number) => void;
+  checkpoints: boolean[];
+  onMarkCheckpoint: (value: number) => void;
+  focus: number | undefined;
+  onChangeFocus: (value: number | undefined) => void;
 };
 
 export default function PageNavigator({
   initialExam,
   currentTask,
-  onChangeCurrentTask
+  onChangeCurrentTask,
+  checkpoints,
+  onMarkCheckpoint,
+  focus,
+  onChangeFocus
 }: Props) {
   const answers = useRecoilValue(answersState);
   const questionIdsFromTasks = getQuestionIdsFromTasks(
@@ -91,31 +102,47 @@ export default function PageNavigator({
             <Flex.Row key={indexTask} gap="4px" alignItems="center">
               {range(task.numQuestions).map(() => {
                 cnt = cnt + 1;
-                const currentTask = cnt;
-                const questionId = getQuestionId(currentTask);
+                const currentQuestion = cnt;
+                const questionId = getQuestionId(currentQuestion);
                 return (
                   <Button
-                    style={{ borderWidth: "2px" }}
+                    className={cx(
+                      styles.button,
+                      checkpoints[currentQuestion]
+                        ? styles.checkpoint
+                        : undefined,
+                      focus === currentQuestion ? styles.focus : undefined
+                    )}
                     size="small"
                     type={answers[questionId] ? "primary" : undefined}
-                    key={currentTask}
+                    key={currentQuestion}
                     onClick={() => {
-                      if (currentTask != indexTask) {
+                      if (currentTask !== indexTask) {
                         onChangeCurrentTask(indexTask);
                       }
+                      onChangeFocus(currentQuestion);
                       const element = document.getElementById(questionId);
 
                       element?.scrollIntoView({ behavior: "smooth" });
                       element?.focus();
                     }}
                   >
-                    {currentTask}
+                    {currentQuestion}
                   </Button>
                 );
               })}
             </Flex.Row>
           ));
         })()}
+        {focus != null ? (
+          <Checkbox
+            key={focus}
+            checked={checkpoints[focus]}
+            onChange={() => onMarkCheckpoint(focus)}
+          />
+        ) : (
+          <Checkbox />
+        )}
       </Flex.Row>
       <Flex.Row gap="12px">
         <Button
