@@ -38,7 +38,7 @@ export default function Body({ initialExam }: Props) {
   );
   const [focus, setFocus] = React.useState<number | undefined>();
   const [checkpoints, setCheckpoints] = React.useState<boolean[]>(
-    Array.from({ length: numQuestions }, () => false)
+    Array.from({ length: numQuestions + 1 }, () => false)
   );
   const handleSubmit = async () => {
     try {
