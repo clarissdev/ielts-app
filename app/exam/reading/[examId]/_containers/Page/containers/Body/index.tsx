@@ -36,14 +36,11 @@ export default function Body({ initialExam }: Props) {
       const answer = range(numQuestions).map(
         (id) => answers[getQuestionId(id + 1)] || ""
       );
-      const { submissionId } = await httpPost$SubmitReading(
-        "/api/v1/submit/reading",
-        {
-          examId: initialExam.examId,
-          answer
-        }
-      );
-      router.push(`/submission/reading/${submissionId}`);
+      await httpPost$SubmitReading("/api/v1/submit/reading", {
+        examId: initialExam.examId,
+        answer
+      });
+      router.push(`/test`);
       notificationApi.success({ message: "Submit exam successfully!" });
     } catch (error) {
       const displayableError = DisplayableError.from(error);

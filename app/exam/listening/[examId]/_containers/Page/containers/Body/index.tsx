@@ -40,14 +40,11 @@ export default function Body({ initialExam }: Props) {
       const answer = range(numQuestions).map(
         (id) => answers[getQuestionId(id + 1)] || ""
       );
-      const { submissionId } = await httpPost$SubmitListening(
-        "/api/v1/submit/listening",
-        {
-          examId: initialExam.examId,
-          answer
-        }
-      );
-      router.push(`/submission/listening/${submissionId}`);
+      await httpPost$SubmitListening("/api/v1/submit/listening", {
+        examId: initialExam.examId,
+        answer
+      });
+      router.push(`/test`);
       notificationApi.success({ message: "Submit exam successfully!" });
     } catch (error) {
       const displayableError = DisplayableError.from(error);
