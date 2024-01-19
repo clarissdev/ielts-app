@@ -1,0 +1,11 @@
+@use "@/modules/app-ui/styles/_colors.scss" as colors;
+
+.button.button.button {
+  border-width: 2px;
+  &.checkpoint {
+    border-radius: 50%;
+  }
+  &.focus {
+    border-color: colors.$primary;
+  }
+}
