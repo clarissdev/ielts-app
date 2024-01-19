@@ -124,7 +124,7 @@ export default function Editor({
             {...config}
             readOnly={readOnly}
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            {...({ spellcheck: "false" } as any)}
+            {...({ spellCheck: "false" } as any)}
           />
         </div>
       </Slate>
