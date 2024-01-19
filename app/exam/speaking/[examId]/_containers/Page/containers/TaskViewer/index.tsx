@@ -33,7 +33,6 @@ export default function TaskViewer({
 }: Props) {
   const [currentQuestion, setCurrentQuestion] = React.useState(0);
   const mediaRecorder = React.useRef<MediaRecorder | null>(null);
-  const [audioChunks, setAudioChunks] = React.useState<Blob[]>([]);
   const onStop = async (blob: Blob, mustProceedNextTask: boolean) => {
     const file = new File([blob], `Part 1 question ${currentQuestion + 1}`);
 
@@ -68,7 +67,6 @@ export default function TaskViewer({
             const audioChunks = [event.data];
             const audioBlob = new Blob(audioChunks, { type: "audio/webm" });
             await onStop?.(audioBlob, true);
-            setAudioChunks([]);
           } else {
             onProceedNextTask();
           }
@@ -101,8 +99,6 @@ export default function TaskViewer({
         <Flex.Cell flex="1 1 0">
           <AudioRecorder
             mediaRecorder={mediaRecorder}
-            audioChunks={audioChunks}
-            onChangeAudioChunks={setAudioChunks}
             onStop={async (blob) => await onStop(blob, false)}
           />
         </Flex.Cell>

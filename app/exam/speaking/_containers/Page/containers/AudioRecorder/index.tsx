@@ -11,20 +11,17 @@ type Props = {
   onStop?: (blob: Blob) => Promise<void>;
 
   mediaRecorder: React.MutableRefObject<MediaRecorder | null>;
-  audioChunks: Blob[];
-  onChangeAudioChunks: (value: Blob[]) => void;
 };
 
 export default function AudioRecorder({
   className,
   style,
   onStop,
-  mediaRecorder,
-  audioChunks,
-  onChangeAudioChunks
+  mediaRecorder
 }: Props) {
   const [permission, setPermission] = React.useState(false);
   const [stream, setStream] = React.useState<MediaStream | null>(null);
+  const [audioChunks, setAudioChunks] = React.useState<Blob[]>([]);
   const [notificationApi, notificationContextHolder] = useNotification();
   const canvasRef = React.useRef<HTMLCanvasElement>(null);
   const canvasCtx = canvasRef.current?.getContext("2d");
@@ -121,7 +118,7 @@ export default function AudioRecorder({
       localAudioChunks.push(event.data);
     };
 
-    onChangeAudioChunks(localAudioChunks);
+    setAudioChunks(localAudioChunks);
   };
 
   const stopRecording = () => {
@@ -131,7 +128,7 @@ export default function AudioRecorder({
     mediaRecorder.current.onstop = async () => {
       const audioBlob = new Blob(audioChunks, { type: "audio/webm" });
       await onStop?.(audioBlob);
-      onChangeAudioChunks([]);
+      setAudioChunks([]);
     };
   };
 

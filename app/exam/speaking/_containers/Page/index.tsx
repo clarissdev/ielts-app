@@ -10,7 +10,6 @@ export default function Page() {
   const [audio, setAudio] = React.useState("");
   const searchParams = useSearchParams();
   const mediaRecorder = React.useRef<MediaRecorder | null>(null);
-  const [audioChunks, setAudioChunks] = React.useState<Blob[]>([]);
 
   return (
     <div className={styles.container}>
@@ -27,8 +26,6 @@ export default function Page() {
           setAudio(url);
         }}
         mediaRecorder={mediaRecorder}
-        audioChunks={audioChunks}
-        onChangeAudioChunks={setAudioChunks}
       />
       <div style={{ marginTop: "20px" }}>
         {audio ? <audio src={audio} controls></audio> : undefined}
