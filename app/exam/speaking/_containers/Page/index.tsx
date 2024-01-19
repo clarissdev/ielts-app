@@ -10,7 +10,6 @@ export default function Page() {
   const [audio, setAudio] = React.useState("");
   const searchParams = useSearchParams();
   const mediaRecorder = React.useRef<MediaRecorder | null>(null);
-  const [recordingStatus, setRecordingStatus] = React.useState("inactive");
   const [audioChunks, setAudioChunks] = React.useState<Blob[]>([]);
 
   return (
@@ -28,8 +27,6 @@ export default function Page() {
           setAudio(url);
         }}
         mediaRecorder={mediaRecorder}
-        recordingStatus={recordingStatus}
-        onChangeRecordingStatus={setRecordingStatus}
         audioChunks={audioChunks}
         onChangeAudioChunks={setAudioChunks}
       />
