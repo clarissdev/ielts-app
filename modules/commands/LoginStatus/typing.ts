@@ -6,7 +6,9 @@ export const Result = z.union([
     userId: z.string(),
     displayName: z.string(),
     isAgent: z.boolean(),
-    email: z.string()
+    email: z.string(),
+    phoneNumber: z.string().optional(),
+    school: z.string().optional()
   }),
   z.object({
     loggedIn: z.literal(false)

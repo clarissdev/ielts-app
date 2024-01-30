@@ -1,6 +1,9 @@
 "use client";
 
-import { Button } from "antd";
+import { Button, Input } from "antd";
+import useNotification from "antd/es/notification/useNotification";
+import { useRouter } from "next/navigation";
+import React from "react";
 import { FaHeadphones } from "react-icons/fa";
 import { FaBookOpen } from "react-icons/fa6";
 import { MdModeEdit } from "react-icons/md";
@@ -10,11 +13,14 @@ import styles from "./index.module.scss";
 
 import Navbar from "@/modules/app-components/Navbar";
 import Flex from "@/modules/app-ui/components/Flex";
+import { httpPost$EditProfile } from "@/modules/commands/EditProfile/fetcher";
 import { GetSubmissionListening$Result } from "@/modules/commands/GetSubmissionListening/typing";
 import { GetSubmissionReading$Result } from "@/modules/commands/GetSubmissionReading/typing";
 import { GetSubmissionSpeaking$Result } from "@/modules/commands/GetSubmissionSpeaking/typing";
 import { GetSubmissionWriting$Result } from "@/modules/commands/GetSubmissionWriting/typing";
 import { useLoginStatus } from "@/modules/common-hooks/useLoginStatus";
+import { shamelesslyRevalidateEverything } from "@/modules/common-utils";
+import { DisplayableError } from "@/modules/error";
 
 type Props = {
   submissionReading: GetSubmissionReading$Result | undefined;
@@ -30,8 +36,47 @@ export default function Route({
   submissionSpeaking
 }: Props) {
   const loginStatus = useLoginStatus();
+  const router = useRouter();
+  const [notificationApi, notificationContextHolder] = useNotification();
+  const [displayName, setDisplayName] = React.useState(
+    loginStatus?.loggedIn ? loginStatus?.displayName || "" : ""
+  );
+  const [phoneNumber, setPhoneNumber] = React.useState(
+    loginStatus?.loggedIn ? loginStatus.phoneNumber || "" : ""
+  );
+  const [school, setSchool] = React.useState(
+    loginStatus?.loggedIn ? loginStatus.school || "" : ""
+  );
+
+  const handleReset = () => {
+    setDisplayName(loginStatus?.loggedIn ? loginStatus?.displayName || "" : "");
+    setPhoneNumber(loginStatus?.loggedIn ? loginStatus.phoneNumber || "" : "");
+    setSchool(loginStatus?.loggedIn ? loginStatus.school || "" : "");
+  };
+
+  const handleSave = async () => {
+    try {
+      await httpPost$EditProfile(`/api/v1/me/edit`, {
+        displayName,
+        phoneNumber,
+        school
+      });
+      notificationApi.success({
+        message: "Details edited successfully!"
+      });
+      shamelesslyRevalidateEverything();
+      router.refresh();
+    } catch (error) {
+      const displayableError = DisplayableError.from(error);
+      notificationApi.error({
+        message: displayableError.title,
+        description: displayableError.description
+      });
+    }
+  };
   return (
     <div>
+      {notificationContextHolder}
       <header>
         <Navbar />
       </header>
@@ -39,12 +84,28 @@ export default function Route({
         {loginStatus?.loggedIn ? (
           <>
             <h3>Your details</h3>
-            <div>{`Your name: ${loginStatus.displayName}`}</div>
-            <div>{`Your email: ${loginStatus.email}`}</div>
+            <div className={styles.label}>{`Your name`}</div>
+            <Input
+              value={displayName}
+              onChange={(e) => setDisplayName(e.target.value)}
+            />
+            <div className={styles.label}>{`Your phone number`}</div>
+            <Input
+              value={phoneNumber}
+              onChange={(e) => setPhoneNumber(e.target.value)}
+            />
+            <div className={styles.label}>{`Your school`}</div>
+            <Input value={school} onChange={(e) => setSchool(e.target.value)} />
+            <Flex.Row justifyContent="center" gap="8px" paddingTop="20px">
+              <Button type="primary" onClick={handleSave}>
+                Save
+              </Button>
+              <Button onClick={handleReset}>Reset</Button>
+            </Flex.Row>
             <h3>Test ngay</h3>
             <Flex.Row
               flex="1 1 0"
-              padding="20px 56px"
+              padding="8px 56px"
               gap="12px"
               justifyContent="center"
               flexWrap="wrap"

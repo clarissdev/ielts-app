@@ -1,7 +1,9 @@
 import { z } from "zod";
 
 export const EditProfile$Params = z.object({
-  displayName: z.string()
+  displayName: z.string(),
+  school: z.string(),
+  phoneNumber: z.string()
 });
 export type EditProfile$Params = z.infer<typeof EditProfile$Params>;
 
