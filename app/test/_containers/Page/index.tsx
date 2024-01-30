@@ -48,6 +48,12 @@ export default function Route({
     loginStatus?.loggedIn ? loginStatus.school || "" : ""
   );
 
+  const shouldDisableAllTests =
+    !loginStatus?.loggedIn ||
+    !loginStatus.displayName ||
+    !loginStatus.phoneNumber ||
+    !loginStatus.school;
+
   const handleReset = () => {
     setDisplayName(loginStatus?.loggedIn ? loginStatus?.displayName || "" : "");
     setPhoneNumber(loginStatus?.loggedIn ? loginStatus.phoneNumber || "" : "");
@@ -84,6 +90,10 @@ export default function Route({
         {loginStatus?.loggedIn ? (
           <>
             <h3>Your details</h3>
+            <div className={styles.alert}>
+              Before proceeding with the test, please ensure you have entered
+              the following information.
+            </div>
             <div className={styles.label}>{`Your name`}</div>
             <Input
               value={displayName}
@@ -119,7 +129,9 @@ export default function Route({
                   href="/exam/listening/658f86ff578ef4f9988f2eef"
                   className={styles.button}
                   icon={<FaHeadphones />}
-                  disabled={submissionListening != null}
+                  disabled={
+                    shouldDisableAllTests || submissionListening != null
+                  }
                 >
                   Listening
                 </Button>
@@ -138,7 +150,7 @@ export default function Route({
                   href="/exam/reading/657bd98a5b375e28c31b3ba2"
                   className={styles.button}
                   icon={<FaBookOpen />}
-                  disabled={submissionReading != null}
+                  disabled={shouldDisableAllTests || submissionReading != null}
                 >
                   Reading
                 </Button>
@@ -157,7 +169,7 @@ export default function Route({
                   href="/exam/writing/658baf8b872548f88a2ca396"
                   className={styles.button}
                   icon={<MdModeEdit />}
-                  disabled={submissionWriting != null}
+                  disabled={shouldDisableAllTests || submissionWriting != null}
                 >
                   Writing
                 </Button>
@@ -175,7 +187,7 @@ export default function Route({
                   target="_blank"
                   rel="noreferrer"
                   size="large"
-                  disabled={submissionSpeaking != null}
+                  disabled={shouldDisableAllTests || submissionSpeaking != null}
                   className={styles.button}
                   href={`/exam/speaking?${new URLSearchParams({
                     redirectUrl: "/exam/speaking/65938f57dc0c9c2ee05f3501"
