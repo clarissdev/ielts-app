@@ -2,8 +2,8 @@ import { Button } from "antd";
 import useNotification from "antd/es/notification/useNotification";
 import React from "react";
 
-import { DisplayableError } from "@/modules/error";
 import Flex from "@/modules/app-ui/components/Flex";
+import { DisplayableError } from "@/modules/error";
 
 type Props = {
   className?: string;
