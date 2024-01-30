@@ -1,4 +1,4 @@
-import { Button, Col, Slider } from "antd";
+import { Button, Slider } from "antd";
 import cx from "clsx";
 import React from "react";
 import { useRecoilState } from "recoil";

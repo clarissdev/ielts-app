@@ -15,7 +15,6 @@ import { useLoginStatus } from "@/modules/common-hooks/useLoginStatus";
 
 export default function Route() {
   const loginStatus = useLoginStatus();
-  console.log(loginStatus);
   return (
     <div>
       <header>
