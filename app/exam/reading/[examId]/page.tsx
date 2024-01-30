@@ -36,6 +36,14 @@ export default async function Route({ params }: PageProps) {
     redirect(`/login?${new URLSearchParams({ redirectUrl: pathname })}`);
   }
 
+  if (
+    !loginStatus.displayName ||
+    !loginStatus.school ||
+    !loginStatus.phoneNumber
+  ) {
+    notFound();
+  }
+
   const exam = await handler$GetReadingExam(db, params).catch(
     intentionallyIgnoreError
   );
