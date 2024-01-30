@@ -2,6 +2,7 @@ import { Button } from "antd";
 import useNotification from "antd/es/notification/useNotification";
 import React from "react";
 
+import Flex from "@/modules/app-ui/components/Flex";
 import { DisplayableError } from "@/modules/error";
 
 type Props = {
@@ -137,16 +138,27 @@ export default function AudioRecorder({
       {notificationContextHolder}
       {!permission ? (
         <Button onClick={getMicrophonePermission}>Get Microphone</Button>
-      ) : null}
-      {permission &&
-      (mediaRecorder.current?.state === "inactive" ||
-        mediaRecorder.current == null) ? (
-        <Button onClick={startRecording}>Start Recording</Button>
-      ) : null}
-      {mediaRecorder.current?.state === "recording" ? (
-        <Button onClick={stopRecording}>Stop Recording</Button>
-      ) : null}
-      <div style={{ marginTop: "20px" }}>
+      ) : (
+        <Flex.Row gap="8px" justifyContent="center">
+          <Button
+            type="primary"
+            onClick={startRecording}
+            disabled={mediaRecorder.current?.state === "recording"}
+          >
+            Start Recording
+          </Button>
+          <Button
+            onClick={stopRecording}
+            disabled={
+              mediaRecorder.current?.state === "inactive" ||
+              mediaRecorder.current == null
+            }
+          >
+            Stop Recording
+          </Button>
+        </Flex.Row>
+      )}
+      <div style={{ marginTop: "20px", textAlign: "center" }}>
         <canvas
           ref={canvasRef}
           style={{ height: "60px", width: "300px" }}

@@ -195,9 +195,11 @@ export default function Route({
             </Flex.Row>
           </>
         ) : (
-          <Button size="large" href="/login">
-            Login to Continue
-          </Button>
+          <div style={{ textAlign: "center" }}>
+            <Button size="large" href="/login">
+              Login to Continue
+            </Button>
+          </div>
         )}
       </main>
     </div>
