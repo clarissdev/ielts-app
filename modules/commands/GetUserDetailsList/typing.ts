@@ -5,6 +5,8 @@ export const Result = z
     userId: z.string(),
     email: z.string(),
     displayName: z.string(),
+    school: z.string().optional(),
+    phoneNumber: z.string().optional(),
 
     // grade
     gradeListening: z.number().optional(),

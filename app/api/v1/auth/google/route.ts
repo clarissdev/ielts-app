@@ -47,7 +47,9 @@ export async function POST(request: Request) {
       createdAt: Date.now(),
       updatedAt: Date.now(),
       displayName: payload.name || null,
-      isAgent: false
+      isAgent: false,
+      school: "",
+      phoneNumber: ""
     });
     userId = insertedId.toHexString();
   }

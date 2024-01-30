@@ -35,7 +35,9 @@ export async function handler(db: Db, options: Options): Promise<Result> {
       userId: token.userId,
       displayName: user.displayName,
       email: user.email,
-      isAgent: user.isAgent
+      isAgent: user.isAgent,
+      phoneNumber: user.phoneNumber,
+      school: user.school
     };
   } catch {
     return { loggedIn: false };

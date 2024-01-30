@@ -49,7 +49,9 @@ export const User = z.object({
   createdAt: UnixTimestamp,
   updatedAt: UnixTimestamp.nullish(),
   displayName: z.string().nullish(),
-  isAgent: z.boolean()
+  isAgent: z.boolean(),
+  phoneNumber: z.string().optional(),
+  school: z.string().optional()
 });
 export type User = z.infer<typeof User>;
 

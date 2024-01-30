@@ -8,11 +8,10 @@ type Options = {
 };
 
 export async function handler$EditProfile(db: Db, { userId, params }: Options) {
-  const { displayName } = params;
   await db.collection("user").updateOne(
     { _id: ObjectId.createFromHexString(userId) },
     {
-      $set: { displayName, updatedAt: Date.now() }
+      $set: { ...params, updatedAt: Date.now() }
     }
   );
   return EditProfile$Result.parse({

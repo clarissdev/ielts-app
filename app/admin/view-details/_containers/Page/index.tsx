@@ -23,33 +23,43 @@ export default function Page() {
         <Table
           dataSource={swr.data?.map((item) => ({
             key: item.userId,
-            userId: item.userId,
             name: item.displayName,
+            phoneNumber: item.phoneNumber || "",
+            school: item.school || "",
             gradeListening: item.gradeListening || "",
             gradeReading: item.gradeReading || "",
             gradeWriting: item.gradeWriting || "",
             gradeSpeaking: item.gradeSpeaking || ""
           }))}
           columns={[
-            { title: "User ID", dataIndex: "userId", key: "user_id" },
             { title: "Name", dataIndex: "name", key: "name" },
             {
-              title: "Grade Listening",
+              title: "Phone Number",
+              dataIndex: "phoneNumber",
+              key: "phoneNumber"
+            },
+            {
+              title: "School",
+              dataIndex: "school",
+              key: "school"
+            },
+            {
+              title: "Listening",
               dataIndex: "gradeListening",
               key: "gradeListening"
             },
             {
-              title: "Grade Reading",
+              title: "Reading",
               dataIndex: "gradeReading",
               key: "gradeReading"
             },
             {
-              title: "Grade Writing",
+              title: "Writing",
               dataIndex: "gradeWriting",
               key: "gradeWriting"
             },
             {
-              title: "Grade Speaking",
+              title: "Speaking",
               dataIndex: "gradeSpeaking",
               key: "gradeSpeaking"
             }

@@ -45,14 +45,7 @@ export default function Navbar({ className, style }: Props) {
           {loginStatus?.loggedIn ? (
             <Dropdown
               menu={{
-                items: [
-                  {
-                    key: "2",
-                    label: "Edit Profile",
-                    onClick: () => router.push("/me/edit")
-                  },
-                  { key: "1", label: "Logout", onClick: logout }
-                ]
+                items: [{ key: "1", label: "Logout", onClick: logout }]
               }}
             >
               <Link
