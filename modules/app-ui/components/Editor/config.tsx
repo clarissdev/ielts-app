@@ -14,6 +14,7 @@ import RadioGroup from "./components/RadioGroup";
 import SelectTable from "./components/SelectTable";
 import Ul from "./components/Ul";
 import { getCommentThreadsOnTextNode } from "./utils";
+import InfoTable from "./components/InfoTable";
 
 type Config = {
   disableEditing: boolean;
@@ -70,6 +71,18 @@ export default function useEditorConfig(
         return <CheckboxList {...props} />;
       case "table":
         return <SelectTable {...props} />;
+      case "info-table":
+        return <InfoTable {...props} />;
+      case "info-table-head":
+        return <InfoTable.Head {...props} />;
+      case "info-table-body":
+        return <InfoTable.Body {...props} />;
+      case "info-table-th":
+        return <InfoTable.Th {...props} />;
+      case "info-table-tr":
+        return <InfoTable.Tr {...props} />;
+      case "info-table-td":
+        return <InfoTable.Td {...props} />;
       case "radio":
         return <RadioGroup {...props} />;
       case "collapse-group":
@@ -83,6 +96,10 @@ export default function useEditorConfig(
   };
 
   const renderLeaf = ({ attributes, children, leaf }: RenderLeafProps) => {
+    if ("sub" in leaf && leaf.sub) {
+      children = <sub>{children}</sub>;
+    }
+
     if ("bold" in leaf && leaf.bold) {
       children = <strong>{children}</strong>;
     }

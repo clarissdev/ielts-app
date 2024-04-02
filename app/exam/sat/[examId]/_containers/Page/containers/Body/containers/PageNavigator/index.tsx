@@ -1,0 +1,59 @@
+import { Button, Checkbox, Popover } from "antd";
+import cx from "clsx";
+import React from "react";
+import { AiOutlineClose } from "react-icons/ai";
+import { MdArrowLeft, MdArrowRight } from "react-icons/md";
+import { useRecoilValue } from "recoil";
+
+import styles from "./index.module.scss";
+
+import { answersState } from "@/modules/app-ui/components/Editor/utils";
+import Flex from "@/modules/app-ui/components/Flex";
+import { getQuestionId, getQuestionIdsFromTasks } from "@/modules/common-utils";
+import { range } from "@/modules/common-utils";
+import { SatExam } from "@/modules/business-types";
+
+type Props = {
+  currentModule: number;
+  initialExam: SatExam;
+  currentTask: number;
+  onChangeCurrentTask: (value: number) => void;
+};
+
+export default function PageNavigator({
+  initialExam,
+  currentTask,
+  currentModule,
+  onChangeCurrentTask
+}: Props) {
+  const answers = useRecoilValue(answersState);
+  const questionIdsFromTasks = initialExam.modules[currentModule].tasks.map(
+    (_, index) => `question_${index < 10 ? `0${index}` : index}`
+  );
+  const [openPopover, setOpenPopover] = React.useState(false);
+
+  return (
+    <Flex.Row
+      alignItems="center"
+      padding="4px 20px"
+      justifyContent="space-between"
+    >
+      <Flex.Row gap="12px">
+        <Button
+          size="small"
+          icon={<MdArrowLeft size="22px" />}
+          disabled={currentTask === 0}
+          onClick={() => onChangeCurrentTask(currentTask - 1)}
+        ></Button>
+        <Button
+          size="small"
+          icon={<MdArrowRight size="22px" />}
+          disabled={
+            currentTask === initialExam.modules[currentModule].tasks.length - 1
+          }
+          onClick={() => onChangeCurrentTask(currentTask + 1)}
+        ></Button>
+      </Flex.Row>
+    </Flex.Row>
+  );
+}

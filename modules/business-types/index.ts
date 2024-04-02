@@ -92,3 +92,20 @@ export const SpeakingExam = z.object({
 });
 
 export type SpeakingExam = z.infer<typeof SpeakingExam>;
+
+export const SatExam = z.object({
+  examId: z.string(),
+  modules: z
+    .object({
+      timeLimit: UnixTimestamp,
+      tasks: z
+        .object({
+          readingContent: z.string(),
+          questionContent: z.string()
+        })
+        .array()
+    })
+    .array()
+});
+
+export type SatExam = z.infer<typeof SatExam>;

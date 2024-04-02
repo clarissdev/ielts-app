@@ -19,7 +19,15 @@ export default function ToolBar() {
       onClick: (e) => {
         e.domEvent.preventDefault();
         toggleMark(editor, "bold");
-      },
+      }
+    },
+    {
+      key: "sub",
+      label: <div>sub</div>,
+      onClick: (e) => {
+        e.domEvent.preventDefault();
+        toggleMark(editor, "sub");
+      }
     },
     {
       key: "italic",
@@ -27,7 +35,7 @@ export default function ToolBar() {
       onClick: (e) => {
         e.domEvent.preventDefault();
         toggleMark(editor, "italic");
-      },
+      }
     },
     {
       key: "underline",
@@ -35,7 +43,7 @@ export default function ToolBar() {
       onClick: (e) => {
         e.domEvent.preventDefault();
         toggleMark(editor, "underline");
-      },
+      }
     },
     {
       key: "highlight",
@@ -43,8 +51,8 @@ export default function ToolBar() {
       onClick: (e) => {
         e.domEvent.preventDefault();
         toggleMark(editor, "highlight");
-      },
-    },
+      }
+    }
   ];
   return (
     <Menu className={styles.container} items={items} mode="horizontal"></Menu>
