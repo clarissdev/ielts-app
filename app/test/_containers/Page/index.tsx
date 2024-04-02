@@ -206,7 +206,7 @@ export default function Route({
                 ) : undefined}
               </Flex.Col>
             </Flex.Row>
-            <h4>SAT</h4>
+            {/* <h4>SAT</h4>
             <Flex.Row
               flex="1 1 0"
               padding="0 56px"
@@ -226,7 +226,7 @@ export default function Route({
               >
                 Practice Test
               </Button>
-            </Flex.Row>
+            </Flex.Row> */}
           </>
         ) : (
           <div style={{ textAlign: "center" }}>

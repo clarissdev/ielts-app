@@ -49,6 +49,9 @@ export default function Body({ initialExam }: Props) {
               style={{ display: index === currentTask ? "block" : "none" }}
               initialReadingContent={readingContent}
               initialQuestionContent={questionContent}
+              onCheckmark={function (): void {
+                throw new Error("Function not implemented.");
+              }}
             />
           );
         })}

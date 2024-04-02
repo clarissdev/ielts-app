@@ -1,4 +1,4 @@
-import { Button, Checkbox, Popover } from "antd";
+import { Button, Checkbox, Dropdown, Popover } from "antd";
 import cx from "clsx";
 import React from "react";
 import { AiOutlineClose } from "react-icons/ai";
@@ -40,14 +40,14 @@ export default function PageNavigator({
     >
       <Flex.Row gap="12px">
         <Button
-          size="small"
-          icon={<MdArrowLeft size="22px" />}
+          size="large"
+          icon={<MdArrowLeft size="26px" />}
           disabled={currentTask === 0}
           onClick={() => onChangeCurrentTask(currentTask - 1)}
         ></Button>
         <Button
-          size="small"
-          icon={<MdArrowRight size="22px" />}
+          size="large"
+          icon={<MdArrowRight size="26px" />}
           disabled={
             currentTask === initialExam.modules[currentModule].tasks.length - 1
           }

@@ -11,3 +11,12 @@
     }
   }
 }
+
+.column {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  flex: 1 1 120px;
+  min-height: 120px;
+  overflow-y: auto;
+}
