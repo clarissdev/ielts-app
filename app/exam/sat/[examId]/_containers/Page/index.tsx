@@ -1,8 +1,10 @@
 "use client";
-import { SatExam } from "@/modules/business-types";
-import { RecoilRoot } from "recoil";
 import React from "react";
+import { RecoilRoot } from "recoil";
+
 import Body from "./containers/Body";
+
+import { SatExam } from "@/modules/business-types";
 
 type Props = {
   initialExam: SatExam;

@@ -1,13 +1,16 @@
-import { answersState } from "@/modules/app-ui/components/Editor/utils";
 import useNotification from "antd/es/notification/useNotification";
 import React from "react";
 import { useRecoilState } from "recoil";
-import SettingBar from "../../../../../../reading/[examId]/_containers/Page/components/SettingBar";
-import { SatExam } from "@/modules/business-types";
-import Flex from "@/modules/app-ui/components/Flex";
-import TaskViewer from "./containers/TaskViewer";
 import { Descendant } from "slate";
+
+import SettingBar from "../../../../../../reading/[examId]/_containers/Page/components/SettingBar";
+
 import PageNavigator from "./containers/PageNavigator";
+import TaskViewer from "./containers/TaskViewer";
+
+import { answersState } from "@/modules/app-ui/components/Editor/utils";
+import Flex from "@/modules/app-ui/components/Flex";
+import { SatExam } from "@/modules/business-types";
 
 type Props = {
   initialExam: SatExam;

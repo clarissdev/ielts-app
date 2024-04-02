@@ -9,9 +9,9 @@ import styles from "./index.module.scss";
 
 import { answersState } from "@/modules/app-ui/components/Editor/utils";
 import Flex from "@/modules/app-ui/components/Flex";
+import { SatExam } from "@/modules/business-types";
 import { getQuestionId, getQuestionIdsFromTasks } from "@/modules/common-utils";
 import { range } from "@/modules/common-utils";
-import { SatExam } from "@/modules/business-types";
 
 type Props = {
   currentModule: number;

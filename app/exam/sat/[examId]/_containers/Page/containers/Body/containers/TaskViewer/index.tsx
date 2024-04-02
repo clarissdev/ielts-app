@@ -1,10 +1,13 @@
-import styles from "./index.module.scss";
-import Flex from "@/modules/app-ui/components/Flex";
-import { Descendant } from "slate";
-import React from "react";
-import Editor from "@/modules/app-ui/components/Editor";
-import PageLayout$TwoColumns from "../../../../../../../../_components/PageLayout$TwoColumns";
 import { Button } from "antd";
+import React from "react";
+import { Descendant } from "slate";
+
+import PageLayout$TwoColumns from "../../../../../../../../_components/PageLayout$TwoColumns";
+
+import styles from "./index.module.scss";
+
+import Editor from "@/modules/app-ui/components/Editor";
+import Flex from "@/modules/app-ui/components/Flex";
 
 type Props = {
   className?: string;

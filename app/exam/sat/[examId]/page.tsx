@@ -3,6 +3,8 @@ import { cookies, headers } from "next/headers";
 import { notFound, redirect } from "next/navigation";
 import { unstable_serialize } from "swr";
 
+import { intentionallyIgnoreError, formatFallback } from "../../../../utils";
+
 import Page from "./_containers/Page";
 
 import { handler$GetSatExam } from "@/modules/commands/GetSatExam/handler";
@@ -11,7 +13,6 @@ import { getResourceKey$LoginStatus } from "@/modules/commands/LoginStatus/fetch
 import { handler$LoginStatus } from "@/modules/commands/LoginStatus/handler";
 import { getDb } from "@/modules/mongodb";
 import { SWRProvider } from "@/modules/swr/components/SWRProvider";
-import { intentionallyIgnoreError, formatFallback } from "../../../../utils";
 
 export const metadata: Metadata = {
   title: "SAT"
