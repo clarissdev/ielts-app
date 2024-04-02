@@ -4,7 +4,7 @@ import { Button, Input } from "antd";
 import useNotification from "antd/es/notification/useNotification";
 import { useRouter } from "next/navigation";
 import React from "react";
-import { FaHeadphones } from "react-icons/fa";
+import { FaHeadphones, FaUniversity } from "react-icons/fa";
 import { FaBookOpen } from "react-icons/fa6";
 import { MdModeEdit } from "react-icons/md";
 import { RiSpeakFill } from "react-icons/ri";
@@ -113,9 +113,10 @@ export default function Route({
               <Button onClick={handleReset}>Reset</Button>
             </Flex.Row>
             <h3>Test ngay</h3>
+            <h4>IELTS 1</h4>
             <Flex.Row
               flex="1 1 0"
-              padding="8px 56px"
+              padding="0 56px"
               gap="12px"
               justifyContent="center"
               flexWrap="wrap"
@@ -205,6 +206,27 @@ export default function Route({
                 ) : undefined}
               </Flex.Col>
             </Flex.Row>
+            {/* <h4>SAT</h4>
+            <Flex.Row
+              flex="1 1 0"
+              padding="0 56px"
+              gap="12px"
+              justifyContent="center"
+              flexWrap="wrap"
+            >
+              <Button
+                type="primary"
+                target="_blank"
+                rel="noreferrer"
+                size="large"
+                href="/exam/sat/6608d0b30f2bffbd5166f0ff"
+                className={styles.button}
+                icon={<FaUniversity />}
+                disabled={shouldDisableAllTests || submissionReading != null}
+              >
+                Practice Test
+              </Button>
+            </Flex.Row> */}
           </>
         ) : (
           <div style={{ textAlign: "center" }}>
