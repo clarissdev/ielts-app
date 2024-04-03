@@ -1,8 +1,10 @@
 import { Button } from "antd";
+import cx from "clsx";
 import React from "react";
 import { Descendant } from "slate";
-import cx from "clsx";
+
 import styles from "./index.module.scss";
+
 import Editor from "@/modules/app-ui/components/Editor";
 import Flex from "@/modules/app-ui/components/Flex";
 
