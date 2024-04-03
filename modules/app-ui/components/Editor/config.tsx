@@ -15,6 +15,8 @@ import SelectTable from "./components/SelectTable";
 import Ul from "./components/Ul";
 import { getCommentThreadsOnTextNode } from "./utils";
 import InfoTable from "./components/InfoTable";
+import Fraction from "./components/Fraction";
+import ImageV2 from "./components/ImageV2";
 
 type Config = {
   disableEditing: boolean;
@@ -63,6 +65,8 @@ export default function useEditorConfig(
         return <h3 {...attributes}>{children}</h3>;
       case "h4":
         return <h4 {...attributes}>{children}</h4>;
+      case "imagev2":
+        return <ImageV2 {...props} />;
       case "image":
         return <ImageFigure {...props} />;
       case "input":
@@ -89,6 +93,8 @@ export default function useEditorConfig(
         return <CollapseGroup {...props} />;
       case "ul":
         return <Ul {...props} />;
+      case "fraction":
+        return <Fraction {...props} />;
       default:
         // For the default case, we delegate to Slate's default rendering.
         return <DefaultElement {...props} />;
@@ -96,6 +102,10 @@ export default function useEditorConfig(
   };
 
   const renderLeaf = ({ attributes, children, leaf }: RenderLeafProps) => {
+    if ("sup" in leaf && leaf.sup) {
+      children = <sup>{children}</sup>;
+    }
+
     if ("sub" in leaf && leaf.sub) {
       children = <sub>{children}</sub>;
     }

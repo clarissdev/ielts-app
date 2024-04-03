@@ -14,80 +14,14 @@ export default function Page() {
     //       type: "div",
     //       children: [
     //         {
-    //           text: "Horses' Responses to Novel Objects Based on Number of Handlers",
-    //           bold: true
+    //           text: "The total amount of plastic remaining to be recycled in a facility over x shifts is represented by the graph above. Which of the following represents the y-intercept of the graph?"
     //         }
     //       ]
     //     },
     //     {
-    //       type: "info-table",
-    //       numRows: 6,
-    //       numColumns: 3,
-    //       children: [
-    //         {
-    //           type: "info-table-head",
-    //           children: [
-    //             {
-    //               type: "info-table-tr",
-    //               children: [
-    //                 {
-    //                   type: "info-table-th",
-    //                   children: [{ text: "" }]
-    //                 },
-    //                 {
-    //                   type: "info-table-th",
-    //                   children: [{ text: "Only One Handler" }]
-    //                 },
-    //                 {
-    //                   type: "info-table-th",
-    //                   children: [{ text: "Multiple Handlers" }]
-    //                 }
-    //               ]
-    //             }
-    //           ]
-    //         },
-    //         {
-    //           type: "info-table-body",
-    //           children: [
-    //             {
-    //               type: "info-table-tr",
-    //               children: [
-    //                 {
-    //                   type: "info-table-td",
-    //                   children: [{ text: "No reluctance", bold: true }]
-    //                 },
-    //                 {
-    //                   type: "info-table-td",
-    //                   children: [{ text: "45%" }]
-    //                 },
-    //                 { type: "info-table-td", children: [{ text: "25%" }] }
-    //               ]
-    //             },
-    //             {
-    //               type: "info-table-tr",
-    //               children: [
-    //                 {
-    //                   type: "info-table-td",
-    //                   children: [{ text: "Mild reluctance", bold: true }]
-    //                 },
-    //                 {
-    //                   type: "info-table-td",
-    //                   children: [{ text: "42%" }]
-    //                 },
-    //                 { type: "info-table-td", children: [{ text: "49%" }] }
-    //               ]
-    //             }
-    //           ]
-    //         }
-    //       ]
-    //     },
-    //     {
-    //       type: "div",
-    //       children: [
-    //         {
-    //           text: "Horses have been domesticated for thousands of years. Therefore, they show great sensitivity to the emotions of humans. Biologist Océane Liehrmann from the University of Turku, Finland, led a team of researchers in a study of horses to determine the effect of the number of handlers (either only one person or multiple people) on the horses' responses to a novel object. The researchers determined that horses with only one handler were less reluctant to interact with the novel object than were horses with multiple handlers. For example, 45% of horses with only one handler had no reluctance when interacting with a novel object while _______\n\nWhich choice most effectively uses data from the table to complete the example?"
-    //         }
-    //       ]
+    //       type: "imagev2",
+    //       src: "https://theenglishcoach.vn/assets/sat_1_m3_q5.png",
+    //       children: [{ text: "" }]
     //     }
     //   ]
     // }
@@ -101,7 +35,21 @@ export default function Page() {
     //       type: "div",
     //       children: [
     //         {
-    //           text: "A) Washington, D.C., on the 18th and the 19th."
+    //           text: "A) "
+    //         },
+    //         {
+    //           type: "fraction",
+    //           children: [{ text: "1" }, { text: "10" }]
+    //         },
+    //         {
+    //           text: " x + "
+    //         },
+    //         {
+    //           type: "fraction",
+    //           children: [{ text: "1" }, { text: "7" }]
+    //         },
+    //         {
+    //           text: " y = 200"
     //         }
     //       ]
     //     },
@@ -109,7 +57,21 @@ export default function Page() {
     //       type: "div",
     //       children: [
     //         {
-    //           text: "B) Philadelphia, PA, on the 23rd and the 25th"
+    //           text: "B) "
+    //         },
+    //         {
+    //           type: "fraction",
+    //           children: [{ text: "1" }, { text: "10" }]
+    //         },
+    //         {
+    //           text: " x + "
+    //         },
+    //         {
+    //           type: "fraction",
+    //           children: [{ text: "1" }, { text: "7" }]
+    //         },
+    //         {
+    //           text: " y = 3,420"
     //         }
     //       ]
     //     },
@@ -117,7 +79,7 @@ export default function Page() {
     //       type: "div",
     //       children: [
     //         {
-    //           text: "C) Philadelphia, PA, on the 24th and the 26th."
+    //           text: "C) 10x + 7y = 200"
     //         }
     //       ]
     //     },
@@ -125,7 +87,7 @@ export default function Page() {
     //       type: "div",
     //       children: [
     //         {
-    //           text: "D) Washington, D.C., on the 23rd and the 24th."
+    //           text: "D) 10x + 7y = 3,420"
     //         }
     //       ]
     //     }
