@@ -1,17 +1,15 @@
 import { Button } from "antd";
 import React from "react";
 import { Descendant } from "slate";
-
-import PageLayout$TwoColumns from "../../../../../../../../_components/PageLayout$TwoColumns";
-
+import cx from "clsx";
 import styles from "./index.module.scss";
-
 import Editor from "@/modules/app-ui/components/Editor";
 import Flex from "@/modules/app-ui/components/Flex";
 
 type Props = {
   className?: string;
   style?: React.CSSProperties;
+  currentModule: number;
   currentTask: number;
   initialReadingContent: Descendant[];
   initialQuestionContent: Descendant[];
@@ -23,6 +21,7 @@ export default function TaskViewer({
   className,
   style,
   currentTask,
+  currentModule,
   initialReadingContent,
   initialQuestionContent,
   onCheckmark
@@ -34,9 +33,10 @@ export default function TaskViewer({
     initialQuestionContent
   );
   return (
-    <div className={className} style={style}>
+    <div className={cx(styles.container, className)} style={style}>
       <Flex.Row>
         <Flex.Cell flex="1 1 300px" padding="12px" className={styles.column}>
+          <div className={styles.module}>{`Module ${currentModule}`}</div>
           <Editor
             className={styles.editor}
             value={readingContent}

@@ -1,3 +1,5 @@
+@use "@/modules/app-ui/styles/_colors.scss" as colors;
+
 .editor {
   div {
     outline: none;
@@ -19,4 +21,23 @@
   flex: 1 1 120px;
   min-height: 120px;
   overflow-y: auto;
+}
+
+.currentTask {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 30px;
+  height: 30px;
+  color: white;
+  font-size: 20px;
+  background-color: colors.$primary;
+  font-weight: 500;
+  border-radius: 4px;
+}
+
+.module {
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 150%;
 }

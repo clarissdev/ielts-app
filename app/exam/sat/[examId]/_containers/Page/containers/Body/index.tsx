@@ -17,8 +17,7 @@ type Props = {
 };
 
 export default function Body({ initialExam }: Props) {
-  const [result, setResult] = React.useState(0);
-  const [hideScreen, setHideScreen] = React.useState(false);
+  const [result, setResult] = React.useState<string[][]>([]);
   const answers = useRecoilState(answersState);
   const [notificationApi, notificationContextHolder] = useNotification();
 
@@ -26,13 +25,20 @@ export default function Body({ initialExam }: Props) {
   const [currentTask, setCurrentTask] = React.useState(0);
 
   return (
-    <Flex.Col minHeight="100vh">
+    <Flex.Col style={{ height: "100vh" }} key={currentModule}>
       <SettingBar
         duration={initialExam.modules[currentModule].timeLimit}
-        onSubmit={async () => {}}
+        onSubmit={async () => {
+          if (currentModule + 1 < initialExam.modules.length) {
+            setCurrentModule(currentModule + 1);
+            setCurrentTask(0);
+          } else {
+            // ... do smth
+          }
+        }}
         onChangeHideScreen={async () => {}}
       />
-      <Flex.Cell flex="1 1 0">
+      <Flex.Cell flex="1 1 0" minHeight="0" style={{ overflowY: "auto" }}>
         {initialExam.modules[currentModule].tasks.map((task, index) => {
           const readingContent = (JSON.parse(
             task.readingContent.replace(/\n/g, "\\n")
@@ -48,6 +54,7 @@ export default function Body({ initialExam }: Props) {
           return (
             <TaskViewer
               key={index}
+              currentModule={currentModule + 1}
               currentTask={index + 1}
               style={{ display: index === currentTask ? "block" : "none" }}
               initialReadingContent={readingContent}

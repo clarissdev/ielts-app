@@ -22,6 +22,14 @@ export default function ToolBar() {
       }
     },
     {
+      key: "sup",
+      label: <div>sup</div>,
+      onClick: (e) => {
+        e.domEvent.preventDefault();
+        toggleMark(editor, "sup");
+      }
+    },
+    {
       key: "sub",
       label: <div>sub</div>,
       onClick: (e) => {

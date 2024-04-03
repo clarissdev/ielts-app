@@ -61,7 +61,7 @@ export default function Page({ submission, exam, user }: Props) {
                 {submission.answer[taskIndex][index] != null ? (
                   <audio controls>
                     <source
-                      src={`https://theenglishcoach.vn/blobs/${submission.answer[taskIndex][index]}.wav`}
+                      src={`https://static.theenglishcoach.vn/blobs/${submission.answer[taskIndex][index]}.wav`}
                     ></source>
                   </audio>
                 ) : (
