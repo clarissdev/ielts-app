@@ -5,6 +5,10 @@ import useNotification from "antd/es/notification/useNotification";
 import { useRouter } from "next/navigation";
 import React from "react";
 
+import ButtonListening from "./components/ButtonListening";
+import ButtonReading from "./components/ButtonReading";
+import ButtonSpeaking from "./components/ButtonSpeaking";
+import ButtonWriting from "./components/ButtonWriting";
 import styles from "./index.module.scss";
 
 import Navbar from "@/modules/app-components/Navbar";
@@ -13,10 +17,6 @@ import { httpPost$EditProfile } from "@/modules/commands/EditProfile/fetcher";
 import { useLoginStatus } from "@/modules/common-hooks/useLoginStatus";
 import { shamelesslyRevalidateEverything } from "@/modules/common-utils";
 import { DisplayableError } from "@/modules/error";
-import ButtonListening from "./components/ButtonListening";
-import ButtonReading from "./components/ButtonReading";
-import ButtonWriting from "./components/ButtonWriting";
-import ButtonSpeaking from "./components/ButtonSpeaking";
 
 export default function Page() {
   const loginStatus = useLoginStatus();

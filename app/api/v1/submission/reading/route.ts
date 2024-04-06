@@ -1,8 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 
-import { getDb } from "@/modules/mongodb";
-import { GetSubmissionReading$Params } from "@/modules/commands/GetSubmissionReading/typing";
 import { handler$GetSubmissionReading } from "@/modules/commands/GetSubmissionReading/handler";
+import { GetSubmissionReading$Params } from "@/modules/commands/GetSubmissionReading/typing";
+import { getDb } from "@/modules/mongodb";
 
 export async function GET(request: NextRequest) {
   const db = await getDb();

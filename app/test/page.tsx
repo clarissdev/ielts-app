@@ -2,9 +2,10 @@ import { Metadata } from "next";
 import { cookies } from "next/headers";
 import { unstable_serialize } from "swr";
 
-import { formatFallback, intentionallyIgnoreError } from "../../utils";
+import { formatFallback } from "../../utils";
 
 import Page from "./_containers/Page";
+
 import { getResourceKey$LoginStatus } from "@/modules/commands/LoginStatus/fetcher";
 import { handler$LoginStatus } from "@/modules/commands/LoginStatus/handler";
 import { getDb } from "@/modules/mongodb";

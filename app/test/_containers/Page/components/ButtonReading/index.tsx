@@ -1,14 +1,15 @@
-import Flex from "@/modules/app-ui/components/Flex";
 import { Button } from "antd";
-import styles from "./index.module.scss";
-import { MdModeEdit } from "react-icons/md";
+import { FaBookOpen } from "react-icons/fa";
 import useSWR from "swr";
+
+import styles from "./index.module.scss";
+
+import Flex from "@/modules/app-ui/components/Flex";
 import {
   getResourceKey$GetSubmissionReading,
   httpGet$GetSubmissionReading
 } from "@/modules/commands/GetSubmissionReading/fetcher";
 import { useLoginStatus } from "@/modules/common-hooks/useLoginStatus";
-import { FaBookOpen } from "react-icons/fa";
 
 type Props = {
   examId: string;

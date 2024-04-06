@@ -1,8 +1,10 @@
-import Flex from "@/modules/app-ui/components/Flex";
 import { Button } from "antd";
-import styles from "./index.module.scss";
 import { MdModeEdit } from "react-icons/md";
 import useSWR from "swr";
+
+import styles from "./index.module.scss";
+
+import Flex from "@/modules/app-ui/components/Flex";
 import {
   getResourceKey$GetSubmissionListening,
   httpGet$GetSubmissionListening
