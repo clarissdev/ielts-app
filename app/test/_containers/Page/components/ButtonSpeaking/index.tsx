@@ -30,7 +30,7 @@ export default function ButtonSpeaking({ examId, disabled }: Props) {
         ? await httpGet$GetSubmissionSpeaking(`/api/v1/submission/speaking`, {
             examId,
             createdBy: loginStatus.userId
-          })
+          }).catch((e) => undefined)
         : undefined
   );
   return (

@@ -30,7 +30,7 @@ export default function ButtonListening({ examId, disabled }: Props) {
         ? await httpGet$GetSubmissionListening(`/api/v1/submission/listening`, {
             examId,
             createdBy: loginStatus.userId
-          })
+          }).catch((e) => undefined)
         : undefined
   );
   return (

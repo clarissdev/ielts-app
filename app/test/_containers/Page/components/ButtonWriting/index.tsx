@@ -30,7 +30,7 @@ export default function ButtonWriting({ examId, disabled }: Props) {
         ? await httpGet$GetSubmissionWriting(`/api/v1/submission/writing`, {
             examId,
             createdBy: loginStatus.userId
-          })
+          }).catch((e) => undefined)
         : undefined
   );
   return (

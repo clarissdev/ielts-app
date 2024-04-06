@@ -30,7 +30,7 @@ export default function ButtonReading({ examId, disabled }: Props) {
         ? await httpGet$GetSubmissionReading(`/api/v1/submission/reading`, {
             examId,
             createdBy: loginStatus.userId
-          })
+          }).catch((e) => undefined)
         : undefined
   );
   return (
