@@ -138,6 +138,10 @@ export default function Page() {
                 disabled={shouldDisableAllTests}
                 examId="661153bf5e805cd51bd54159"
               />
+              <ButtonWriting
+                disabled={shouldDisableAllTests}
+                examId="661180955305d417392457bf"
+              />
             </Flex.Row>
           </>
         ) : (
