@@ -49,6 +49,7 @@ export default async function Route({ params }: PageProps) {
   if (!exam) notFound();
 
   const submission = await handler$GetSubmissionSpeaking(db, {
+    examId: params.examId,
     createdBy: loginStatus.userId
   }).catch(intentionallyIgnoreError);
 

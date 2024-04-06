@@ -1,11 +1,11 @@
 /** @type {import('next').NextConfig} */
 
-const CLOUDFRONT_HOST = process.env.NEXT_PUBLIC_CLOUDFRONT_HOST || "";
-
 const nextConfig = {
   images: {
     remotePatterns: [
-      { hostname: CLOUDFRONT_HOST },
+      {
+        hostname: "static.theenglishcoach.vn"
+      },
       { hostname: `iotcdn.oss-ap-southeast-1.aliyuncs.com` }
     ],
     // The config below must be coupled to:

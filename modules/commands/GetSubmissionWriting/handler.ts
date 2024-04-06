@@ -3,6 +3,7 @@ import { Db, ObjectId } from "mongodb";
 import { assert } from "../utils";
 
 import { Result, Params } from "./typing";
+import { z } from "zod";
 
 export async function handler$GetSubmissionWriting(db: Db, params: Params) {
   const agg = [
@@ -12,6 +13,7 @@ export async function handler$GetSubmissionWriting(db: Db, params: Params) {
             _id: ObjectId.createFromHexString(params.submissionId)
           }
         : {
+            examId: params.examId,
             createdBy: params.createdBy
           }
     }

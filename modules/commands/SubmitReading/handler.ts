@@ -1,6 +1,5 @@
 import { Db } from "mongodb";
 
-import { getScoreFromNumCorrectQuestions } from "../../../app/submission/reading/[submissionId]/utils";
 import { handler$GetAnswerReading } from "../GetAnswerReading/handler";
 
 import { SubmitReading$Params, SubmitReading$Result } from "./typing";
@@ -11,6 +10,23 @@ type Options = {
   params: SubmitReading$Params;
   createdBy: string;
 };
+
+function getScoreFromNumCorrectQuestions(numCorrectQuestions: number) {
+  if (numCorrectQuestions >= 39 && numCorrectQuestions <= 40) return 9;
+  if (numCorrectQuestions >= 37 && numCorrectQuestions <= 38) return 8.5;
+  if (numCorrectQuestions >= 35 && numCorrectQuestions <= 36) return 8;
+  if (numCorrectQuestions >= 33 && numCorrectQuestions <= 34) return 7.5;
+  if (numCorrectQuestions >= 30 && numCorrectQuestions <= 32) return 7;
+  if (numCorrectQuestions >= 27 && numCorrectQuestions <= 29) return 6.5;
+  if (numCorrectQuestions >= 23 && numCorrectQuestions <= 26) return 6;
+  if (numCorrectQuestions >= 19 && numCorrectQuestions <= 22) return 5.5;
+  if (numCorrectQuestions >= 15 && numCorrectQuestions <= 18) return 5;
+  if (numCorrectQuestions >= 13 && numCorrectQuestions <= 14) return 4.5;
+  if (numCorrectQuestions >= 10 && numCorrectQuestions <= 12) return 4;
+  if (numCorrectQuestions >= 8 && numCorrectQuestions <= 9) return 3.5;
+  if (numCorrectQuestions >= 6 && numCorrectQuestions <= 7) return 3;
+  return 1;
+}
 
 export async function handler$SubmitReading(
   db: Db,
