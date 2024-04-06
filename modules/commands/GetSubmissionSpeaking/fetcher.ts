@@ -12,3 +12,7 @@ export async function httpGet$GetSubmissionSpeaking(
   const result = Result.parse(data);
   return result;
 }
+
+export function getResourceKey$GetSubmissionSpeaking(params: Params) {
+  return ["78a27873-17c0-4040-b810-e2ca1b2702bf", params];
+}

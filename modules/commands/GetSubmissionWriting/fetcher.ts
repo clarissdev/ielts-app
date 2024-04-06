@@ -12,3 +12,7 @@ export async function httpGet$GetSubmissionWriting(
   const result = Result.parse(data);
   return result;
 }
+
+export function getResourceKey$GetSubmissionWriting(params: Params) {
+  return ["06c71a67-b7c2-485b-9cb2-5cfb37706e52", params];
+}

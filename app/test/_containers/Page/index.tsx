@@ -4,37 +4,21 @@ import { Button, Input } from "antd";
 import useNotification from "antd/es/notification/useNotification";
 import { useRouter } from "next/navigation";
 import React from "react";
-import { FaHeadphones, FaUniversity } from "react-icons/fa";
-import { FaBookOpen } from "react-icons/fa6";
-import { MdModeEdit } from "react-icons/md";
-import { RiSpeakFill } from "react-icons/ri";
 
 import styles from "./index.module.scss";
 
 import Navbar from "@/modules/app-components/Navbar";
 import Flex from "@/modules/app-ui/components/Flex";
 import { httpPost$EditProfile } from "@/modules/commands/EditProfile/fetcher";
-import { GetSubmissionListening$Result } from "@/modules/commands/GetSubmissionListening/typing";
-import { GetSubmissionReading$Result } from "@/modules/commands/GetSubmissionReading/typing";
-import { GetSubmissionSpeaking$Result } from "@/modules/commands/GetSubmissionSpeaking/typing";
-import { GetSubmissionWriting$Result } from "@/modules/commands/GetSubmissionWriting/typing";
 import { useLoginStatus } from "@/modules/common-hooks/useLoginStatus";
 import { shamelesslyRevalidateEverything } from "@/modules/common-utils";
 import { DisplayableError } from "@/modules/error";
+import ButtonListening from "./components/ButtonListening";
+import ButtonReading from "./components/ButtonReading";
+import ButtonWriting from "./components/ButtonWriting";
+import ButtonSpeaking from "./components/ButtonSpeaking";
 
-type Props = {
-  submissionReading: GetSubmissionReading$Result | undefined;
-  submissionListening: GetSubmissionListening$Result | undefined;
-  submissionWriting: GetSubmissionWriting$Result | undefined;
-  submissionSpeaking: GetSubmissionSpeaking$Result | undefined;
-};
-
-export default function Route({
-  submissionReading,
-  submissionListening,
-  submissionWriting,
-  submissionSpeaking
-}: Props) {
+export default function Page() {
   const loginStatus = useLoginStatus();
   const router = useRouter();
   const [notificationApi, notificationContextHolder] = useNotification();
@@ -113,7 +97,7 @@ export default function Route({
               <Button onClick={handleReset}>Reset</Button>
             </Flex.Row>
             <h3>Test ngay</h3>
-            <h4>IELTS 1</h4>
+            <h4>IELTS Practice 1</h4>
             <Flex.Row
               flex="1 1 0"
               padding="0 56px"
@@ -121,92 +105,24 @@ export default function Route({
               justifyContent="center"
               flexWrap="wrap"
             >
-              <Flex.Col gap="12px">
-                <Button
-                  type="primary"
-                  target="_blank"
-                  rel="noreferrer"
-                  size="large"
-                  href="/exam/listening/658f86ff578ef4f9988f2eef"
-                  className={styles.button}
-                  icon={<FaHeadphones />}
-                  disabled={
-                    shouldDisableAllTests || submissionListening != null
-                  }
-                >
-                  Listening
-                </Button>
-                {submissionListening ? (
-                  <div>{`Your result: ${submissionListening?.grade?.toFixed(
-                    1
-                  )}`}</div>
-                ) : undefined}
-              </Flex.Col>
-              <Flex.Col gap="12px">
-                <Button
-                  type="primary"
-                  target="_blank"
-                  rel="noreferrer"
-                  size="large"
-                  href="/exam/reading/657bd98a5b375e28c31b3ba2"
-                  className={styles.button}
-                  icon={<FaBookOpen />}
-                  disabled={shouldDisableAllTests || submissionReading != null}
-                >
-                  Reading
-                </Button>
-                {submissionReading ? (
-                  <div>{`Your result: ${submissionReading?.grade?.toFixed(
-                    1
-                  )}`}</div>
-                ) : undefined}
-              </Flex.Col>
-              <Flex.Col gap="12px">
-                <Button
-                  type="primary"
-                  target="_blank"
-                  rel="noreferrer"
-                  size="large"
-                  href="/exam/writing/658baf8b872548f88a2ca396"
-                  className={styles.button}
-                  icon={<MdModeEdit />}
-                  disabled={shouldDisableAllTests || submissionWriting != null}
-                >
-                  Writing
-                </Button>
-                {submissionWriting ? (
-                  <div>{`Your result: ${
-                    submissionWriting?.grade
-                      ? submissionWriting.grade.toFixed(1)
-                      : "TBD"
-                  }`}</div>
-                ) : undefined}
-              </Flex.Col>
-              <Flex.Col gap="12px">
-                <Button
-                  type="primary"
-                  target="_blank"
-                  rel="noreferrer"
-                  size="large"
-                  disabled={shouldDisableAllTests || submissionSpeaking != null}
-                  className={styles.button}
-                  href={`/exam/speaking?${new URLSearchParams({
-                    redirectUrl: "/exam/speaking/65938f57dc0c9c2ee05f3501"
-                  })}`}
-                  icon={<RiSpeakFill />}
-                >
-                  Speaking
-                </Button>
-                {submissionSpeaking ? (
-                  <div>{`Your result: ${
-                    submissionSpeaking?.grade
-                      ? submissionSpeaking.grade.toFixed(1)
-                      : "TBD"
-                  }`}</div>
-                ) : undefined}
-              </Flex.Col>
+              <ButtonListening
+                disabled={shouldDisableAllTests}
+                examId="658f86ff578ef4f9988f2eef"
+              />
+              <ButtonReading
+                disabled={shouldDisableAllTests}
+                examId="657bd98a5b375e28c31b3ba2"
+              />
+              <ButtonWriting
+                disabled={shouldDisableAllTests}
+                examId="658baf8b872548f88a2ca396"
+              />
+              <ButtonSpeaking
+                disabled={shouldDisableAllTests}
+                examId="65938f57dc0c9c2ee05f3501"
+              />
             </Flex.Row>
-            {/* <h4>SAT</h4>
+            <h4>IELTS Practice 2</h4>
             <Flex.Row
               flex="1 1 0"
               padding="0 56px"
@@ -214,19 +130,15 @@ export default function Route({
               justifyContent="center"
               flexWrap="wrap"
             >
-              <Button
-                type="primary"
-                target="_blank"
-                rel="noreferrer"
-                size="large"
-                href="/exam/sat/6608d0b30f2bffbd5166f0ff"
-                className={styles.button}
-                icon={<FaUniversity />}
-                disabled={shouldDisableAllTests || submissionReading != null}
-              >
-                Practice Test
-              </Button>
-            </Flex.Row> */}
+              <ButtonReading
+                disabled={shouldDisableAllTests}
+                examId="660d595c085c87fd48ba271b"
+              />
+              <ButtonListening
+                disabled={shouldDisableAllTests}
+                examId="661153bf5e805cd51bd54159"
+              />
+            </Flex.Row>
           </>
         ) : (
           <div style={{ textAlign: "center" }}>

@@ -12,6 +12,7 @@ export async function handler$GetSubmissionSpeaking(db: Db, params: Params) {
             _id: ObjectId.createFromHexString(params.submissionId)
           }
         : {
+            examId: params.examId,
             createdBy: params.createdBy
           }
     }

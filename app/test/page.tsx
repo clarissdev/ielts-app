@@ -5,11 +5,6 @@ import { unstable_serialize } from "swr";
 import { formatFallback, intentionallyIgnoreError } from "../../utils";
 
 import Page from "./_containers/Page";
-
-import { handler$GetSubmissionListening } from "@/modules/commands/GetSubmissionListening/handler";
-import { handler$GetSubmissionReading } from "@/modules/commands/GetSubmissionReading/handler";
-import { handler$GetSubmissionSpeaking } from "@/modules/commands/GetSubmissionSpeaking/handler";
-import { handler$GetSubmissionWriting } from "@/modules/commands/GetSubmissionWriting/handler";
 import { getResourceKey$LoginStatus } from "@/modules/commands/LoginStatus/fetcher";
 import { handler$LoginStatus } from "@/modules/commands/LoginStatus/handler";
 import { getDb } from "@/modules/mongodb";
@@ -26,30 +21,6 @@ export default async function Route() {
     token: cookieList.get("token")?.value
   });
 
-  const submissionReading = loginStatus.loggedIn
-    ? await handler$GetSubmissionReading(db, {
-        createdBy: loginStatus.userId
-      }).catch(intentionallyIgnoreError)
-    : undefined;
-
-  const submissionListening = loginStatus.loggedIn
-    ? await handler$GetSubmissionListening(db, {
-        createdBy: loginStatus.userId
-      }).catch(intentionallyIgnoreError)
-    : undefined;
-
-  const submissionWriting = loginStatus.loggedIn
-    ? await handler$GetSubmissionWriting(db, {
-        createdBy: loginStatus.userId
-      }).catch(intentionallyIgnoreError)
-    : undefined;
-
-  const submissionSpeaking = loginStatus.loggedIn
-    ? await handler$GetSubmissionSpeaking(db, {
-        createdBy: loginStatus.userId
-      }).catch(intentionallyIgnoreError)
-    : undefined;
-
   return (
     <SWRProvider
       value={{
@@ -58,12 +29,7 @@ export default async function Route() {
         })
       }}
     >
-      <Page
-        submissionReading={submissionReading}
-        submissionListening={submissionListening}
-        submissionWriting={submissionWriting}
-        submissionSpeaking={submissionSpeaking}
-      />
+      <Page />
     </SWRProvider>
   );
 }
