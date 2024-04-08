@@ -18,15 +18,12 @@ type Props = {
   initialExam: ReadingExam;
 };
 
-const NUM_MILLISECONDS_PER_HOURS = 3600000;
-
 export default function Body({ initialExam }: Props) {
   const router = useRouter();
   const [currentTask, setCurrentTask] = React.useState(0);
   const [hideScreen, setHideScreen] = React.useState(false);
   const [showReview, setShowReview] = React.useState(false);
   const answers = useRecoilValue(answersState);
-  const [notificationApi, notificationContextHolder] = useNotification();
   const numQuestions = initialExam.tasks.reduce(
     (accumulator, task) => accumulator + task.numQuestions,
     0
@@ -35,38 +32,9 @@ export default function Body({ initialExam }: Props) {
   const [checkpoints, setCheckpoints] = React.useState<boolean[]>(
     Array.from({ length: numQuestions + 1 }, () => false)
   );
-  const handleSubmit = async () => {
-    try {
-      const answer = range(numQuestions).map(
-        (id) => answers[getQuestionId(id + 1)] || ""
-      );
-      await httpPost$SubmitReading("/api/v1/submit/reading", {
-        examId: initialExam.examId,
-        answer
-      });
-      router.push(`/test`);
-      notificationApi.success({ message: "Submit exam successfully!" });
-    } catch (error) {
-      const displayableError = DisplayableError.from(error);
-      notificationApi.error({
-        message: displayableError.title,
-        description: displayableError.description
-      });
-    }
-  };
-
-  React.useEffect(() => {
-    const timer = setTimeout(
-      () => void handleSubmit(),
-      NUM_MILLISECONDS_PER_HOURS
-    );
-    return () => clearTimeout(timer);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   return (
     <div>
-      {notificationContextHolder}
       {initialExam.tasks.map((task, index) => {
         const readingContent = (JSON.parse(
           task.readingContent
@@ -87,9 +55,11 @@ export default function Body({ initialExam }: Props) {
             }
             topAdornment={
               <SettingBar
-                duration={NUM_MILLISECONDS_PER_HOURS}
                 onChangeHideScreen={setHideScreen}
-                onSubmit={handleSubmit}
+                answer={range(numQuestions).map(
+                  (id) => answers[getQuestionId(id + 1)] || ""
+                )}
+                examId={initialExam.examId}
               />
             }
             bottomAdornment={

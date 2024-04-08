@@ -1,10 +1,9 @@
-import { Button, Slider } from "antd";
+import { Button } from "antd";
 import cx from "clsx";
 import React from "react";
 import { useRecoilState } from "recoil";
 
-import ModalSetting from "../../../../../../../../reading/[examId]/_containers/Page/components/SettingBar/containers/ModalSetting";
-
+import ModalSetting from "./containers/ModalSetting";
 import styles from "./index.module.scss";
 
 import CountdownTimer from "@/modules/app-components/CountdownTimer";
@@ -15,16 +14,15 @@ import {
 import Flex from "@/modules/app-ui/components/Flex";
 import { useLoginStatus } from "@/modules/common-hooks/useLoginStatus";
 import { EM_DASH } from "@/modules/common-utils/unicode";
-import { useRouter } from "next/navigation";
-import { httpPost$SubmitListening } from "@/modules/commands/SubmitListening/fetcher";
+import { httpPost$SubmitWriting } from "@/modules/commands/SubmitWriting/fetcher";
 import useNotification from "antd/es/notification/useNotification";
-import { DisplayableError } from "@/modules/error";
+import { useRouter } from "next/navigation";
+
+const NUM_MILLISECONDS_PER_HOURS = 3600000;
 
 type Props = {
   className?: string;
   style?: React.CSSProperties;
-  duration: number;
-  listeningSrc: string;
   answer: string[];
   examId: string;
 
@@ -34,8 +32,6 @@ type Props = {
 export default function SettingBar({
   className,
   style,
-  duration,
-  listeningSrc,
   answer,
   examId,
 
@@ -46,25 +42,37 @@ export default function SettingBar({
   const [fontSize, setFontSize] = useRecoilState(fontSizeState);
   const [color, setColor] = useRecoilState(colorState);
   const loginStatus = useLoginStatus();
-  const audioRef = React.useRef<HTMLAudioElement>(null);
   const [notificationApi, notificationContextHolder] = useNotification();
+  const buttonRef = React.useRef<HTMLButtonElement>();
 
   const handleSubmit = async () => {
     try {
-      await httpPost$SubmitListening("/api/v1/submit/listening", {
-        examId,
-        answer
-      });
-      router.push(`/test`);
-      notificationApi.success({ message: "Submit exam successfully!" });
+      const { submissionId } = await httpPost$SubmitWriting(
+        "/api/v1/submit/writing",
+        {
+          examId,
+          answer
+        }
+      );
+      notificationApi.success({ message: "Exam submitted successfully!" });
+      router.push(`/submission/writing/${submissionId}`);
     } catch (error) {
-      const displayableError = DisplayableError.from(error);
       notificationApi.error({
-        message: displayableError.title,
-        description: displayableError.description
+        message: "Error",
+        description: "An error has occured, please try again!"
       });
+      router.push("/library");
     }
   };
+
+  React.useEffect(() => {
+    const timer = setTimeout(
+      () => buttonRef.current?.click(),
+      NUM_MILLISECONDS_PER_HOURS
+    );
+    return () => clearTimeout(timer);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [NUM_MILLISECONDS_PER_HOURS]);
 
   return (
     <div className={cx(styles.container, className)} style={style}>
@@ -75,33 +83,16 @@ export default function SettingBar({
         gap="12px"
         alignItems="center"
       >
-        <audio controls id="audio" style={{ display: "none" }} ref={audioRef}>
-          <source src={listeningSrc} />
-        </audio>
         <div>{loginStatus?.loggedIn ? loginStatus.displayName : EM_DASH}</div>
         <div className={styles.countdownTimer}>
           <CountdownTimer
             className={styles.countdownTimer}
-            duration={duration}
+            duration={NUM_MILLISECONDS_PER_HOURS}
             unstyled
             as="span"
           />
         </div>
-        <Flex.Row gap="4px" alignItems="center">
-          <Flex.Cell flex="1 1 300px" minWidth="80px">
-            <Slider
-              defaultValue={1}
-              min={0}
-              max={1}
-              step={0.01}
-              style={{ margin: "0 16px" }}
-              onChange={(value) => {
-                if (audioRef.current) {
-                  audioRef.current.volume = value;
-                }
-              }}
-            />
-          </Flex.Cell>
+        <Flex.Row gap="4px">
           {/* {loginStatus?.loggedIn && loginStatus.isAgent ? ( */}
           <Button onClick={handleSubmit}>Submit</Button>
           {/* ) : undefined} */}

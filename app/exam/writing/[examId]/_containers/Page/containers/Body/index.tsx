@@ -6,13 +6,12 @@ import React from "react";
 import { Descendant } from "slate";
 import { z } from "zod";
 
-import SettingBar from "../../../../../../reading/[examId]/_containers/Page/components/SettingBar";
-
 import PageNavigator from "./components/PageNavigator";
 import TaskViewer from "./components/TaskViewer";
 
 import { WritingExam } from "@/modules/business-types";
 import { httpPost$SubmitWriting } from "@/modules/commands/SubmitWriting/fetcher";
+import SettingBar from "./components/SettingBar";
 
 type Props = {
   initialExam: WritingExam;
@@ -37,31 +36,6 @@ export default function Body({ initialExam }: Props) {
   const [answer, setAnswer] = React.useState<string[]>(
     Array.from({ length: initialExam.tasks.length }, () => "")
   );
-  const handleSubmit = async () => {
-    try {
-      const { submissionId } = await httpPost$SubmitWriting(
-        "/api/v1/submit/writing",
-        {
-          examId: initialExam.examId,
-          answer
-        }
-      );
-      notificationApi.success({ message: "Exam submitted successfully!" });
-      router.push(`/submission/writing/${submissionId}`);
-    } catch (error) {
-      notificationApi.error({
-        message: "Error",
-        description: "An error has occured, please try again!"
-      });
-      router.push("/library");
-    }
-  };
-
-  React.useEffect(() => {
-    const timer = setTimeout(() => void handleSubmit(), duration);
-    return () => clearTimeout(timer);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [duration]);
 
   return (
     <div>
@@ -78,8 +52,8 @@ export default function Body({ initialExam }: Props) {
             }
             topAdornment={
               <SettingBar
-                duration={duration}
-                onSubmit={handleSubmit}
+                examId={initialExam.examId}
+                answer={answer}
                 onChangeHideScreen={setHideScreen}
               />
             }

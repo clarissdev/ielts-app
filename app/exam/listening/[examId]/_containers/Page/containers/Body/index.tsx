@@ -13,9 +13,7 @@ import styles from "./index.module.scss";
 import { answersState } from "@/modules/app-ui/components/Editor/utils";
 import Flex from "@/modules/app-ui/components/Flex";
 import { ListeningExam } from "@/modules/business-types";
-import { httpPost$SubmitListening } from "@/modules/commands/SubmitListening/fetcher";
 import { getQuestionId, range } from "@/modules/common-utils";
-import { DisplayableError } from "@/modules/error";
 
 type Props = {
   initialExam: ListeningExam;
@@ -40,25 +38,7 @@ export default function Body({ initialExam }: Props) {
   const [checkpoints, setCheckpoints] = React.useState<boolean[]>(
     Array.from({ length: numQuestions + 1 }, () => false)
   );
-  const handleSubmit = async () => {
-    try {
-      const answer = range(numQuestions).map(
-        (id) => answers[getQuestionId(id + 1)] || ""
-      );
-      await httpPost$SubmitListening("/api/v1/submit/listening", {
-        examId: initialExam.examId,
-        answer
-      });
-      router.push(`/test`);
-      notificationApi.success({ message: "Submit exam successfully!" });
-    } catch (error) {
-      const displayableError = DisplayableError.from(error);
-      notificationApi.error({
-        message: displayableError.title,
-        description: displayableError.description
-      });
-    }
-  };
+
   return (
     <div>
       {notificationContextHolder}
@@ -83,7 +63,10 @@ export default function Body({ initialExam }: Props) {
                   listeningSrc={initialExam.listeningSrc}
                   duration={NUM_MILLISECONDS_PER_40_MINUTES}
                   onChangeHideScreen={setHideScreen}
-                  onSubmit={handleSubmit}
+                  answer={range(numQuestions).map(
+                    (id) => answers[getQuestionId(id + 1)] || ""
+                  )}
+                  examId={""}
                 />
               }
               bottomAdornment={
