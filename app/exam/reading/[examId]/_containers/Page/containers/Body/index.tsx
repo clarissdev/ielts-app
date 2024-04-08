@@ -1,5 +1,3 @@
-import useNotification from "antd/es/notification/useNotification";
-import { useRouter } from "next/navigation";
 import React from "react";
 import { useRecoilValue } from "recoil";
 import { Descendant } from "slate";
@@ -10,16 +8,13 @@ import TaskViewer from "../../components/TaskViewer";
 
 import { answersState } from "@/modules/app-ui/components/Editor/utils";
 import { ReadingExam } from "@/modules/business-types";
-import { httpPost$SubmitReading } from "@/modules/commands/SubmitReading/fetcher";
 import { getQuestionId, range } from "@/modules/common-utils";
-import { DisplayableError } from "@/modules/error";
 
 type Props = {
   initialExam: ReadingExam;
 };
 
 export default function Body({ initialExam }: Props) {
-  const router = useRouter();
   const [currentTask, setCurrentTask] = React.useState(0);
   const [hideScreen, setHideScreen] = React.useState(false);
   const [showReview, setShowReview] = React.useState(false);

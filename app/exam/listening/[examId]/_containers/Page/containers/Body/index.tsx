@@ -1,6 +1,4 @@
 "use client";
-import useNotification from "antd/es/notification/useNotification";
-import { useRouter } from "next/navigation";
 import React from "react";
 import { useRecoilValue } from "recoil";
 import { Descendant } from "slate";
@@ -22,11 +20,9 @@ type Props = {
 const NUM_MILLISECONDS_PER_40_MINUTES = 2400000;
 
 export default function Body({ initialExam }: Props) {
-  const router = useRouter();
   const [currentTask, setCurrentTask] = React.useState(0);
   const [hideScreen, setHideScreen] = React.useState(false);
   const answers = useRecoilValue(answersState);
-  const [notificationApi, notificationContextHolder] = useNotification();
 
   const [isStarted, setIsStarted] = React.useState(true);
 
@@ -41,7 +37,6 @@ export default function Body({ initialExam }: Props) {
 
   return (
     <div>
-      {notificationContextHolder}
       {initialExam.tasks.map((task, index) => {
         const questionContent = (JSON.parse(
           task.questionContent
