@@ -4,6 +4,7 @@ import { Button, Input } from "antd";
 import useNotification from "antd/es/notification/useNotification";
 import { useRouter } from "next/navigation";
 import React from "react";
+import { FaUniversity } from "react-icons/fa";
 
 import ButtonListening from "./components/ButtonListening";
 import ButtonReading from "./components/ButtonReading";
@@ -130,18 +131,38 @@ export default function Page() {
               justifyContent="center"
               flexWrap="wrap"
             >
-              <ButtonReading
-                disabled={shouldDisableAllTests}
-                examId="660d595c085c87fd48ba271b"
-              />
               <ButtonListening
                 disabled={shouldDisableAllTests}
                 examId="661153bf5e805cd51bd54159"
+              />
+              <ButtonReading
+                disabled={shouldDisableAllTests}
+                examId="660d595c085c87fd48ba271b"
               />
               <ButtonWriting
                 disabled={shouldDisableAllTests}
                 examId="661180955305d417392457bf"
               />
+            </Flex.Row>
+            <h4>SAT Practice</h4>
+            <Flex.Row
+              flex="1 1 0"
+              padding="0 56px"
+              gap="12px"
+              justifyContent="center"
+              flexWrap="wrap"
+            >
+              <Button
+                type="primary"
+                target="_blank"
+                rel="noreferrer"
+                size="large"
+                href="https://satfelis.com/course-online-detail/65dd611c238e5c0009310167"
+                className={styles.button}
+                icon={<FaUniversity />}
+              >
+                SAT
+              </Button>
             </Flex.Row>
           </>
         ) : (
