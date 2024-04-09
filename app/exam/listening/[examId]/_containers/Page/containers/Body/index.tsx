@@ -17,12 +17,15 @@ type Props = {
   initialExam: ListeningExam;
 };
 
+const NUM_MILLISECONDS_PER_40_MINUTES = 2400000;
+
 export default function Body({ initialExam }: Props) {
   const [currentTask, setCurrentTask] = React.useState(0);
   const [hideScreen, setHideScreen] = React.useState(false);
   const answers = useRecoilValue(answersState);
 
   const [isStarted, setIsStarted] = React.useState(true);
+  const buttonSubmitRef = React.useRef<HTMLButtonElement>(null);
 
   const numQuestions = initialExam.tasks.reduce(
     (accumulator, task) => accumulator + task.numQuestions,
@@ -32,6 +35,14 @@ export default function Body({ initialExam }: Props) {
   const [checkpoints, setCheckpoints] = React.useState<boolean[]>(
     Array.from({ length: numQuestions + 1 }, () => false)
   );
+
+  React.useEffect(() => {
+    const timer = setTimeout(() => {
+      buttonSubmitRef.current?.click();
+    }, NUM_MILLISECONDS_PER_40_MINUTES);
+    return () => clearTimeout(timer);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <div>
@@ -58,7 +69,9 @@ export default function Body({ initialExam }: Props) {
                   answer={range(numQuestions).map(
                     (id) => answers[getQuestionId(id + 1)] || ""
                   )}
-                  examId={""}
+                  examId={initialExam.examId}
+                  duration={NUM_MILLISECONDS_PER_40_MINUTES}
+                  buttonSubmitRef={buttonSubmitRef}
                 />
               }
               bottomAdornment={

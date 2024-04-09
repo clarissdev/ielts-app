@@ -21,7 +21,7 @@ export async function handler$GetSubmissionReading(db: Db, params: Params) {
     .collection("submission-reading")
     .aggregate(agg)
     .toArray();
-  assert(records?.length === 1, "submission reading not found");
+  assert(records?.length >= 1, "submission reading not found");
 
   const submission = GetSubmissionReading$Result.parse({
     submissionId: records[0]._id.toHexString(),

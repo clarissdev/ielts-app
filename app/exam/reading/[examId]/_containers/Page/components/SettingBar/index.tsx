@@ -19,13 +19,13 @@ import { useLoginStatus } from "@/modules/common-hooks/useLoginStatus";
 import { EM_DASH } from "@/modules/common-utils/unicode";
 import { DisplayableError } from "@/modules/error";
 
-const NUM_MILLISECONDS_PER_HOURS = 3600000;
-
 type Props = {
   className?: string;
   style?: React.CSSProperties;
   answer: string[];
   examId: string;
+  buttonSubmitRef: React.RefObject<HTMLButtonElement>;
+  duration: number;
 
   onChangeHideScreen: (value: boolean) => void;
 };
@@ -35,6 +35,8 @@ export default function SettingBar({
   style,
   answer,
   examId,
+  buttonSubmitRef,
+  duration,
 
   onChangeHideScreen
 }: Props) {
@@ -44,7 +46,6 @@ export default function SettingBar({
   const [color, setColor] = useRecoilState(colorState);
   const loginStatus = useLoginStatus();
   const [notificationApi, notificationContextHolder] = useNotification();
-  const buttonRef = React.useRef<HTMLButtonElement>(null);
 
   const handleSubmit = async () => {
     try {
@@ -63,15 +64,6 @@ export default function SettingBar({
     }
   };
 
-  React.useEffect(() => {
-    const timer = setTimeout(
-      () => buttonRef.current?.click(),
-      NUM_MILLISECONDS_PER_HOURS
-    );
-    return () => clearTimeout(timer);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
   return (
     <div className={cx(styles.container, className)} style={style}>
       {notificationContextHolder}
@@ -85,14 +77,14 @@ export default function SettingBar({
         <div className={styles.countdownTimer}>
           <CountdownTimer
             className={styles.countdownTimer}
-            duration={NUM_MILLISECONDS_PER_HOURS}
+            duration={duration}
             unstyled
             as="span"
           />
         </div>
         <Flex.Row gap="4px">
           {/* {loginStatus?.loggedIn && loginStatus.isAgent ? ( */}
-          <Button ref={buttonRef} onClick={handleSubmit}>
+          <Button ref={buttonSubmitRef} onClick={handleSubmit}>
             Submit
           </Button>
           {/* ) : undefined} */}

@@ -20,14 +20,14 @@ import { useLoginStatus } from "@/modules/common-hooks/useLoginStatus";
 import { EM_DASH } from "@/modules/common-utils/unicode";
 import { DisplayableError } from "@/modules/error";
 
-const NUM_MILLISECONDS_PER_40_MINUTES = 2400000;
-
 type Props = {
   className?: string;
   style?: React.CSSProperties;
   listeningSrc: string;
   answer: string[];
   examId: string;
+  buttonSubmitRef: React.RefObject<HTMLButtonElement>;
+  duration: number;
 
   onChangeHideScreen: (value: boolean) => void;
 };
@@ -38,6 +38,8 @@ export default function SettingBar({
   listeningSrc,
   answer,
   examId,
+  buttonSubmitRef,
+  duration,
 
   onChangeHideScreen
 }: Props) {
@@ -48,7 +50,6 @@ export default function SettingBar({
   const loginStatus = useLoginStatus();
   const audioRef = React.useRef<HTMLAudioElement>(null);
   const [notificationApi, notificationContextHolder] = useNotification();
-  const buttonRef = React.useRef<HTMLButtonElement>(null);
 
   const handleSubmit = async () => {
     try {
@@ -67,15 +68,6 @@ export default function SettingBar({
     }
   };
 
-  React.useEffect(() => {
-    const timer = setTimeout(
-      () => buttonRef.current?.click(),
-      NUM_MILLISECONDS_PER_40_MINUTES
-    );
-    return () => clearTimeout(timer);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
   return (
     <div className={cx(styles.container, className)} style={style}>
       {notificationContextHolder}
@@ -92,7 +84,7 @@ export default function SettingBar({
         <div className={styles.countdownTimer}>
           <CountdownTimer
             className={styles.countdownTimer}
-            duration={NUM_MILLISECONDS_PER_40_MINUTES}
+            duration={duration}
             unstyled
             as="span"
           />
@@ -113,7 +105,7 @@ export default function SettingBar({
             />
           </Flex.Cell>
           {/* {loginStatus?.loggedIn && loginStatus.isAgent ? ( */}
-          <Button onClick={handleSubmit} ref={buttonRef}>
+          <Button onClick={handleSubmit} ref={buttonSubmitRef}>
             Submit
           </Button>
           {/* ) : undefined} */}

@@ -14,6 +14,8 @@ type Props = {
   initialExam: ReadingExam;
 };
 
+const NUM_MILLISECONDS_PER_HOURS = 3600000;
+
 export default function Body({ initialExam }: Props) {
   const [currentTask, setCurrentTask] = React.useState(0);
   const [hideScreen, setHideScreen] = React.useState(false);
@@ -27,6 +29,15 @@ export default function Body({ initialExam }: Props) {
   const [checkpoints, setCheckpoints] = React.useState<boolean[]>(
     Array.from({ length: numQuestions + 1 }, () => false)
   );
+  const buttonSubmitRef = React.useRef<HTMLButtonElement>(null);
+
+  React.useEffect(() => {
+    const timer = setTimeout(() => {
+      buttonSubmitRef.current?.click();
+    }, NUM_MILLISECONDS_PER_HOURS);
+    return () => clearTimeout(timer);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <div>
@@ -55,6 +66,8 @@ export default function Body({ initialExam }: Props) {
                   (id) => answers[getQuestionId(id + 1)] || ""
                 )}
                 examId={initialExam.examId}
+                duration={NUM_MILLISECONDS_PER_HOURS}
+                buttonSubmitRef={buttonSubmitRef}
               />
             }
             bottomAdornment={

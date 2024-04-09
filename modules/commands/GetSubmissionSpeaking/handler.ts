@@ -21,7 +21,7 @@ export async function handler$GetSubmissionSpeaking(db: Db, params: Params) {
     .collection("submission-speaking")
     .aggregate(agg)
     .toArray();
-  assert(records?.length === 1, "submission speaking not found");
+  assert(records?.length >= 1, "submission speaking not found");
 
   const submission = Result.parse({
     submissionId: records[0]._id.toHexString(),
