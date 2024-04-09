@@ -67,7 +67,7 @@ export default function Body({ initialExam }: Props) {
                 )}
                 examId={initialExam.examId}
                 duration={NUM_MILLISECONDS_PER_HOURS}
-                buttonSubmitRef={buttonSubmitRef}
+                buttonSubmitRef={index === 0 ? buttonSubmitRef : null}
               />
             }
             bottomAdornment={

@@ -24,7 +24,7 @@ type Props = {
   answer: string[];
   examId: string;
 
-  buttonSubmitRef: React.RefObject<HTMLButtonElement>;
+  buttonSubmitRef: React.RefObject<HTMLButtonElement> | null;
   duration: number;
 
   onChangeHideScreen: (value: boolean) => void;
