@@ -1,5 +1,5 @@
 import { Button } from "antd";
-import { MdModeEdit } from "react-icons/md";
+import { FaHeadphones } from "react-icons/fa";
 import useSWR from "swr";
 
 import styles from "./index.module.scss";
@@ -42,7 +42,7 @@ export default function ButtonListening({ examId, disabled }: Props) {
         size="large"
         href={`/exam/listening/${examId}`}
         className={styles.button}
-        icon={<MdModeEdit />}
+        icon={<FaHeadphones />}
         disabled={
           disabled || !loginStatus?.loggedIn || submissionListening != null
         }

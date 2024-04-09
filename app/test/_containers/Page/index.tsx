@@ -17,6 +17,7 @@ import { httpPost$EditProfile } from "@/modules/commands/EditProfile/fetcher";
 import { useLoginStatus } from "@/modules/common-hooks/useLoginStatus";
 import { shamelesslyRevalidateEverything } from "@/modules/common-utils";
 import { DisplayableError } from "@/modules/error";
+import { FaUniversity } from "react-icons/fa";
 
 export default function Page() {
   const loginStatus = useLoginStatus();
@@ -130,18 +131,38 @@ export default function Page() {
               justifyContent="center"
               flexWrap="wrap"
             >
-              <ButtonReading
-                disabled={shouldDisableAllTests}
-                examId="660d595c085c87fd48ba271b"
-              />
               <ButtonListening
                 disabled={shouldDisableAllTests}
                 examId="661153bf5e805cd51bd54159"
+              />
+              <ButtonReading
+                disabled={shouldDisableAllTests}
+                examId="660d595c085c87fd48ba271b"
               />
               <ButtonWriting
                 disabled={shouldDisableAllTests}
                 examId="661180955305d417392457bf"
               />
+            </Flex.Row>
+            <h4>SAT Practice</h4>
+            <Flex.Row
+              flex="1 1 0"
+              padding="0 56px"
+              gap="12px"
+              justifyContent="center"
+              flexWrap="wrap"
+            >
+              <Button
+                type="primary"
+                target="_blank"
+                rel="noreferrer"
+                size="large"
+                href="https://satfelis.com/course-online-detail/65dd611c238e5c0009310167"
+                className={styles.button}
+                icon={<FaUniversity />}
+              >
+                SAT
+              </Button>
             </Flex.Row>
           </>
         ) : (

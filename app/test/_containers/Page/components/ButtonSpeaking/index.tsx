@@ -1,5 +1,5 @@
 import { Button } from "antd";
-import { MdModeEdit } from "react-icons/md";
+import { RiSpeakFill } from "react-icons/ri";
 import useSWR from "swr";
 
 import styles from "./index.module.scss";
@@ -44,7 +44,7 @@ export default function ButtonSpeaking({ examId, disabled }: Props) {
           redirectUrl: `/exam/speaking/${examId}`
         })}`}
         className={styles.button}
-        icon={<MdModeEdit />}
+        icon={<RiSpeakFill />}
         disabled={
           disabled || !loginStatus?.loggedIn || submissionSpeaking != null
         }
