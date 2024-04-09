@@ -20,7 +20,7 @@ export async function handler$GetSubmissionSat(db: Db, params: Params) {
     .collection("submission-sat")
     .aggregate(agg)
     .toArray();
-  assert(records?.length === 1, "submission sat not found");
+  assert(records?.length >= 1, "submission sat not found");
 
   const submission = GetSubmissionSat$Result.parse({
     submissionId: records[0]._id.toHexString(),

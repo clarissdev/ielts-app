@@ -37,7 +37,9 @@ export async function handler$SubmitReading(
   });
 
   const numCorrectAnswers = params.answer.filter((item, index) =>
-    answer.answers[getQuestionId(index + 1)].includes(item)
+    answer.answers[getQuestionId(index + 1)]
+      .map((item) => item.toLowerCase())
+      .includes(item.toLowerCase())
   ).length;
 
   const grade = getScoreFromNumCorrectQuestions(numCorrectAnswers);

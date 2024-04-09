@@ -1,5 +1,7 @@
 import { Button, Slider } from "antd";
+import useNotification from "antd/es/notification/useNotification";
 import cx from "clsx";
+import { useRouter } from "next/navigation";
 import React from "react";
 import { useRecoilState } from "recoil";
 
@@ -13,16 +15,19 @@ import {
   fontSizeState
 } from "@/modules/app-ui/components/Editor/utils";
 import Flex from "@/modules/app-ui/components/Flex";
+import { httpPost$SubmitListening } from "@/modules/commands/SubmitListening/fetcher";
 import { useLoginStatus } from "@/modules/common-hooks/useLoginStatus";
 import { EM_DASH } from "@/modules/common-utils/unicode";
-// import { useLoginStatus } from "@/modules/common-hooks/useLoginStatus";
+import { DisplayableError } from "@/modules/error";
 
 type Props = {
   className?: string;
   style?: React.CSSProperties;
-  duration: number;
   listeningSrc: string;
-  onSubmit: () => Promise<void>;
+  answer: string[];
+  examId: string;
+  buttonSubmitRef: React.RefObject<HTMLButtonElement>;
+  duration: number;
 
   onChangeHideScreen: (value: boolean) => void;
 };
@@ -30,20 +35,42 @@ type Props = {
 export default function SettingBar({
   className,
   style,
-  duration,
   listeningSrc,
-  onSubmit,
+  answer,
+  examId,
+  buttonSubmitRef,
+  duration,
 
   onChangeHideScreen
 }: Props) {
+  const router = useRouter();
   const [showModalSetting, setShowModalSetting] = React.useState(false);
   const [fontSize, setFontSize] = useRecoilState(fontSizeState);
   const [color, setColor] = useRecoilState(colorState);
   const loginStatus = useLoginStatus();
   const audioRef = React.useRef<HTMLAudioElement>(null);
+  const [notificationApi, notificationContextHolder] = useNotification();
+
+  const handleSubmit = async () => {
+    try {
+      await httpPost$SubmitListening("/api/v1/submit/listening", {
+        examId,
+        answer
+      });
+      router.push(`/test`);
+      notificationApi.success({ message: "Submit exam successfully!" });
+    } catch (error) {
+      const displayableError = DisplayableError.from(error);
+      notificationApi.error({
+        message: displayableError.title,
+        description: displayableError.description
+      });
+    }
+  };
 
   return (
     <div className={cx(styles.container, className)} style={style}>
+      {notificationContextHolder}
       <Flex.Row
         padding="4px 20px"
         justifyContent="space-between"
@@ -78,7 +105,9 @@ export default function SettingBar({
             />
           </Flex.Cell>
           {/* {loginStatus?.loggedIn && loginStatus.isAgent ? ( */}
-          <Button onClick={onSubmit}>Submit</Button>
+          <Button onClick={handleSubmit} ref={buttonSubmitRef}>
+            Submit
+          </Button>
           {/* ) : undefined} */}
           <Button
             onClick={() => {

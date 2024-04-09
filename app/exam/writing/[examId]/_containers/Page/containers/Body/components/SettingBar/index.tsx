@@ -14,16 +14,16 @@ import {
   fontSizeState
 } from "@/modules/app-ui/components/Editor/utils";
 import Flex from "@/modules/app-ui/components/Flex";
-import { httpPost$SubmitReading } from "@/modules/commands/SubmitReading/fetcher";
+import { httpPost$SubmitWriting } from "@/modules/commands/SubmitWriting/fetcher";
 import { useLoginStatus } from "@/modules/common-hooks/useLoginStatus";
 import { EM_DASH } from "@/modules/common-utils/unicode";
-import { DisplayableError } from "@/modules/error";
 
 type Props = {
   className?: string;
   style?: React.CSSProperties;
   answer: string[];
   examId: string;
+
   buttonSubmitRef: React.RefObject<HTMLButtonElement>;
   duration: number;
 
@@ -35,6 +35,7 @@ export default function SettingBar({
   style,
   answer,
   examId,
+
   buttonSubmitRef,
   duration,
 
@@ -49,18 +50,21 @@ export default function SettingBar({
 
   const handleSubmit = async () => {
     try {
-      await httpPost$SubmitReading("/api/v1/submit/reading", {
-        examId,
-        answer
-      });
-      router.push(`/test`);
-      notificationApi.success({ message: "Submit exam successfully!" });
+      const { submissionId } = await httpPost$SubmitWriting(
+        "/api/v1/submit/writing",
+        {
+          examId,
+          answer
+        }
+      );
+      notificationApi.success({ message: "Exam submitted successfully!" });
+      router.push(`/submission/writing/${submissionId}`);
     } catch (error) {
-      const displayableError = DisplayableError.from(error);
       notificationApi.error({
-        message: displayableError.title,
-        description: displayableError.description
+        message: "Error",
+        description: "An error has occured, please try again!"
       });
+      router.push("/library");
     }
   };
 
@@ -84,7 +88,7 @@ export default function SettingBar({
         </div>
         <Flex.Row gap="4px">
           {/* {loginStatus?.loggedIn && loginStatus.isAgent ? ( */}
-          <Button ref={buttonSubmitRef} onClick={handleSubmit}>
+          <Button onClick={handleSubmit} ref={buttonSubmitRef}>
             Submit
           </Button>
           {/* ) : undefined} */}

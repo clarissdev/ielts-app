@@ -22,7 +22,7 @@ export async function handler$GetSubmissionWriting(db: Db, params: Params) {
     .collection("submission-writing")
     .aggregate(agg)
     .toArray();
-  assert(records?.length === 1, "submission writing not found");
+  assert(records?.length >= 1, "submission writing not found");
 
   const submission = Result.parse({
     submissionId: records[0]._id.toHexString(),
