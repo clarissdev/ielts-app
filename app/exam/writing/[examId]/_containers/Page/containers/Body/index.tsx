@@ -51,7 +51,7 @@ export default function Body({ initialExam }: Props) {
                 answer={answer}
                 onChangeHideScreen={setHideScreen}
                 duration={NUM_MILLISECONDS_PER_HOURS}
-                buttonSubmitRef={buttonSubmitRef}
+                buttonSubmitRef={index === 0 ? buttonSubmitRef : null}
               />
             }
             bottomAdornment={
