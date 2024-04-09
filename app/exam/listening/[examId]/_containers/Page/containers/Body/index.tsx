@@ -17,8 +17,6 @@ type Props = {
   initialExam: ListeningExam;
 };
 
-const NUM_MILLISECONDS_PER_40_MINUTES = 2400000;
-
 export default function Body({ initialExam }: Props) {
   const [currentTask, setCurrentTask] = React.useState(0);
   const [hideScreen, setHideScreen] = React.useState(false);
@@ -56,7 +54,6 @@ export default function Body({ initialExam }: Props) {
               topAdornment={
                 <SettingBar
                   listeningSrc={initialExam.listeningSrc}
-                  duration={NUM_MILLISECONDS_PER_40_MINUTES}
                   onChangeHideScreen={setHideScreen}
                   answer={range(numQuestions).map(
                     (id) => answers[getQuestionId(id + 1)] || ""

@@ -43,7 +43,7 @@ export default function SettingBar({
   const [color, setColor] = useRecoilState(colorState);
   const loginStatus = useLoginStatus();
   const [notificationApi, notificationContextHolder] = useNotification();
-  const buttonRef = React.useRef<HTMLButtonElement>();
+  const buttonRef = React.useRef<HTMLButtonElement>(null);
 
   const handleSubmit = async () => {
     try {
@@ -94,7 +94,9 @@ export default function SettingBar({
         </div>
         <Flex.Row gap="4px">
           {/* {loginStatus?.loggedIn && loginStatus.isAgent ? ( */}
-          <Button onClick={handleSubmit}>Submit</Button>
+          <Button onClick={handleSubmit} ref={buttonRef}>
+            Submit
+          </Button>
           {/* ) : undefined} */}
           <Button
             onClick={() => {
