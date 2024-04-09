@@ -18,7 +18,6 @@ import { httpPost$EditProfile } from "@/modules/commands/EditProfile/fetcher";
 import { useLoginStatus } from "@/modules/common-hooks/useLoginStatus";
 import { shamelesslyRevalidateEverything } from "@/modules/common-utils";
 import { DisplayableError } from "@/modules/error";
-import { FaUniversity } from "react-icons/fa";
 
 export default function Page() {
   const loginStatus = useLoginStatus();
