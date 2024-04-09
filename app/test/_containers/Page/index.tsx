@@ -4,6 +4,7 @@ import { Button, Input } from "antd";
 import useNotification from "antd/es/notification/useNotification";
 import { useRouter } from "next/navigation";
 import React from "react";
+import { FaUniversity } from "react-icons/fa";
 
 import ButtonListening from "./components/ButtonListening";
 import ButtonReading from "./components/ButtonReading";
@@ -17,7 +18,6 @@ import { httpPost$EditProfile } from "@/modules/commands/EditProfile/fetcher";
 import { useLoginStatus } from "@/modules/common-hooks/useLoginStatus";
 import { shamelesslyRevalidateEverything } from "@/modules/common-utils";
 import { DisplayableError } from "@/modules/error";
-import { FaUniversity } from "react-icons/fa";
 
 export default function Page() {
   const loginStatus = useLoginStatus();
