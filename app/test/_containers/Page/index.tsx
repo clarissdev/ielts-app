@@ -144,6 +144,23 @@ export default function Page() {
                 examId="661180955305d417392457bf"
               />
             </Flex.Row>
+            <h4>IELTS Practice 3</h4>
+            <Flex.Row
+              flex="1 1 0"
+              padding="0 56px"
+              gap="12px"
+              justifyContent="center"
+              flexWrap="wrap"
+            >
+              <ButtonListening
+                disabled={shouldDisableAllTests}
+                examId="661641e86a6920cb907966de"
+              />
+              <ButtonReading
+                disabled={shouldDisableAllTests}
+                examId="6614f1acb1d4d93d9faef9aa"
+              />
+            </Flex.Row>
             <h4>SAT Practice</h4>
             <Flex.Row
               flex="1 1 0"

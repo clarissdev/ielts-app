@@ -20,40 +20,42 @@ export default function SelectTable({
   const { options, indices } = Props.parse(element);
   const [answers, setAnswers] = useRecoilState(answersState);
   return (
-    <table {...attributes} className={styles.container}>
-      <thead>
-        <tr>
-          <th></th>
-          {options.map((item) => (
-            <th key={item}>{` ${item} `}</th>
-          ))}
-        </tr>
-      </thead>
-      <tbody>
-        {indices.map((id, index) => (
-          <tr key={id} id={id}>
-            <td>{children[index]}</td>
-
+    <div {...attributes} style={{ display: "flex", justifyContent: "center" }}>
+      <table className={styles.container}>
+        <thead>
+          <tr>
+            <th></th>
             {options.map((item) => (
-              <td key={item}>
-                <button
-                  className={styles.buttonCheck}
-                  onClick={() => {
-                    if (answers[id] !== item) {
-                      setAnswers((answers) => ({ ...answers, [id]: item }));
-                    } else {
-                      const { [id]: _, ...rest } = answers;
-                      setAnswers(rest);
-                    }
-                  }}
-                >
-                  {answers[id] === item ? <IoCheckmark /> : undefined}
-                </button>
-              </td>
+              <th key={item}>{` ${item} `}</th>
             ))}
           </tr>
-        ))}
-      </tbody>
-    </table>
+        </thead>
+        <tbody>
+          {indices.map((id, index) => (
+            <tr key={id} id={id}>
+              <td>{children[index]}</td>
+
+              {options.map((item) => (
+                <td key={item}>
+                  <button
+                    className={styles.buttonCheck}
+                    onClick={() => {
+                      if (answers[id] !== item) {
+                        setAnswers((answers) => ({ ...answers, [id]: item }));
+                      } else {
+                        const { [id]: _, ...rest } = answers;
+                        setAnswers(rest);
+                      }
+                    }}
+                  >
+                    {answers[id] === item ? <IoCheckmark /> : undefined}
+                  </button>
+                </td>
+              ))}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
   );
 }
