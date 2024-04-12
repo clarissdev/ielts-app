@@ -174,7 +174,7 @@ export default function Page() {
                 target="_blank"
                 rel="noreferrer"
                 size="large"
-                href="https://satfelis.com/course-online-detail/65dd611c238e5c0009310167"
+                href="https://satfelis.com/course-online-detail/661500ed2838e800089bda0d"
                 className={styles.button}
                 icon={<FaUniversity />}
               >
