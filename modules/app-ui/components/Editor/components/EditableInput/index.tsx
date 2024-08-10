@@ -28,6 +28,7 @@ export default function EditableInput({
   return (
     <span contentEditable={false} {...attributes}>
       <Input
+        autoComplete="off"
         id={index}
         className={cx(styles.input, hidden ? styles.hidden : undefined)}
         value={
