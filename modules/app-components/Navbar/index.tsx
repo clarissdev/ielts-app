@@ -36,9 +36,6 @@ export default function Navbar({ className, style }: Props) {
           </Link>
         </Flex.Cell>
         <Flex.Row gap="12px" alignItems="center">
-          <Link href="/test" className={styles.link}>
-            Test Ngay
-          </Link>
           {loginStatus?.loggedIn ? (
             <Dropdown
               menu={{

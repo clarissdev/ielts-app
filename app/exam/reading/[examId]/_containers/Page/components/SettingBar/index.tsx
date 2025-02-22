@@ -53,7 +53,7 @@ export default function SettingBar({
         examId,
         answer
       });
-      router.push(`/test`);
+      router.push(`/`);
       notificationApi.success({ message: "Submit exam successfully!" });
     } catch (error) {
       const displayableError = DisplayableError.from(error);

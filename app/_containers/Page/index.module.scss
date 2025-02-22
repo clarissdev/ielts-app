@@ -1,57 +1,43 @@
-@use "@/modules/app-ui/styles/_colors.scss" as colors;
-
-@mixin onNarrowScreen {
-  @media (max-width: 960px) {
-    @content;
-  }
+.main {
+  max-width: 768px;
+  margin: 0 auto;
+  margin-top: 32px;
+  padding: 0 32px;
+  flex-wrap: wrap;
 }
 
-.main {
-  margin: 0 auto;
-  max-width: 1440px;
+.leftColumn {
   position: relative;
 }
 
-.belowBanner {
-  @include onNarrowScreen() {
-    display: flex;
-    justify-content: center !important;
-  }
+.rightColumn {
+  position: relative;
+  text-align: center;
 }
 
 .banner {
   width: 100%;
+  max-width: 520px;
   height: auto;
 }
 
-.figure {
-  max-width: 280px;
-  height: auto;
+.label {
+  line-height: 175%;
 }
 
-.buttonTest.buttonTest.buttonTest {
-  font-size: 28px;
-  height: 60px;
-  padding: 8px 20px;
-  text-transform: uppercase;
-  font-weight: 600;
+.alert {
+  font-size: 14px;
+  font-style: italic;
 }
 
-.figureContainer {
-  position: relative;
-  text-align: center;
-  font-family: var(--font-monsterats);
-  font-weight: 500;
+.button {
+  display: inline-flex;
+  align-items: center;
 }
 
-.backdrop {
-  width: 160px;
-  height: 160px;
-  left: 50%;
-  z-index: -1;
-  transform: translateX(-50%);
-  top: 32px;
-  border-radius: 50%;
-  position: absolute;
-  background-color: colors.$secondary;
+.button.button.button {
+  font-size: 20px;
+  height: 40px;
+  font-style: normal;
+  text-decoration: none;
 }

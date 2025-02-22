@@ -34,7 +34,7 @@ export default function Page({ className, style, exam }: Props) {
           answer
         });
         notificationApi.success({ message: "Submit exam successfully!" });
-        router.push("/test");
+        router.push("/");
       } catch (error) {
         const displayableError = DisplayableError.from(error);
         notificationApi.error({
